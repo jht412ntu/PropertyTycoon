@@ -1,6 +1,6 @@
 # Summary
 
-* [Introduction](README.md)
+* [Overview](README.md)
     * [Team Members](TM.md)
 * [Timeline](timeline/README.md)
     * [Week 1](timeline/week1/week1.md)

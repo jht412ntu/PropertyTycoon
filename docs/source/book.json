@@ -1,18 +1,38 @@
 {
-        "title": "Property Tycoon",
-       	"author": "Hallton J",
-       	"description": "Software Engineering Group Project",
-       	"language": "en",
-       	"gitbook": "3.2.3",
-       	"structure": {
-		"readme": "README.md"
-	},
-	"links": {
-		"sidebar": {
-			"GitHub": "https://github.com/jht412ntu/PropertyTycoon"
-		}
-	},
-	"style": {
-		"website": "styles/website.css"
-	}
+    "title": "Property Tycoon",
+    "author": "Hallton J",
+    "description": "Software Engineering Group Project",
+    "language": "en",
+    "gitbook": "3.2.3",
+    "structure": {
+		    "readme": "README.md"
+	  },
+    "plugins": [
+        "chapter-fold",
+        "todo",
+        "github",
+        "advanced-emoji",
+        "tbfed-pagefooter"
+    ],
+    "pluginsConfig": {
+        "github": {
+            "url": "https://github.com/jht412ntu/PropertyTycoon"
+        },
+        "theme-default": {
+            "showLevel": false
+        },
+        "tbfed-pagefooter": {
+            "copyright":"Copyright &copy Hallton+ 2020",
+            "modify_label": "Modified at：",
+            "modify_format": "YYYY-MM-DD HH:mm:ss"
+        }
+    },
+    "links": {
+		    "sidebar": {
+			    "Project": "https://github.com/jht412ntu/PropertyTycoon"
+		    }
+	  },
+    "style": {
+		    "website": "styles/website.css"
+	  }
 }
