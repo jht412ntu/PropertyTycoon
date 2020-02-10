@@ -11,5 +11,8 @@
 		"sidebar": {
 			"GitHub": "https://github.com/jht412ntu/PropertyTycoon"
 		}
+	},
+	"style": {
+		"website": "styles/website.css"
 	}
 }
