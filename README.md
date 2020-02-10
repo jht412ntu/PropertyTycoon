@@ -1,2 +1,2 @@
 # PropertyTycoon
-- New line
+- a New line
