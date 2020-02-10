@@ -1,4 +1,4 @@
 # PropertyTycoon
 - Project gitbook: 
  
-  https://jht412ntu.github.io/PropertyTycoon
+  https://jht412ntu.github.io/PropertyTycoon/
