@@ -1,4 +1,5 @@
 # PropertyTycoon
 - Project gitbook: 
  
-  https://jht412ntu.github.io/PropertyTycoon
+  https://sept.team
+  (Software Engineering Property Tycoon)
