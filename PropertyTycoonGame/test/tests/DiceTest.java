@@ -53,7 +53,7 @@ public class DiceTest {
     }
     
     @Test
-    public void rollAgainTest(){
+    public void doubleRollTest(){
         Dice dice = new Dice();
         dice.setNumDouble(3);
         dice.rollAgain();
@@ -77,4 +77,15 @@ public class DiceTest {
         
     }
     
+    
+    @Test
+    public void rollAgainTest(){
+        Dice dice = new Dice();
+        dice.setRollDice(3,5);
+        assertEquals(false, dice.rollAgain);
+        dice.newPlayer();
+        dice.setRollDice(3, 3);
+        assertEquals(true, dice.rollAgain);
+    }
+        
 }

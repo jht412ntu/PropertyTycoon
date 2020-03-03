@@ -35,6 +35,9 @@ public class Dice {
                 numDouble += 1;
                 rollAgain();
             }
+            else{
+                rollAgain = false;
+            }
             totalValue();
         }
     }
@@ -112,5 +115,25 @@ public class Dice {
 
     public void setNumDouble(int numDouble) {
         this.numDouble = numDouble;
+    }
+    
+    /** 
+    * For testing only
+    * Same logic as roll dice method, but the value of each dice can be set manually
+    * 
+    */
+    public void setRollDice(int x, int y){
+        if(rollAgain){
+            diceVal0 = x;
+            diceVal1 = y;
+            if(diceVal0 == diceVal1){
+                numDouble += 1;
+                rollAgain();
+            }
+            else{
+                rollAgain = false;
+            }
+            totalValue();
+        }
     }
 }
