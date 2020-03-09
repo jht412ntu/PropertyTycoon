@@ -15,6 +15,7 @@ import propertytycoongame.Dice;
 public class DiceTest {
     
     public DiceTest() {
+    	
     }
     
     @BeforeClass
