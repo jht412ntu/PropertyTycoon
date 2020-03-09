@@ -1,7 +1,5 @@
 package propertytycoongame;
 
-import java.util.ArrayList;
-
 /** Player 
 *
 * Enum tokens can only be choosen in a limited range
