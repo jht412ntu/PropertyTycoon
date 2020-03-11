@@ -1,0 +1,151 @@
+package propertytycoongame;
+
+import java.sql.Time;
+import java.time.ZoneId;
+import java.util.Collections;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.TimeZone;
+
+/**
+ * Property Tycoon Game Central Control
+ * 
+ * Class that provides functionality for starting and controlling the game.
+ * 
+ * @author Haotian Jiao
+ * @version 1.0.0
+ */
+public class CentralControl {
+    private final Date startTime;
+    private final Long duration;
+    private Date endTime;
+    private String mode;
+    private LinkedList<Player> players;
+    
+    public CentralControl(long duration) { // in minutes
+        players = new LinkedList<>();
+        startTime = new Date(); // set start time to be current system time
+        this.duration = duration * 60000; // time in milliseconds
+        
+        if (duration == 0) { // Normal(survival) mode
+            mode = "Normal";
+            endTime = startTime; // the normal mode does not have specific end time
+        } else { // Abridged(timed) mode  **cannot be negative time**
+            mode = "Abridged";
+            endTime = new Date(startTime.getTime() + this.duration);
+        } 
+    }
+    
+    /**
+     * Add player to the game
+     * 
+     * @param name 
+     */
+    public void addPlayer(Player name) {
+        players.add(name);
+    }
+
+    /**
+     * Shuffling all the players
+     * 
+     */
+    public void initPlayers() {
+        Collections.shuffle(players);
+    }
+    
+    /**
+     * Set the current player to the next
+     * 
+     */
+    public void nextPlayer() {
+        Player prePlayer = players.remove();
+        addPlayer(prePlayer);
+    }
+
+    /**
+     * Set the final end time
+     * 
+     * Uses only when the game is playing in normal mode
+     */
+    public void setEndTime() {
+        endTime = new Date(getCurrentTime().getTime());
+    }
+    
+    /**
+     * Get the current player who should playing the game
+     * 
+     * @return Player
+     */
+    public Player getCurrentPlayer() {
+        return players.peek();
+    }
+    
+    /**
+     * Get all the players
+     * 
+     * @return LinkedList
+     */
+    public LinkedList getPlayers() {
+        return players;
+    }
+
+    /**
+     * Get the current system time
+     * 
+     * @return Date
+     */
+    public Date getCurrentTime() {
+        return new Date();
+    }
+    
+    /**
+     * Get the start time of the game
+     * 
+     * @return Date
+     */
+    public Date getStartTime() {
+        return startTime;
+    }
+    
+    /**
+     * Get the end time of the game
+     * 
+     * @return Date
+     */
+    public Date getEndTime() {
+        return endTime;
+    }
+    
+    /**
+     * Get the remaining time of the game
+     * 
+     * @return String
+     */
+    public Time getRemainingTime() {
+        long interval = endTime.getTime() - getCurrentTime().getTime();
+        return timeFormat(interval);
+    }
+    
+    /**
+     * Get the duration of the game
+     * 
+     * @return String
+     */
+    public Time getDuration() {
+        long interval = endTime.getTime() - startTime.getTime();
+        return timeFormat(interval);
+    }
+    
+    /**
+     * Format the time in milliseconds to 00:00:00(H:m:s)
+     * 
+     * @param milliseconds
+     * @return Time
+     */
+    public Time timeFormat(long milliseconds) {
+        TimeZone.setDefault(TimeZone.getTimeZone(ZoneId.of("UTC")));
+        Time hms = new Time(milliseconds);
+        return hms;
+    }
+
+}
