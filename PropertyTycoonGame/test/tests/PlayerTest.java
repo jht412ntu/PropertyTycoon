@@ -12,8 +12,7 @@ import propertytycoongame.Player;
 * @author Hayden
 */
 public class PlayerTest {
-	Token player1 = Token.boot;
-	
+	Player player = new Player(1000,Token.boot);
 	public PlayerTest() {
 		
 	}
