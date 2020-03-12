@@ -2,7 +2,9 @@
 
 * [Overview](README.md)
     * [Team Members](TM.md)
+    * [Meetings](MEETING.md)
     * [Board Classes](BC.md)
+    * [Sprints](SPRINT.md)
 * [Timeline](timeline/README.md)
     * [Week 1](timeline/week1/week1.md)
     * [Week 2](timeline/week2/week2.md)
