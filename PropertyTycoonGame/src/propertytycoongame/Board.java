@@ -2,9 +2,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
-    public static void main(String[] args) { 
-        Map<Integer, Cell> board = new HashMap<>();
 
+    public HashMap<Integer, Cell> theboard ;
+
+/*
+       board=new HashMap<>();
         Cell c1 = new Cell("go", false, null, "Collect £200",null,null,0,0,null);
         Cell c2 = new Cell("Crapper Street", true, "Brown", null,60,2,0,0,null);
         Cell c3 = new Cell("Pot Luck", false, null, "Take card",null,null,0,0,null);
@@ -93,18 +95,15 @@ public class Board {
         //Red, Yellow;
         // Green, Deep blue;'
     }
-        public int buyHouse(String h){
+    public int buyHouse(Integer i,String h){
         int x=0;
-            if (h.equals("Brown") || h.equals("Blue")){
 
-            }
-            return x;
-        }
+        return x;
+    }
 
 
 
-
-
+*/
 
     static class Cell {
 
@@ -113,10 +112,10 @@ public class Board {
         public String group;
         public String action;
         public String ownedby;
-        public int cost;
-        public int housebuilded;
-        public int hotelbuilded;
-        public int rent;//unimproved
+        public Integer cost;
+        public Integer housebuilded;
+        public Integer hotelbuilded;
+        public Integer rent;//unimproved
         public Cell(String property, boolean available, String group, String action, Integer cost, Integer rent ,Integer housebuilded,Integer hotelbuilded,String ownedby) {
             this.property = property;
             this.available=available;
@@ -132,7 +131,4 @@ public class Board {
 
 
 
-}
-
-
-}
+    }}
