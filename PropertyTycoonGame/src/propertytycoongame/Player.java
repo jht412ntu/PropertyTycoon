@@ -10,10 +10,11 @@ package propertytycoongame;
 
 public class Player{
 	
-	private int money;
+	private int money = 1500;
 	private int location = 0;
 	private Token token;
 	private boolean passGo = false;
+        private String name;
 
 	
 	public enum Token{
@@ -21,9 +22,9 @@ public class Player{
 	}
 	
 	
-	public Player(int money,Token token) {
+	public Player(String name,Token token) {
 		// TODO Auto-generated constructor stub
-		this.money = money;
+		this.name = name;
 		this.token = token;
 	}
 	
@@ -58,5 +59,9 @@ public class Player{
 	public Token getToken() {
 		return token;
 	}
+        
+        public String getName(){
+            return name;
+        }
 	
 }
