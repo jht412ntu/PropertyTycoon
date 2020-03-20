@@ -18,8 +18,20 @@ public class Dice {
     private final int[] sides = range(1,6).toArray();
     private int diceVal0, diceVal1;
     private int numDouble = 0;
+
+    /**
+     *
+     */
     public int totalVal;
+
+    /**
+     *
+     */
     public boolean goJail = false;
+
+    /**
+     *
+     */
     public boolean rollAgain = true;
     
     /**
@@ -42,6 +54,9 @@ public class Dice {
         }
     }
     
+    /**
+     *
+     */
     public void totalValue(){
         totalVal = diceVal0 + diceVal1;
     }
@@ -61,6 +76,11 @@ public class Dice {
     /*
     * Sets goJail as true if the player has exceeded 3 consecutive rolls
     */
+
+    /**
+     *
+     */
+
     public void goToJail(){
         goJail = numDouble > 2;
     }
@@ -69,6 +89,11 @@ public class Dice {
     * Decides if the player can roll again, if not they can't 
     * roll again and should go to jail.
     */
+
+    /**
+     *
+     */
+
     
     public void rollAgain(){
         if(numDouble <= 2){
@@ -84,35 +109,69 @@ public class Dice {
     /*
      * The tests below are for testing purposes.
      */
+
+    /**
+     *
+     * @return
+     */
+
     
     public int getDiceVal0() {
         return diceVal0;
     }
 
+    /**
+     *
+     * @param diceVal0
+     */
     public void setDiceVal0(int diceVal0) {
         this.diceVal0 = diceVal0;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getDiceVal1() {
         return diceVal1;
     }
 
+    /**
+     *
+     * @param diceVal1
+     */
     public void setDiceVal1(int diceVal1) {
         this.diceVal1 = diceVal1;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getTotalVal() {
         return totalVal;
     }
 
+    /**
+     *
+     * @param totalVal
+     */
     public void setTotalVal(int totalVal) {
         this.totalVal = totalVal;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getNumDouble() {
         return numDouble;
     }
 
+    /**
+     *
+     * @param numDouble
+     */
     public void setNumDouble(int numDouble) {
         this.numDouble = numDouble;
     }
@@ -121,6 +180,8 @@ public class Dice {
     * For testing only
     * Same logic as roll dice method, but the value of each dice can be set manually
     * 
+     * @param x
+     * @param y
     */
     public void setRollDice(int x, int y){
         if(rollAgain){
