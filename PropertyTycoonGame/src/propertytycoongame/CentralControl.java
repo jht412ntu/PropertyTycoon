@@ -60,8 +60,11 @@ public class CentralControl {
      * 
      */
     public void nextPlayer() {
-        //Player prePlayer = players.remove();
-        //addPlayer(prePlayer);
+        if(currentPlayer < players.size()-1){
+            currentPlayer += 1;
+        }else{
+            currentPlayer = 0;
+        }
     }
 
     /**

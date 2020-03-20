@@ -18,6 +18,7 @@ public class GameGUI extends javax.swing.JFrame {
     Dice dice = new Dice();
     Token st;
     Boolean fullGame;
+    Boolean running = false;
     
     
     
@@ -55,6 +56,10 @@ public class GameGUI extends javax.swing.JFrame {
         txtRollValue = new javax.swing.JLabel();
         txtCurrPlayer = new javax.swing.JLabel();
         txtPlrBalance = new javax.swing.JLabel();
+        btnNextPlayer = new javax.swing.JToggleButton();
+        tmrTime = new javax.swing.JLabel();
+        txtAvaliable = new javax.swing.JLabel();
+        btnBuyProp = new javax.swing.JToggleButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         exitMenuItem = new javax.swing.JMenuItem();
@@ -182,6 +187,22 @@ public class GameGUI extends javax.swing.JFrame {
 
         txtPlrBalance.setText("Balance:");
 
+        btnNextPlayer.setText("Next Player");
+        btnNextPlayer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextPlayerActionPerformed(evt);
+            }
+        });
+
+        txtAvaliable.setText("Avaliable: ");
+
+        btnBuyProp.setText("Buy Property");
+        btnBuyProp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuyPropActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout gameScreenLayout = new javax.swing.GroupLayout(gameScreen);
         gameScreen.setLayout(gameScreenLayout);
         gameScreenLayout.setHorizontalGroup(
@@ -189,34 +210,51 @@ public class GameGUI extends javax.swing.JFrame {
             .addGroup(gameScreenLayout.createSequentialGroup()
                 .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(gameScreenLayout.createSequentialGroup()
-                        .addGap(82, 82, 82)
-                        .addComponent(txtCurrPlayer)
-                        .addGap(86, 86, 86))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gameScreenLayout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(67, 67, 67)
                         .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCurrPos)
-                            .addComponent(btnRollDice))
-                        .addGap(36, 36, 36)))
-                .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPlrBalance)
-                    .addComponent(txtRollValue))
-                .addContainerGap(230, Short.MAX_VALUE))
+                            .addComponent(btnNextPlayer)
+                            .addComponent(txtCurrPlayer)
+                            .addGroup(gameScreenLayout.createSequentialGroup()
+                                .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtCurrPos)
+                                    .addComponent(btnRollDice)
+                                    .addComponent(txtAvaliable))
+                                .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(gameScreenLayout.createSequentialGroup()
+                                        .addGap(36, 36, 36)
+                                        .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtPlrBalance)
+                                            .addComponent(txtRollValue)))
+                                    .addGroup(gameScreenLayout.createSequentialGroup()
+                                        .addGap(60, 60, 60)
+                                        .addComponent(btnBuyProp))))))
+                    .addGroup(gameScreenLayout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addComponent(tmrTime)))
+                .addGap(132, 132, 132))
         );
         gameScreenLayout.setVerticalGroup(
             gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(gameScreenLayout.createSequentialGroup()
-                .addGap(49, 49, 49)
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addComponent(tmrTime)
+                .addGap(18, 18, 18)
+                .addComponent(btnNextPlayer)
+                .addGap(18, 18, 18)
                 .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCurrPlayer)
                     .addComponent(txtPlrBalance))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRollDice)
                     .addComponent(txtRollValue))
                 .addGap(40, 40, 40)
                 .addComponent(txtCurrPos)
-                .addGap(73, 73, 73))
+                .addGap(18, 18, 18)
+                .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtAvaliable)
+                    .addComponent(btnBuyProp))
+                .addGap(31, 31, 31))
         );
 
         fileMenu.setMnemonic('f');
@@ -282,14 +320,20 @@ public class GameGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_startFullGameActionPerformed
 
     private void btnRollDiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRollDiceActionPerformed
-        dice.rollDice();
-        txtRollValue.setText("Roll Value: " + dice.totalVal);
-        txtCurrPlayer.setText("Player:" + game.getCurrentPlayer().getName());
+        if(dice.rollAgain){
+            dice.rollDice();
+            game.getCurrentPlayer().setLocation(game.getCurrentPlayer().getLocation() + dice.totalVal);
+            if(dice.goJail){
+                game.getCurrentPlayer().setLocation(11);
+            }
+            updateGUI();
+        }
     }//GEN-LAST:event_btnRollDiceActionPerformed
 
     private void btnStartGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartGameActionPerformed
         gui.playerSetup.setVisible(false);
         gui.gameScreen.setVisible(true);
+        updateGUI();
     }//GEN-LAST:event_btnStartGameActionPerformed
 
     private void btnAddPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPlayerActionPerformed
@@ -303,9 +347,41 @@ public class GameGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_tokenListValueChanged
 
     private void startAbridgedGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startAbridgedGameActionPerformed
-        game = new CentralControl(Integer.getInteger(txtGameLength.toString()));
+        game = new CentralControl(90);
+        gui.startScreen.setVisible(false);
+        gui.playerSetup.setVisible(true);
+        
+        //running = true;
+        //tmr();
     }//GEN-LAST:event_startAbridgedGameActionPerformed
 
+    private void btnNextPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextPlayerActionPerformed
+        game.nextPlayer();
+        dice.newPlayer();
+        updateGUI();
+    }//GEN-LAST:event_btnNextPlayerActionPerformed
+
+    private void btnBuyPropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuyPropActionPerformed
+        
+    }//GEN-LAST:event_btnBuyPropActionPerformed
+
+    private void updateGUI(){
+        gui.txtPlrBalance.setText("Balance: "+ game.getCurrentPlayer().getMoney());
+        txtRollValue.setText("Roll Value: " + dice.totalVal);
+        txtCurrPlayer.setText("Player:" + (game.getCurrentPlayer()).getName());
+        txtCurrPos.setText("Current Position: " + game.getCurrentPlayer().getLocation());
+        tmrTime.setText(game.getRemainingTime().toString());
+        //gui.txtAvaliable.setText(game.getCurrentPlayer().getLocation().avaliable);    Waiting for board class.
+        
+    }
+    
+//    private void tmr(){
+//        while(running){
+//            gui.tmrTime.setText(game.getRemainingTime().toString());
+//        }
+//    }
+    
+    
     private void createTokenList(){
         tokenList.setModel(new javax.swing.AbstractListModel<Token>() {
             Token[] ts = Token.values();
@@ -379,6 +455,8 @@ public class GameGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JToggleButton btnAddPlayer;
+    private javax.swing.JToggleButton btnBuyProp;
+    private javax.swing.JToggleButton btnNextPlayer;
     private javax.swing.JToggleButton btnRollDice;
     private javax.swing.JButton btnStartGame;
     private javax.swing.JMenuItem contentsMenuItem;
@@ -393,7 +471,9 @@ public class GameGUI extends javax.swing.JFrame {
     private javax.swing.JButton startAbridgedGame;
     private javax.swing.JButton startFullGame;
     private javax.swing.JPanel startScreen;
+    private javax.swing.JLabel tmrTime;
     private javax.swing.JList<Token> tokenList;
+    private javax.swing.JLabel txtAvaliable;
     private javax.swing.JLabel txtCurrPlayer;
     private javax.swing.JLabel txtCurrPos;
     private javax.swing.JTextField txtFplayername;
