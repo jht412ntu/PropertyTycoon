@@ -4,8 +4,9 @@ import java.sql.Time;
 import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.TimeZone;
+import propertytycoongame.Player;
 
 /**
  * Property Tycoon Game Central Control
@@ -20,10 +21,11 @@ public class CentralControl {
     private final Long duration;
     private Date endTime;
     private String mode;
-    private LinkedList<Player> players;
+    private ArrayList<Player> players;
+    private int currentPlayer = 0;
     
     public CentralControl(long duration) { // in minutes
-        players = new LinkedList<>();
+        players = new ArrayList<Player>();
         startTime = new Date(); // set start time to be current system time
         this.duration = duration * 60000; // time in milliseconds
         
@@ -41,8 +43,8 @@ public class CentralControl {
      * 
      * @param name 
      */
-    public void addPlayer(Player name) {
-        players.add(name);
+    public void addPlayer(Player p) {
+        players.add(p);
     }
 
     /**
@@ -58,8 +60,11 @@ public class CentralControl {
      * 
      */
     public void nextPlayer() {
-        Player prePlayer = players.remove();
-        addPlayer(prePlayer);
+        if(currentPlayer < players.size()-1){
+            currentPlayer += 1;
+        }else{
+            currentPlayer = 0;
+        }
     }
 
     /**
@@ -77,15 +82,15 @@ public class CentralControl {
      * @return Player
      */
     public Player getCurrentPlayer() {
-        return players.peek();
+        return players.get(currentPlayer);
     }
     
     /**
      * Get all the players
      * 
-     * @return LinkedList
+     * @return ArrayList
      */
-    public LinkedList getPlayers() {
+    public ArrayList getPlayers() {
         return players;
     }
 

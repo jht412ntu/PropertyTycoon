@@ -3,8 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/Users/Hayden/GitHub/PropertyTycoon/PropertyTycoonGame/test/tests/Boardtest.java</file>
+            <file>file:/Users/Hayden/GitHub/PropertyTycoon/PropertyTycoonGame/src/propertytycoongame/GameGUI.java</file>
+            <file>file:/Users/Hayden/GitHub/PropertyTycoon/PropertyTycoonGame/src/propertytycoongame/CentralControl.java</file>
             <file>file:/Users/Hayden/GitHub/PropertyTycoon/PropertyTycoonGame/src/propertytycoongame/Dice.java</file>
-            <file>file:/Users/Hayden/GitHub/PropertyTycoon/PropertyTycoonGame/test/tests/DiceTest.java</file>
+            <file>file:/Users/Hayden/GitHub/PropertyTycoon/PropertyTycoonGame/src/propertytycoongame/PropertyTycoonGame.java</file>
+            <file>file:/Users/Hayden/GitHub/PropertyTycoon/PropertyTycoonGame/src/propertytycoongame/Player.java</file>
+            <file>file:/Users/Hayden/GitHub/PropertyTycoon/PropertyTycoonGame/src/propertytycoongame/Board.java</file>
+            <file>file:/Users/Hayden/GitHub/PropertyTycoon/PropertyTycoonGame/test/tests/CentralControlTest.java</file>
         </group>
     </open-files>
 </project-private>
