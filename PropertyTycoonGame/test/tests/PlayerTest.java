@@ -7,13 +7,12 @@ import org.junit.Test;
 import propertytycoongame.Player;
 
 
-/** Testing class for the Dice class.
+/** Testing class for the Player class.
 *
-* @author Hayden
+* @author Mingfeng
 */
 public class PlayerTest {
-	Token player1 = Token.boot;
-	
+	Player player = new Player("Foret",Token.boot);
 	public PlayerTest() {
 		
 	}

@@ -1,5 +1,6 @@
+package propertytycoongame;
+
 import java.util.HashMap;
-import java.util.Map;
 
 public class Board {
 

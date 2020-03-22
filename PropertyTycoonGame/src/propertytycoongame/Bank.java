@@ -41,6 +41,7 @@ public class Bank {
             p.sell(player);
             player.setMoney(player.getMoney() - p.getCost());
             balance += p.getCost();
+            player.buyProperty(p);
         }
     }
     
@@ -55,6 +56,7 @@ public class Bank {
         if (p.getOwner() == player) {
             player.setMoney(player.getMoney() + p.getCost());
             balance -= p.getCost();
+            player.sellProperty(p);
         } else {
             throw new PropertyException("The player does not own this property.");
         }
@@ -107,20 +109,17 @@ public class Bank {
                 if (currentGroup.equals("Brown") || currentGroup.equals("Blue")) {
                     balance -= 50;
                     player.setMoney(player.getMoney() + 50);
-                    p.sellHouse();
                 } else if (currentGroup.equals("Purple") || currentGroup.equals("Orange")) {
                     balance -= 100;
                     player.setMoney(player.getMoney() + 100);
-                    p.sellHouse();
                 } else if (currentGroup.equals("Red") || currentGroup.equals("Yellow")) {
                     balance -= 150;
                     player.setMoney(player.getMoney() + 150);
-                    p.sellHouse();
                 } else if (currentGroup.equals("Green") || currentGroup.equals("Deep blue")) {
                     balance -= 200;
                     player.setMoney(player.getMoney() + 200);
-                    p.sellHouse();
                 }
+                p.sellHouse();
             } else {
                 throw new PropertyException("This property does not have any house.");
             }

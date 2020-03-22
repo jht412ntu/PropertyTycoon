@@ -23,6 +23,8 @@ public class CentralControl {
     private String mode;
     private ArrayList<Player> players;
     private int currentPlayer = 0;
+    public static Jail jail  = new Jail();
+    public static Dice dices = new Dice();
     
     public CentralControl(long duration) { // in minutes
         players = new ArrayList<Player>();

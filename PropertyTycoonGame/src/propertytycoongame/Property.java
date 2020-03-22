@@ -8,7 +8,7 @@ package propertytycoongame;
  * @author Haotian Jiao
  * @version 1.0.0
  */
-public class Property {
+public class Property extends Cell{
     private final String name;
     private final String group;
     private final int cost;
@@ -227,5 +227,4 @@ public class Property {
     public int getStatus() {
         return status;
     }
-    
 }
