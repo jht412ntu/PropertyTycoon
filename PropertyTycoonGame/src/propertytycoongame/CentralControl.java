@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.TimeZone;
-import propertytycoongame.Player;
 
 /**
  * Property Tycoon Game Central Control
@@ -14,7 +13,7 @@ import propertytycoongame.Player;
  * Class that provides functionality for starting and controlling the game.
  * 
  * @author Haotian Jiao
- * @version 1.0.0
+ * @version 1.0.1
  */
 public class CentralControl {
     private final Date startTime;
@@ -43,7 +42,7 @@ public class CentralControl {
     /**
      * Add player to the game
      * 
-     * @param name 
+     * @param p 
      */
     public void addPlayer(Player p) {
         players.add(p);
