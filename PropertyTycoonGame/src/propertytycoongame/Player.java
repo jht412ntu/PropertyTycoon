@@ -17,7 +17,7 @@ public class Player {
     private boolean passGo = false;
     private String name;
     private int releaseCard;
-    private ArrayList<Property> properties = new ArrayList<Property>();
+    private ArrayList<Property> ownedProperties = new ArrayList<Property>();
 
     /**
      *
@@ -120,8 +120,8 @@ public class Player {
      * @description: add a house in your houses list
      */
     public ArrayList<Property> buyProperty(Property property) {
-        properties.add(property);
-        return properties;
+        ownedProperties.add(property);
+        return ownedProperties;
     }
 
     /**
@@ -132,8 +132,8 @@ public class Player {
      * @description: remove a house in your houses list
      */
     public ArrayList<Property> sellProperty(Property property) {
-        properties.remove(property);
-        return properties;
+        ownedProperties.remove(property);
+        return ownedProperties;
     }
 
     /*
