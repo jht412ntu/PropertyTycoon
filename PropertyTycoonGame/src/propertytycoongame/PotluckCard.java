@@ -1,11 +1,5 @@
 package propertytycoongame;
 
-import java.awt.image.ImageProducer;
-import java.util.HashMap;
-import java.util.IdentityHashMap;
-import java.util.Map;
-
-import propertytycoongame.Player.Token;
 
 public class PotluckCard extends Cards {
 
@@ -65,25 +59,8 @@ public class PotluckCard extends Cards {
 	          ;//?????????????????
 	      case "Get out of jail free":
 	          player.addAreleaseCard();;;//????????????????????
-	}
-
-    public static void main(String[] args){
-    	Player player = new Player("Foret",Token.boot);
-        PotluckCard potluckCard=new PotluckCard(player);
-
-        //get random card String
-        String randomcard= potluckCard.getAcard(cards);
+    	}
     }
-
-
-      
-
-      
-    }
-
-
-
-
 }
 
 

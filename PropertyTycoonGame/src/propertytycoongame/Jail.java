@@ -2,6 +2,12 @@ package propertytycoongame;
 
 import java.util.HashMap;
 
+/** Jail
+*
+* This class is resposible for putting or releasing prisoner in Jail
+* Also pass a turn for a prisoner
+* @author Mingfeng
+*/
 public class Jail extends Cell{
 	private HashMap<Player, Integer> prisoners;
 	
@@ -47,6 +53,7 @@ public class Jail extends Cell{
 		prisoners.replace(player, oldTurn - 1);
 		return oldTurn - 1; 
 	}
+	
 	/**
 	* @author: Mingfeng
 	* @methodsName: pass

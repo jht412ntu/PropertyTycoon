@@ -24,23 +24,3 @@ public class Cards {
         player.setLocation(player.getLocation()+location);
     }
 }
-
-
-
-
-
-
-/*
-class cardstest{
-    public static void main(String[] args) {
-        cards card = new cards();
-        card.Cards = new HashMap<>();
-        card.Cards.put(1,"1111111");
-        card.Cards.put(2,"2111111");
-        card.Cards.put(3,"3111111");
-        card.Cards.put(4,"4111111");
-        System.out.println(card.Cards.size());
-        System.out.println(card.getAcard(card.Cards));
-        }
-
-    }*/

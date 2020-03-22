@@ -1,9 +1,11 @@
 package propertytycoongame;
 
+import java.util.ArrayList;
+
 /** Player 
 *
 * Enum tokens can only be choosen in a limited range
-* 
+* Players` behaviour in game eg: roll dices, buy
 * 
 * @author Mingfeng
 */
@@ -16,11 +18,10 @@ public class Player{
 	private boolean passGo = false;
     private String name;
     private int releaseCard; 
-    
+    private ArrayList<Property> properties = new ArrayList<Property>();
 	public enum Token{
 		boot,smartphone,goblet,hatstand,cat,spoon;
 	}
-	
 	
 	public Player(String name,Token token) {
 		// TODO Auto-generated constructor stub
@@ -57,8 +58,8 @@ public class Player{
     
     /**
    	* @author: Mingfeng
-   	* @methodsName: useCard
-   	* @description: use a card
+   	* @methodsName: released
+   	* @description: release yourself from jail
    	*/ 
     
     public void released() {
@@ -68,10 +69,36 @@ public class Player{
 		}
 	}
     
+    /**
+   	* @author: Mingfeng
+   	* @methodsName: addAreleaseCard
+   	* @description: add a realeasd card in your hand
+   	*/ 
     public void addAreleaseCard() {
 		releaseCard += 1;
 	}
     
+    /**
+   	* @author: Mingfeng
+     * @return 
+   	* @methodsName: buyProperty
+   	* @description: add a house in your houses list
+   	*/ 
+    public ArrayList<Property> buyProperty(Property property) {
+		properties.add(property);
+		return properties;
+	}
+    
+    /**
+   	* @author: Mingfeng
+     * @return 
+   	* @methodsName: sellProperty
+   	* @description: remove a house in your houses list
+   	*/ 
+    public ArrayList<Property> sellProperty(Property property) {
+		properties.remove(property);
+		return properties;
+	}
     
 	/*
 	 * field getter and setter
