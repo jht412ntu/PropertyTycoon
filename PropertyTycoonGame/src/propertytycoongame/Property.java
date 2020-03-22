@@ -6,7 +6,7 @@ package propertytycoongame;
  * Class that provides functionality to access and manage a property.
  * 
  * @author Haotian Jiao
- * @version 1.0.0
+ * @version 1.0.1
  */
 public class Property extends Cell{
     private final String name;
@@ -22,6 +22,7 @@ public class Property extends Cell{
     private Player owner;
     
     public Property(String property, String group, int cost, int rent, int oneHouseRent, int twoHousesRent, int threeHousesRent, int fourHousesRent, int hotelRent) {
+        super();
         name = property;
         this.group = group;
         this.cost = cost;
@@ -210,8 +211,6 @@ public class Property extends Cell{
         }
     }
     
-    
-    // 1: one house 2: two houses 3: three houses 4: four houses 5: a hotel
     /**
      * Gets the status of the property
      * 
