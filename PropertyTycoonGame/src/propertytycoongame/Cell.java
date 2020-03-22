@@ -1,20 +1,33 @@
 package propertytycoongame;
 
-
-/** Cell
-*
-* The peice of board with location
-* 
-* @author Mingfeng
-*/
+/**
+ * Cell
+ *
+ * The peice of board with location
+ *
+ * @author Mingfeng
+ */
 public class Cell {
-	private int location;
 
-	public int getLocation() {
-		return location;
-	}
+    private int position;
 
-	public void setLocation(int location) {
-		this.location = location;
-	}
+    public Cell() {
+        
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public int getPosition() {
+        return position;
+    }
+
+    /**
+     * 
+     * @param location 
+     */
+    public void setPosition(int location) {
+        this.position = location;
+    }
 }
