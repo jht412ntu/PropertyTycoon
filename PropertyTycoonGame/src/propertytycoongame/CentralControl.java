@@ -23,7 +23,7 @@ public class CentralControl {
     private String mode;
     private ArrayList<Player> players;
     private int currentPlayer = 0;
-    public static Jail jail  = new Jail();
+    public static Board board  = new Board();
     public static Dice dices = new Dice();
     
     public CentralControl(long duration) { // in minutes
