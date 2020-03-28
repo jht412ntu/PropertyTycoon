@@ -14,12 +14,13 @@ public class Player{
 	
 	private int money = 1500;
 	private int location = 0;
-	private Token token;
+	private final Token token;
 	private boolean passGo = false;
-    private String name;
+    private final String name;
     private int releaseCard; 
     private ArrayList<Property> properties = new ArrayList<Property>();
-	public enum Token{
+	
+    public enum Token{
 		boot,smartphone,goblet,hatstand,cat,spoon;
 	}
 	
