@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Class that provides functionality for banking.
  * 
  * @author Haotian Jiao
- * @version 1.0.0
+ * @version 1.0.1
  */
 public class Bank {
     private int balance;
@@ -57,6 +57,7 @@ public class Bank {
             player.setMoney(player.getMoney() + p.getCost());
             balance -= p.getCost();
             player.sellProperty(p);
+            p.changeOwner(null);
         } else {
             throw new PropertyException("The player does not own this property.");
         }
