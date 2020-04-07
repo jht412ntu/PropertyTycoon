@@ -73,23 +73,32 @@ public class Player {
      */
     public void rollDices() {
         if (CentralControl.dices.getNumDouble() > 2) {
-            CentralControl.jail.put(this);
-        } else if (CentralControl.jail.inJail(this) > 0) {
-            CentralControl.jail.pass(this);
+            CentralControl.board.getJail().put(this);
+        } else if (CentralControl.board.getJail().inJail(this) > 0) {
+            CentralControl.board.getJail().pass(this);
         } else {
             CentralControl.dices.rollDice();
             location += CentralControl.dices.getTotalVal();
+            if (location > 40) {
+				passGo = true;
+				money += 200;
+				location -= 40;
+			}
+            else if (location == 21) {
+            	CentralControl.board.getPark().collcetFine(this);
+			}
         }
     }
 
     /**
      * @author: Mingfeng
      * @methodsName: payReleased
-     * @description: pay 50$ for releasing
+     * @description: pay 50$ for releasing and add money to Park
      */
     public void payReleased() {
         money -= 50;
-        CentralControl.jail.release(this);
+        CentralControl.board.getJail().release(this);
+        CentralControl.board.getPark().addMoney(50);
     }
 
     /**
@@ -100,7 +109,7 @@ public class Player {
     public void released() {
         if (releaseCard > 0) {
             releaseCard -= 1;
-            CentralControl.jail.release(this);
+            CentralControl.board.getJail().release(this);
         }
     }
 
@@ -153,8 +162,8 @@ public class Player {
      *
      * @param money
      */
-    public void setMoney(int money) {
-        this.money = money;
+    public void addMoney(int money) {
+        this.money += money;
     }
 
     /**
@@ -188,7 +197,7 @@ public class Player {
     public void setPassGo(boolean passGo) {
         this.passGo = passGo;
     }
-
+    
     /**
      *
      * @return
