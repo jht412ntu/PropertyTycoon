@@ -14,7 +14,7 @@ import propertytycoongame.Player;
  * Class that provides functionality for starting and controlling the game.
  * 
  * @author Haotian Jiao
- * @version 1.0.0
+ * @version 1.0.1
  */
 public class CentralControl {
     private final Date startTime;
@@ -23,6 +23,7 @@ public class CentralControl {
     private String mode;
     private ArrayList<Player> players;
     private int currentPlayer = 0;
+    private ArrayList<Player> passedGoPlayers; // players that completed at least a full circuit
     public static Board board  = new Board();
     public static Dice dices = new Dice();
     
@@ -155,4 +156,19 @@ public class CentralControl {
         return hms;
     }
 
+    public void setPassedGoPlayer(Player player) {
+        for (Player p:players){
+            if (p.isPassGo() && !passedGoPlayers.contains(p)) {
+                passedGoPlayers.add(player);
+            }
+        }
+    }
+    
+    public boolean isPlayerPassedGo(Player player) {
+        if (passedGoPlayers.contains(player)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
