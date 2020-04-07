@@ -1,6 +1,7 @@
 package propertytycoongame;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Property Tycoon Game Bank
@@ -8,16 +9,19 @@ import java.util.ArrayList;
  * Class that provides functionality for banking.
  * 
  * @author Haotian Jiao
- * @version 1.0.1
+ * @version 1.0.2
  */
 public class Bank {
     private int balance;
     private ArrayList<Property> properties;
+    private int maxOffer;
+    private Player currentBidder;
     
     public Bank() {
         balance = 50000; // initial balance
         properties = new ArrayList<>();
-        
+        maxOffer = 0;
+        currentBidder = null;
     }
 
     /**
@@ -39,7 +43,7 @@ public class Bank {
     public void buyProperty(Player player, Property p) throws PropertyException {
         if (player.getMoney() >= p.getCost()) {
             p.sell(player);
-            player.setMoney(player.getMoney() - p.getCost());
+            player.addMoney(- p.getCost());
             balance += p.getCost();
             player.buyProperty(p);
         }
@@ -54,7 +58,7 @@ public class Bank {
      */
     public void sellProperty (Player player, Property p) throws PropertyException {
         if (p.getOwner() == player) {
-            player.setMoney(player.getMoney() + p.getCost());
+            player.addMoney(p.getCost());
             balance -= p.getCost();
             player.sellProperty(p);
             p.changeOwner(null);
@@ -109,16 +113,16 @@ public class Bank {
             if (p.getNumOfHouse() > 0) {
                 if (currentGroup.equals("Brown") || currentGroup.equals("Blue")) {
                     balance -= 50;
-                    player.setMoney(player.getMoney() + 50);
+                    player.addMoney(50);
                 } else if (currentGroup.equals("Purple") || currentGroup.equals("Orange")) {
                     balance -= 100;
-                    player.setMoney(player.getMoney() + 100);
+                    player.addMoney(100);
                 } else if (currentGroup.equals("Red") || currentGroup.equals("Yellow")) {
                     balance -= 150;
-                    player.setMoney(player.getMoney() + 150);
+                    player.addMoney(150);
                 } else if (currentGroup.equals("Green") || currentGroup.equals("Deep blue")) {
                     balance -= 200;
-                    player.setMoney(player.getMoney() + 200);
+                    player.addMoney(200);
                 }
                 p.sellHouse();
             } else {
@@ -174,19 +178,19 @@ public class Bank {
         if (p.ifHotelBuilded()) {
             if (currentGroup.equals("Brown") || currentGroup.equals("Blue")) {
                 balance -= 50;
-                player.setMoney(player.getMoney() + 50);
+                player.addMoney(50);
                 p.sellHotel();
             } else if (currentGroup.equals("Purple") || currentGroup.equals("Orange")) {
                 balance -= 100;
-                player.setMoney(player.getMoney() + 100);
+                player.addMoney(100);
                 p.sellHotel();
             } else if (currentGroup.equals("Red") || currentGroup.equals("Yellow")) {
                 balance -= 150;
-                player.setMoney(player.getMoney() + 150);
+                player.addMoney(150);
                 p.sellHotel();
             } else if (currentGroup.equals("Green") || currentGroup.equals("Deep blue")) {
                 balance -= 200;
-                player.setMoney(player.getMoney() + 200);
+                player.addMoney(200);
                 p.sellHotel();
             }
         } else {
@@ -224,7 +228,7 @@ public class Bank {
      */
     public void checkEnoughMoney(Player player, int amount) throws BankException {
         if (player.getMoney() >= amount) {
-            player.setMoney(player.getMoney() - amount);
+            player.addMoney(-amount);
             balance += amount;
         } else {
             throw new BankException("The player does not have enough money to build.");
@@ -238,18 +242,34 @@ public class Bank {
      * @param amount Set amount
      */
     public void distributeCash (Player player, int amount) { // 1500 initial distribution and 200 when passes GO
-        player.setMoney(player.getMoney() + amount);
+        player.addMoney(amount);
         balance -= amount;
     }
     
     /**
-     * // NEED TO BE FINISHED
+     * Accepts new offer and refuses low offer
+     * also keeps the current winner
+     * 
      * @param p A Property instance
-     * @throws PropertyException 
+     * @param player Current bidder
+     * @param offer Current offer
+     * @throws PropertyException
      */
-    public void bid(Property p) throws PropertyException {
+    public void bid(Property p, Player player, int offer) throws PropertyException {
         if (p.isAvailable()) {
-            // NEED TO BE FINISHED
+            if (currentBidder == null) {
+                if (player.getMoney() >= offer) {
+                    maxOffer = offer;
+                    currentBidder = player;
+                }
+            } else {
+                if (offer > maxOffer) {
+                    if (player.getMoney() >= offer) {
+                        maxOffer = offer;
+                        currentBidder = player;
+                    }
+                }
+            }
         } else {
             throw new PropertyException("The property has been sold.");
         }
