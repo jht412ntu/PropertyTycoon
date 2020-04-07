@@ -192,6 +192,14 @@ public class Player {
 
     /**
      *
+     * @param passGo
+     */
+    public void setPassGo(boolean passGo) {
+        this.passGo = passGo;
+    }
+    
+    /**
+     *
      * @return
      */
     public Token getToken() {
