@@ -1,11 +1,12 @@
+package propertytycoongame;
+
 import java.util.HashMap;
-import java.util.Map;
 
 public class Board {
 
-    public HashMap<Integer, Cell> theboard ;
+    public HashMap<Integer, Cell> theboard;
 
-/*
+    /*
        board=new HashMap<>();
         Cell c1 = new Cell("go", false, null, "Collect £200",null,null,0,0,null);
         Cell c2 = new Cell("Crapper Street", true, "Brown", null,60,2,0,0,null);
@@ -103,32 +104,5 @@ public class Board {
 
 
 
-*/
-
-    static class Cell {
-
-        public String property;
-        public boolean available;
-        public String group;
-        public String action;
-        public String ownedby;
-        public Integer cost;
-        public Integer housebuilded;
-        public Integer hotelbuilded;
-        public Integer rent;//unimproved
-        public Cell(String property, boolean available, String group, String action, Integer cost, Integer rent ,Integer housebuilded,Integer hotelbuilded,String ownedby) {
-            this.property = property;
-            this.available=available;
-            this.housebuilded=housebuilded;
-            this.hotelbuilded=hotelbuilded;
-            this.group=group;
-            this.action=action;
-            this.group=group;
-            this.cost=cost;
-            this.rent=rent;
-            this.ownedby=ownedby;
-        }
-
-
-
-    }}
+     */
+}
