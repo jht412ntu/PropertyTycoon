@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.TimeZone;
+import propertytycoongame.Player;
 
 /**
  * Property Tycoon Game Central Control
@@ -22,7 +23,8 @@ public class CentralControl {
     private String mode;
     private ArrayList<Player> players;
     private int currentPlayer = 0;
-    public static Jail jail  = new Jail();
+    private ArrayList<Player> passedGoPlayers; // players that completed at least a full circuit
+    public static Board board  = new Board();
     public static Dice dices = new Dice();
     
     public CentralControl(long duration) { // in minutes
@@ -42,7 +44,7 @@ public class CentralControl {
     /**
      * Add player to the game
      * 
-     * @param p 
+     * @param name 
      */
     public void addPlayer(Player p) {
         players.add(p);
@@ -154,4 +156,19 @@ public class CentralControl {
         return hms;
     }
 
+    public void setPassedGoPlayer(Player player) {
+        for (Player p:players){
+            if (p.isPassGo() && !passedGoPlayers.contains(p)) {
+                passedGoPlayers.add(player);
+            }
+        }
+    }
+    
+    public boolean isPlayerPassedGo(Player player) {
+        if (passedGoPlayers.contains(player)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
