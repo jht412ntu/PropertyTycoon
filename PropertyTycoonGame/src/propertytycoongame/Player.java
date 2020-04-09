@@ -19,40 +19,8 @@ public class Player {
     private int releaseCard;
     private ArrayList<Property> ownedProperties = new ArrayList<Property>();
 
-    /**
-     *
-     */
     public enum Token {
-
-        /**
-         *
-         */
-        boot,
-
-        /**
-         *
-         */
-        smartphone,
-
-        /**
-         *
-         */
-        goblet,
-
-        /**
-         *
-         */
-        hatstand,
-
-        /**
-         *
-         */
-        cat,
-
-        /**
-         *
-         */
-        spoon;
+        boot,smartphone,goblet,hatstand,cat,spoon;
     }
 
     /**
@@ -81,7 +49,7 @@ public class Player {
             location += CentralControl.dices.getTotalVal();
             if (location > 40) {
 				passGo = true;
-				money += 200;
+				CentralControl.board.getBank().distributeCash(this,200);
 				location -= 40;
 			}
             else if (location == 21) {
@@ -124,7 +92,7 @@ public class Player {
 
     /**
      * @author: Mingfeng
-     * @return
+     * @return	ArrayList<Property>, Properties this player owns
      * @methodsName: buyProperty
      * @description: add a house in your houses list
      */
@@ -136,7 +104,7 @@ public class Player {
     /**
      * @param property
      * @author: Mingfeng
-     * @return
+     * @return	ArrayList<Property>, Properties this player owns
      * @methodsName: sellProperty
      * @description: remove a house in your houses list
      */
@@ -151,7 +119,7 @@ public class Player {
 
     /**
      *
-     * @return
+     * @return int
      */
 
     public int getMoney() {
@@ -168,7 +136,7 @@ public class Player {
 
     /**
      *
-     * @return
+     * @return int
      */
     public int getLocation() {
         return location;
@@ -184,7 +152,7 @@ public class Player {
 
     /**
      *
-     * @return
+     * @return boolean
      */
     public boolean isPassGo() {
         return passGo;
@@ -200,7 +168,7 @@ public class Player {
     
     /**
      *
-     * @return
+     * @return Token
      */
     public Token getToken() {
         return token;
@@ -208,7 +176,7 @@ public class Player {
 
     /**
      *
-     * @return
+     * @return String
      */
     public String getName() {
         return name;
