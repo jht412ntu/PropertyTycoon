@@ -12,14 +12,16 @@ public class Property extends Cell{
     private final String name;
     private final String group;
     private final int cost;
-    private final int rent;
+    private int rent;
     private int improvedRent;
     private final int[] improvedRents;
-    private boolean available;
+    protected  boolean available;
     private boolean hotelBuilded;
     private int numOfHouse;
     private int status; // 1: one house 2: two houses 3: three houses 4: four houses 5: a hotel
     private Player owner;
+    private boolean undermortgage;//if property undermortage player cant collect money;
+
     
     public Property(String property, String group, int cost, int rent, int oneHouseRent, int twoHousesRent, int threeHousesRent, int fourHousesRent, int hotelRent) {
         super();
@@ -210,6 +212,37 @@ public class Property extends Cell{
             status = 0;
         }
     }
+
+    /*
+    *palyer need to land on a the property to mortage
+    *
+    * */
+    public void mortgage(Bank bank,Player player,Board board){
+        if (name.equals(board.theboard.get(player.getLocation())))
+        {
+            undermortgage=true;//when property under mortgage player can't collect rent
+            bank.balance-=(cost/2);
+            player.addMoney(cost/2);
+        };
+    }
+
+    /*
+    * player resell the property to bank
+    * property back to available
+    *
+    * */
+    public  void liquidate(Bank bank,Player player,Board board){
+        player.ownedProperties.remove(name);
+        bank.balance-=(cost/2);
+        player.addMoney(cost/2);
+        owner=null;
+        rent=0;
+        status=0;
+        available=true;
+        undermortgage=false;
+        numOfHouse=0;
+
+    };
     
     /**
      * Gets the status of the property
