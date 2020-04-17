@@ -21,11 +21,14 @@ public class CentralControl {
     private final Long duration;
     private Date endTime;
     private String mode;
-    private ArrayList<Player> players;
+    public ArrayList<Player> players;
     private int currentPlayer = 0;
     private ArrayList<Player> passedGoPlayers; // players that completed at least a full circuit
     public static Board board  = new Board();
     public static Dice dices = new Dice();
+    public static Bank bank = new Bank();
+    public static Jail jail = new Jail();
+    public static Park park = new Park();
     
     public CentralControl(long duration) { // in minutes
         players = new ArrayList<Player>();

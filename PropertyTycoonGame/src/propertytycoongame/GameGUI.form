@@ -264,17 +264,18 @@
                                       <Component id="btnRollDice" min="-2" max="-2" attributes="0"/>
                                       <Component id="txtAvaliable" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
-                                          <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="txtPlrBalance" min="-2" max="-2" attributes="0"/>
-                                              <Component id="txtRollValue" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
+                                          <Component id="txtPrpCost" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
                                           <Component id="btnBuyProp" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="txtRollValue" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="txtPlrBalance" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="136" max="-2" attributes="0"/>
+                                          <Component id="txtBankBalance" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -285,7 +286,7 @@
                           <Component id="tmrTime" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="132" max="-2" attributes="0"/>
+                  <EmptySpace pref="191" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -300,6 +301,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="txtCurrPlayer" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtPlrBalance" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtBankBalance" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -312,6 +314,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="txtAvaliable" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnBuyProp" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtPrpCost" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
               </Group>
@@ -370,6 +373,16 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuyPropActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="txtBankBalance">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Bank Balance"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="txtPrpCost">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Cost:"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

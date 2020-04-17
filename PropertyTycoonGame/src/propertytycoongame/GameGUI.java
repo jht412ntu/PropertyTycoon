@@ -60,6 +60,8 @@ public class GameGUI extends javax.swing.JFrame {
         tmrTime = new javax.swing.JLabel();
         txtAvaliable = new javax.swing.JLabel();
         btnBuyProp = new javax.swing.JToggleButton();
+        txtBankBalance = new javax.swing.JLabel();
+        txtPrpCost = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         exitMenuItem = new javax.swing.JMenuItem();
@@ -203,6 +205,10 @@ public class GameGUI extends javax.swing.JFrame {
             }
         });
 
+        txtBankBalance.setText("Bank Balance");
+
+        txtPrpCost.setText("Cost:");
+
         javax.swing.GroupLayout gameScreenLayout = new javax.swing.GroupLayout(gameScreen);
         gameScreen.setLayout(gameScreenLayout);
         gameScreenLayout.setHorizontalGroup(
@@ -219,19 +225,21 @@ public class GameGUI extends javax.swing.JFrame {
                                     .addComponent(txtCurrPos)
                                     .addComponent(btnRollDice)
                                     .addComponent(txtAvaliable))
+                                .addGap(36, 36, 36)
                                 .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(gameScreenLayout.createSequentialGroup()
-                                        .addGap(36, 36, 36)
-                                        .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtPlrBalance)
-                                            .addComponent(txtRollValue)))
+                                        .addComponent(txtPrpCost)
+                                        .addGap(86, 86, 86)
+                                        .addComponent(btnBuyProp))
+                                    .addComponent(txtRollValue)
                                     .addGroup(gameScreenLayout.createSequentialGroup()
-                                        .addGap(60, 60, 60)
-                                        .addComponent(btnBuyProp))))))
+                                        .addComponent(txtPlrBalance)
+                                        .addGap(136, 136, 136)
+                                        .addComponent(txtBankBalance))))))
                     .addGroup(gameScreenLayout.createSequentialGroup()
                         .addGap(94, 94, 94)
                         .addComponent(tmrTime)))
-                .addGap(132, 132, 132))
+                .addContainerGap(191, Short.MAX_VALUE))
         );
         gameScreenLayout.setVerticalGroup(
             gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,7 +251,8 @@ public class GameGUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCurrPlayer)
-                    .addComponent(txtPlrBalance))
+                    .addComponent(txtPlrBalance)
+                    .addComponent(txtBankBalance))
                 .addGap(18, 18, 18)
                 .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRollDice)
@@ -253,7 +262,8 @@ public class GameGUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtAvaliable)
-                    .addComponent(btnBuyProp))
+                    .addComponent(btnBuyProp)
+                    .addComponent(txtPrpCost))
                 .addGap(31, 31, 31))
         );
 
@@ -366,12 +376,14 @@ public class GameGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuyPropActionPerformed
 
     private void updateGUI(){
-        gui.txtPlrBalance.setText("Balance: "+ game.getCurrentPlayer().getMoney());
+        txtPlrBalance.setText("Balance: "+ game.getCurrentPlayer().getMoney());
         txtRollValue.setText("Roll Value: " + dice.totalVal);
         txtCurrPlayer.setText("Player:" + (game.getCurrentPlayer()).getName());
         txtCurrPos.setText("Current Position: " + game.getCurrentPlayer().getLocation());
         tmrTime.setText(game.getRemainingTime().toString());
-        //gui.txtAvaliable.setText(game.getCurrentPlayer().getLocation().avaliable);    Waiting for board class.
+        //txtAvaliable.setText(game.getCurrentPlayer().getLocation();    //Waiting for board class.
+        txtBankBalance.setText(Integer.toString(game.bank.getBalance()));
+        //txtPrpCost.setText(Integer.toString(game.getCurrentPlayer().getLocation())); //Waiting for board class.
         
     }
     
@@ -474,11 +486,13 @@ public class GameGUI extends javax.swing.JFrame {
     private javax.swing.JLabel tmrTime;
     private javax.swing.JList<Token> tokenList;
     private javax.swing.JLabel txtAvaliable;
+    private javax.swing.JLabel txtBankBalance;
     private javax.swing.JLabel txtCurrPlayer;
     private javax.swing.JLabel txtCurrPos;
     private javax.swing.JTextField txtFplayername;
     private javax.swing.JTextField txtGameLength;
     private javax.swing.JLabel txtPlrBalance;
+    private javax.swing.JLabel txtPrpCost;
     private javax.swing.JLabel txtRollValue;
     // End of variables declaration//GEN-END:variables
 

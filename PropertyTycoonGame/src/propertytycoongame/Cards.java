@@ -18,7 +18,9 @@ public class Cards {
 
 
     public void pay(Player player ,int amount){
-        player.setMoney(player.getMoney()+amount); }
+        player.addMoney(amount); 
+        //CentralControl.bank.setBalance(CentralControl.bank.getBalance() - amount); 
+    }
 
     public void move(Player player,int location){
         player.setLocation(player.getLocation()+location);

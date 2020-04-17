@@ -69,13 +69,13 @@ public class Player {
     /**
      * @author: Mingfeng
      * @methodsName: rollDices
-     * @description: Roll dices and check wheather play need to go to Jail
+     * @description: Roll dices and checks whether player needs to go to Jail
      */
     public void rollDices() {
         if (CentralControl.dices.getNumDouble() > 2) {
-            CentralControl.board.getJail().put(this);
-        } else if (CentralControl.board.getJail().inJail(this) > 0) {
-            CentralControl.board.getJail().pass(this);
+            CentralControl.jail.put(this);
+        } else if (CentralControl.jail.inJail(this) > 0) {
+            CentralControl.jail.pass(this);
         } else {
             CentralControl.dices.rollDice();
             location += CentralControl.dices.getTotalVal();
@@ -85,7 +85,8 @@ public class Player {
 				location -= 40;
 			}
             else if (location == 21) {
-            	CentralControl.board.getPark().collcetFine(this);
+            	//CentralControl.board.getPark().collectFine(this);
+                CentralControl.park.collectFine(this);
 			}
         }
     }
@@ -97,8 +98,9 @@ public class Player {
      */
     public void payReleased() {
         money -= 50;
-        CentralControl.board.getJail().release(this);
-        CentralControl.board.getPark().addMoney(50);
+        
+        CentralControl.jail.release(this);
+        CentralControl.park.addFine(50);
     }
 
     /**
@@ -109,14 +111,14 @@ public class Player {
     public void released() {
         if (releaseCard > 0) {
             releaseCard -= 1;
-            CentralControl.board.getJail().release(this);
+            CentralControl.jail.release(this);
         }
     }
 
     /**
      * @author: Mingfeng
      * @methodsName: addAreleaseCard
-     * @description: add a realeasd card in your hand
+     * @description: add a released card in your hand
      */
     public void addAreleaseCard() {
         releaseCard += 1;
