@@ -17,7 +17,7 @@ public class Player {
     private boolean passGo = false;
     private String name;
     private int releaseCard;
-    private ArrayList<Property> Properties = new ArrayList<Property>();
+    protected ArrayList<Property> Properties = new ArrayList<Property>();
 
     public enum Token {
         boot,smartphone,goblet,hatstand,cat,spoon;
@@ -33,7 +33,6 @@ public class Player {
         this.name = name;
         this.token = token;
     }
-
     /**
      * @author: Mingfeng
      * @methodsName: rollDices
@@ -48,13 +47,13 @@ public class Player {
             CentralControl.dices.rollDice();
             location += CentralControl.dices.getTotalVal();
             if (location > 40) {
-				passGo = true;
-				CentralControl.bank.distributeCash(this,200);
-				location -= 40;
-			}
+                passGo = true;
+                CentralControl.bank.distributeCash(this,200);
+                location -= 40;
+            }
             else if (location == 21) {
-            	CentralControl.board.getPark().collectFine(this);
-			}
+                CentralControl.board.getPark().collectFine(this);
+            }
         }
     }
 
@@ -114,7 +113,7 @@ public class Player {
     }
 
     /*
-	 * field getter and setter
+     * field getter and setter
      */
 
     /**
@@ -165,7 +164,7 @@ public class Player {
     public void setPassGo(boolean passGo) {
         this.passGo = passGo;
     }
-    
+
     /**
      *
      * @return Token
@@ -182,6 +181,27 @@ public class Player {
         return name;
     }
     public ArrayList<Property> propertiesList() {
-		return Properties;
-	}
-}
+        return Properties;
+    }
+
+
+    /**
+     *
+     *
+     */
+    public void collectrent(Property p ,Player payer){
+        if(payer.getLocation()==p.location && p.undermortgage!=true){
+            payer.addMoney(-p.getRent());
+            addMoney(p.getRent());
+
+        }
+    }
+
+    public void payrent(Property p,Player reciever){
+        if(getLocation()==p.location && p.undermortgage!=true){
+            addMoney(-p.getRent());
+            reciever.addMoney(p.getRent());
+
+
+        }
+    }}
