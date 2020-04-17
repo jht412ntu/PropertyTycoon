@@ -21,10 +21,10 @@ public class Property extends Cell{
     private int status; // 1: one house 2: two houses 3: three houses 4: four houses 5: a hotel
     private Player owner;
     private boolean undermortgage;//if property undermortage player cant collect money;
-
+    private int position;
     
-    public Property(String property, String group, int cost, int rent, int oneHouseRent, int twoHousesRent, int threeHousesRent, int fourHousesRent, int hotelRent) {
-        super();
+    public Property(int position,String property, String group, int cost, int rent, int oneHouseRent, int twoHousesRent, int threeHousesRent, int fourHousesRent, int hotelRent) {
+        super(position);
         name = property;
         this.group = group;
         this.cost = cost;
@@ -232,7 +232,7 @@ public class Property extends Cell{
     *
     * */
     public  void liquidate(Bank bank,Player player,Board board){
-        player.ownedProperties.remove(name);
+        player.propertiesList().remove(name);
         bank.balance-=(cost/2);
         player.addMoney(cost/2);
         owner=null;

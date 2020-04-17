@@ -11,8 +11,8 @@ public class Cell {
 
     private int position;
 
-    public Cell() {
-        
+    public Cell(int position) {
+        position = this.position;
     }
 
     /**
