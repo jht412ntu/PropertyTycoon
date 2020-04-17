@@ -3,3 +3,4 @@
 .DS_Store
 PropertyTycoonGame/.DS_Store
 /PropertyTycoonGame/dist/
+*.xml
