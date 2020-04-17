@@ -8,7 +8,7 @@ public class OpportunityknockCard extends Cards{
     Queue<String> shuffledqueue1 = new LinkedList<>();
 
     public OpportunityknockCard() {
-        super(0);
+        super(37);
         unshuffleList1.add("Bank pays you divided of £50");
         unshuffleList1.add("You have won a lip sync battle. Collect £100");
         unshuffleList1.add("Advance to Turing Heights");
@@ -36,38 +36,68 @@ public class OpportunityknockCard extends Cards{
         String topcard=shuffledqueue1.poll();
         switch (topcard) {
             case "Bank pays you divided of £50":
-                pay(player,50);
+                player.addMoney(50);
                 bank.addBalance(-50);
                 shuffledqueue1.offer(topcard);
             case "You have won a lip sync battle. Collect £100":
-                pay(player,100);
+                player.addMoney(100);
                 bank.addBalance(-100);
                 shuffledqueue1.offer(topcard);
             case "Advance to Turing Heights":
+                player.setLocation(40);
             case "Advance to Han Xin Gardens. If you pass GO, collect £200":
+                player.setLocation(25);
+                if (player.isPassGo()==true){
+                    player.addMoney(200);
+                }
             case "Fined £15 for speeding":
+                player.addMoney(-15);
+                CentralControl.park.addFine(15);
             case "Pay university fees of £150":
-                pay(player,150);
+                player.addMoney(150);
                 bank.addBalance(-150);
                 shuffledqueue1.offer(topcard);
             case "Take a trip to Hove station. If you pass GO collect £200":
+                player.setLocation(16);
+                if (player.isPassGo()==true){
+                    player.addMoney(200);
+                }
             case "Loan matures, collect £150":
+                bank.addBalance(-150);
+                player.addMoney(150);
             case "You are assessed for repairs, £40/house, £115/hotel":
+                 for(Property property:player.Properties){
+                     player.addMoney(-property.getNumOfHouse()*40);
+                     if(property.ifHotelBuilded()!=false);
+                     player.addMoney(-115);
+                 }
             case "Advance to GO":
                  player.setLocation(0);
                  shuffledqueue1.offer(topcard);
             case "You are assessed for repairs, £25/house, £100/hotel":
+                for(Property property:player.Properties){
+                    player.addMoney(-property.getNumOfHouse()*40);
+                    if(property.ifHotelBuilded()!=false);
+                    player.addMoney(-115);
+                }
             case "Go back 3 spaces":
-                player.setLocation(player.getLocation()-3);
+                 move(player,-3);
             case "Advance to Skywalker Drive. If you pass GO collect £200":
+                player.setLocation(12);
+                if (player.isPassGo()==true){
+                    player.addMoney(200);
+                }
             case   "Go to jail. Do not pass GO, do not collect £200":
                  player.setLocation(31);//suppose we should have a method gotojail
-                 //CentralControl.jail.put(player);
+                 CentralControl.jail.put(player);
                  shuffledqueue1.offer(topcard);
             case   "Drunk in charge of a skateboard. Fine £20":
-                //
+                  player.addMoney(-20);
+                  CentralControl.park.addFine(20);
+
             case  "Get out of jail free":
                 player.addAreleaseCard();
+
 
 
 
