@@ -4,105 +4,116 @@ import java.util.HashMap;
 
 public class Board {
 
-    public HashMap<Integer, Cell> theboard;
+    public HashMap<Integer, Cell> theboard ;
 
-    /*
-       board=new HashMap<>();
-        Cell c1 = new Cell("go", false, null, "Collect £200",null,null,0,0,null);
-        Cell c2 = new Cell("Crapper Street", true, "Brown", null,60,2,0,0,null);
-        Cell c3 = new Cell("Pot Luck", false, null, "Take card",null,null,0,0,null);
-        Cell c4 = new Cell("Gangsters Paradise", true, "Brown", null,60,4,0,0,null);
-        Cell c5 = new Cell("Income Tax", false, null, "Pay £200",null,null,0,0,null);
-        Cell c6 = new Cell("Brighton Station", true, "Station", null,200,999999999,0,0,null);/////////
-        Cell c7 = new Cell("Weeping Angel", true, "Blue", null,100,6,0,0,null);
-        Cell c8 = new Cell("Opportunity Knocks", false, null, "Take card",null,null,0,0,null);
-        Cell c9 = new Cell("Potts Avenue", true, "Blue", null,100,6,0,0,null);
-        Cell c10 = new Cell("Nardole Drive", true, "Blue", null,120,8,0,0,null);
-        Cell c11 = new Cell("Jail/Just visiting", false, null, null,null,null,0,0,null);
-        Cell c12 = new Cell("Skywalker Drive", true, "Purple", null,140,10,0,0,null);
-        Cell c13 = new Cell("Tesla Power Co", true, "Utilities", null,150,9999999,0,0,null);//////
-        Cell c14 = new Cell("Wookie Hole", true, "Purple", null,140,10,0,0,null);
-        Cell c15 = new Cell("Rey Lane", true, "Purple", null,160,12,0,0,null);
-        Cell c16 = new Cell("Hove Station", true, "Station", null,200,999999,0,0,null);////
-        Cell c17 = new Cell("Cooper Drive", true, "Orange", null,180,14,0,0,null);
-        Cell c18 = new Cell("Pot Luck", false, null, "Take card",null,null,0,0,null);
-        Cell c19 = new Cell("Wolowitz Street", true, "Orange", null,180,14,0,0,null);
-        Cell c20 = new Cell("Penny Lane", true, "Orange", null,200,16,0,0,null);
-        Cell c21 = new Cell("Free Parking", false, null, "Collect fines",null,null,0,0,null);
-        Cell c22 = new Cell("Yue Fei Square", true, "Red", null,220,18,0,0,null);
-        Cell c23 = new Cell("Opportunity Knocks", false, null, "Take card",null,null,0,0,null);
-        Cell c24 = new Cell("Mulan Rouge", true, "Red", null,220,18,0,0,null);
-        Cell c25 = new Cell("Han Xin Gardens", true, "Red", null,240,20,0,0,null);
-        Cell c26 = new Cell("Falmer Station", true, "Station", null,200,9999999,0,0,null);/////
-        Cell c27 = new Cell(" Kirk Close", true, "Yellow", null,260,22,0,0,null);
-        Cell c28 = new Cell("Picard Avenue", true, "Yellow", null,260,22,0,0,null);
-        Cell c29 = new Cell("Edison Water", true, "Utilities", null,150,999999,0,0,null);////
-        Cell c30 = new Cell("Crusher Creek", true, "Yellow", null,280,22,0,0,null);
-        Cell c31 = new Cell("Go to Jail", false, null, null,null,null,0,0,null);
-        Cell c32 = new Cell("Sirat Mews", true, "Green", null,300,26,0,0,null);
-        Cell c33 = new Cell("Ghengis Crescent", true, "Green", null,300,26,0,0,null);
-        Cell c34 = new Cell("Pot Luck", false, null, "Take card",null,null,0,0,null);
-        Cell c35 = new Cell("Ibis Close", true, "Green", null,320,28,0,0,null);
-        Cell c36 = new Cell("Lewes Station", true, "Station", null,200,99999,0,0,null);/////
-        Cell c37 = new Cell("Opportunity Knocks", false, null, "Take card",null,null,0,0,null);
-        Cell c38 = new Cell("Hawking Way", true, "Deep blue", null,350,35,0,0,null);
-        Cell c39 = new Cell("Super Tax", false, null, "Pay £100",null,null,0,0,null);
-        Cell c40 = new Cell("Turing Heights", true, "Deep blue", null,400,50,0,0,null);
-        board.put(1, c1);
-        board.put(2, c2);
-        board.put(3, c3);
-        board.put(4, c4);
-        board.put(5, c5);
-        board.put(6, c6);
-        board.put(7, c7);
-        board.put(8, c8);
-        board.put(9, c9);
-        board.put(10, c10);
-        board.put(11, c11);
-        board.put(12, c12);
-        board.put(13, c13);
-        board.put(14, c14);
-        board.put(15, c15);
-        board.put(16, c16);
-        board.put(17, c17);
-        board.put(18, c18);
-        board.put(19, c19);
-        board.put(20, c20);
-        board.put(21, c21);
-        board.put(22, c22);
-        board.put(23, c23);
-        board.put(24, c24);
-        board.put(25, c25);
-        board.put(26, c26);
-        board.put(27, c27);
-        board.put(28, c28);
-        board.put(29, c29);
-        board.put(30, c30);
-        board.put(31, c31);
-        board.put(32, c32);
-        board.put(33, c33);
-        board.put(34, c34);
-        board.put(35, c35);
-        board.put(36, c36);
-        board.put(37, c37);
-        board.put(38, c38);
-        board.put(39, c39);
-        board.put(40, c40);
+    private Park park = new Park(21);
+    private PotluckCard potluckCard = new PotluckCard(3);
+    private Jail jail = new Jail(11);
+    
+    public  Board () {
+        //theboard.put(cell.location,cell);
+        Property p1=new Property(1,"go",null,0,0,0,0,0,0,0);
+        Property p2=new Property(2,"Crapper Street","Brown",60,0,0,0,0,0,0);
+        Property p4=new Property(4,"Gangsters Paradise","Brown",60,0,0,0,0,0,0);
+        Property p5=new Property(5,"Income Tax",null,0,0,0,0,0,0,0);
+        Property p6=new Property(6,"Brighton Station","Station",200,0,0,0,0,0,0);
+        Property p7=new Property(7,"Weeping Angel","Blue",100,0,0,0,0,0,0);
+        Property p8=new Property(8,"Opportunity Knocks",null,0,0,0,0,0,0,0);
+        Property p9=new Property(9,"Potts Avenue","Blue",100,0,0,0,0,0,0);
+        Property p10=new Property(10,"Nardole Drive","Blue",120,0,0,0,0,0,0);
+        Property p11=new Property(11,"Jail/Just visiting",null,0,0,0,0,0,0,0);
+        Property p12=new Property(12,"Skywalker Drive","Purple",140,0,0,0,0,0,0);
+        Property p13=new Property(13,"Tesla Power Co","Utilities",150,0,0,0,0,0,0);
+        Property p14=new Property(14,"Wookie Hole","Purple",140,0,0,0,0,0,0);
+        Property p15=new Property(15,"Rey Lane","Purple",160,0,0,0,0,0,0);
+        Property p16=new Property(16,"Hove Station","Station",200,0,0,0,0,0,0);
+        Property p17=new Property(17,"Cooper Drive","Orange",180,0,0,0,0,0,0);
+        Property p18=new Property(18,"Pot Luck",null,0,0,0,0,0,0,0);
+        Property p19=new Property(19,"Wolowitz Street","Orange",180,0,0,0,0,0,0);
+        Property p20=new Property(20,"Penny Lane","Orange",200,0,0,0,0,0,0);
+        Property p21=new Property(21,"Free Parking",null,0,0,0,0,0,0,0);
+        Property p22=new Property(22,"Yue Fei Square","Red",220,0,0,0,0,0,0);
+        Property p23=new Property(23,"Opportunity Knocks",null,0,0,0,0,0,0,0);
+        Property p24=new Property(24,"Mulan Rouge","Red",220,0,0,0,0,0,0);
+        Property p25=new Property(25,"Han Xin Gardens","Red",240,0,0,0,0,0,0);
+        Property p26=new Property(26,"Falmer Station","Station",200,0,0,0,0,0,0);
+        Property p27=new Property(27,"Kirk Close","Yellow",260,0,0,0,0,0,0);
+        Property p28=new Property(28,"Picard Avenue","Yellow",260,0,0,0,0,0,0);
+        Property p29=new Property(29,"Edison Water","Utilities",150,0,0,0,0,0,0);
+        Property p30=new Property(30,"Crusher Creek","Yellow",280,0,0,0,0,0,0);
+        Property p31=new Property(31,"Go to Jail",null,0,0,0,0,0,0,0);
+        Property p32=new Property(32,"Sirat Mews","Green",300,0,0,0,0,0,0);
+        Property p33=new Property(33,"Ghengis Crescent","Green",300,0,0,0,0,0,0);
+        Property p34=new Property(34,"Pot Luck",null,0,0,0,0,0,0,0);
+        Property p35=new Property(35,"Ibis Close","Green",320,0,0,0,0,0,0);
+        Property p36=new Property(36,"Lewes Station","Station",200,0,0,0,0,0,0);
+        Property p37=new Property(37,"Opportunity Knocks",null,0,0,0,0,0,0,0);
+        Property p38=new Property(38,"Hawking Way","Deep blue",350,0,0,0,0,0,0);
+        Property p39=new Property(39,"Super Tax",null,0,0,0,0,0,0,0);
+        Property p40=new Property(40,"Turing Heights","Deep blue",400,0,0,0,0,0,0);
+        p1.available=false;
+        p5.available=false;
+        p8.available=false;
+        p11.available=false;
+        p18.available=false;
+        p21.available=false;
+        p23.available=false;
+        p31.available=false;
+        p34.available=false;
+        p37.available=false;
+        p39.available=false;
 
-        Cell h = board.get(12);
-        System.out.println(h.group);
-        //Brown, Blue;
-        //Purple, Orange;
-        //Red, Yellow;
-        // Green, Deep blue;'
+
+
+
+        theboard.put(1,p1);
+        theboard.put(2,p2);
+        theboard.put(3,potluckCard);
+        theboard.put(4,p4);
+        theboard.put(5,p5);
+        theboard.put(6,p6);
+        theboard.put(7,p7);
+        theboard.put(8,p8);
+        theboard.put(9,p9);
+        theboard.put(10,p10);
+        theboard.put(11,p11);
+        theboard.put(12,p12);
+        theboard.put(13,p13);
+        theboard.put(14,p14);
+        theboard.put(15,p15);
+        theboard.put(16,p16);
+        theboard.put(17,p17);
+        theboard.put(18,p18);
+        theboard.put(19,p19);
+        theboard.put(20,p20);
+        theboard.put(21,park);
+        theboard.put(22,p22);
+        theboard.put(23,p23);
+        theboard.put(24,p24);
+        theboard.put(25,p25);
+        theboard.put(26,p26);
+        theboard.put(27,p27);
+        theboard.put(28,p28);
+        theboard.put(29,p29);
+        theboard.put(30,p30);
+        theboard.put(31,jail);
+        theboard.put(32,p32);
+        theboard.put(33,p33);
+        theboard.put(34,potluckCard);
+        theboard.put(35,p35);
+        theboard.put(36,p36);
+        theboard.put(37,p37);
+        theboard.put(38,p38);
+        theboard.put(39,p39);
+        theboard.put(40,p40);
     }
-    public int buyHouse(Integer i,String h){
-        int x=0;
+    public Jail getJail() {
+    	return jail;
+	}
+    
+    public Park getPark() {
+		return park;
+	}
 
-        return x;
-    }
 
-
-
-     */
 }

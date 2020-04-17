@@ -26,6 +26,8 @@ public class CentralControl {
     private ArrayList<Player> passedGoPlayers; // players that completed at least a full circuit
     public static Board board  = new Board();
     public static Dice dices = new Dice();
+    public static Bank bank = new Bank();
+    
     
     public CentralControl(long duration) { // in minutes
         players = new ArrayList<Player>();
@@ -170,5 +172,10 @@ public class CentralControl {
         } else {
             return false;
         }
+    }
+    
+    public void leaveGame() {
+    	passedGoPlayers.remove(currentPlayer);
+    	players.remove(currentPlayer);
     }
 }

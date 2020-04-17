@@ -274,4 +274,5 @@ public class Bank {
             throw new PropertyException("The property has been sold.");
         }
     }
+    
 }

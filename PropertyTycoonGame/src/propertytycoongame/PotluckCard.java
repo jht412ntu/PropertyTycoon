@@ -9,8 +9,8 @@ public class PotluckCard extends Cards {
 	Queue<String> shuffledqueue = new LinkedList<>();
 
      //constructor
-    public PotluckCard() {
-
+    public PotluckCard(int position) {
+    		super(position);
 			unshuffleList.add("Get out of jail free");
 			unshuffleList.add("You inherit £100");
 			unshuffleList.add("You have won 2nd prize in a beauty contest, collect £20");
