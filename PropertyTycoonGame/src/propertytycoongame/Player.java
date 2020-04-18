@@ -9,7 +9,7 @@ import java.util.ArrayList;
  *
  * @author Mingfeng
  */
-public class Player {
+public class Player implements Comparable<Player>{
 
     private int money = 1500;
     private int location = 0;
@@ -17,7 +17,7 @@ public class Player {
     private boolean passGo = false;
     private String name;
     private int releaseCard;
-    private ArrayList<Property> Properties = new ArrayList<Property>();
+    protected ArrayList<Property> Properties = new ArrayList<Property>();
 
     public enum Token {
         boot,smartphone,goblet,hatstand,cat,spoon;
@@ -33,7 +33,6 @@ public class Player {
         this.name = name;
         this.token = token;
     }
-
     /**
      * @author: Mingfeng
      * @methodsName: rollDices
@@ -42,33 +41,42 @@ public class Player {
     public void rollDices() {
         if (CentralControl.dices.getNumDouble() > 2) {
             CentralControl.board.getJail().put(this);
-        } else if (CentralControl.board.getJail().inJail(this) > 0) {
+        } else if (CentralControl.board.getJail().turnInJail(this) > 0) {
             CentralControl.board.getJail().pass(this);
         } else {
             CentralControl.dices.rollDice();
             location += CentralControl.dices.getTotalVal();
             if (location > 40) {
-				passGo = true;
-				CentralControl.bank.distributeCash(this,200);
-				location -= 40;
-			}
-            else if (location == 21) {
-            	CentralControl.board.getPark().collectFine(this);
-			}
-            else if (location == 5) {
+                passGo = true;
+                CentralControl.bank.distributeCash(this,200);
+                location -= 40;
+                CentralControl.bank.addBalance(-200);
+            }
+            switch (location) {
+            //park fine collection
+			case 21:
+				CentralControl.board.getPark().collectFine(this);
+				break;
+				//income tax	
+			case 5:
 				try {
 					minusMoney(200);
 				} catch (lackMoneyException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}
-            else if (location == 31) {
+				break;
+			case 31:
 				CentralControl.board.getJail().put(this);
 				location = 11;
+				break;
+			default:
+				Property p = (Property)CentralControl.board.theboard.get(location);
+				Player owner = p.getOwner();
+				payrent(p, owner);
 			}
+           }
         }
-    }
 
     /**
      * @author: Mingfeng
@@ -124,9 +132,14 @@ public class Player {
         Properties.remove(property);
         return Properties;
     }
+    
+    public void raiseMoney() {
+    	// need GUI finished (when player cannot pay rent, the mortage button and sell button will be hignlight
+		// player is not abole to act other behaviours but leave game
+	}
 
     /*
-	 * field getter and setter
+     * field getter and setter
      */
 
     /**
@@ -188,7 +201,7 @@ public class Player {
     public void setPassGo(boolean passGo) {
         this.passGo = passGo;
     }
-    
+
     /**
      *
      * @return Token
@@ -204,7 +217,29 @@ public class Player {
     public String getName() {
         return name;
     }
+    
     public ArrayList<Property> propertiesList() {
-		return Properties;
-	}
-}
+        return Properties;
+    }
+
+
+    /**
+     *
+     *
+     */
+    public void payrent(Property p,Player reciever){
+        if(CentralControl.board.getJail().turnInJail(reciever) == 0 && p.undermortgage!=true){
+            try {
+				minusMoney(p.getRent());
+			} catch (lackMoneyException e) {
+				raiseMoney();
+				return;
+			}
+            reciever.addMoney(p.getRent());
+        }
+    }
+	@Override
+	public int compareTo(Player o) {
+		// TODO Auto-generated method stub
+		return new Integer(this.getMoney()).compareTo(o.getMoney());
+	}}

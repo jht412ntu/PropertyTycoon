@@ -15,7 +15,7 @@ public class Park extends Cell{
 		// TODO Auto-generated constructor stub
 	}
 
-	private int collectedFine = 0;
+	public int collectedFine = 0;
 	
 	/**
      * Add money to the parking area
