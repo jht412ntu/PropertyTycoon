@@ -21,7 +21,6 @@ public class Board {
         Property p8=new Property(8,"Opportunity Knocks",null,0,0,0,0,0,0,0);
         Property p9=new Property(9,"Potts Avenue","Blue",100,0,0,0,0,0,0);
         Property p10=new Property(10,"Nardole Drive","Blue",120,0,0,0,0,0,0);
-        Property p11=new Property(11,"Jail/Just visiting",null,0,0,0,0,0,0,0);
         Property p12=new Property(12,"Skywalker Drive","Purple",140,0,0,0,0,0,0);
         Property p13=new Property(13,"Tesla Power Co","Utilities",150,0,0,0,0,0,0);
         Property p14=new Property(14,"Wookie Hole","Purple",140,0,0,0,0,0,0);
@@ -54,7 +53,6 @@ public class Board {
         p1.available=false;
         p5.available=false;
         p8.available=false;
-        p11.available=false;
         p18.available=false;
         p21.available=false;
         p23.available=false;
@@ -76,7 +74,7 @@ public class Board {
         theboard.put(8,p8);
         theboard.put(9,p9);
         theboard.put(10,p10);
-        theboard.put(11,p11);
+        theboard.put(11,jail);
         theboard.put(12,p12);
         theboard.put(13,p13);
         theboard.put(14,p14);
@@ -96,7 +94,7 @@ public class Board {
         theboard.put(28,p28);
         theboard.put(29,p29);
         theboard.put(30,p30);
-        theboard.put(31,jail);
+        theboard.put(31,p31);
         theboard.put(32,p32);
         theboard.put(33,p33);
         theboard.put(34,potluckCard);

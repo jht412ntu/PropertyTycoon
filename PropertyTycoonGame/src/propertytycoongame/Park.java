@@ -17,7 +17,6 @@ public class Park extends Cell{
 
 	private int collectedFine = 0;
 	
-	
 	/**
      * Add money to the parking area
      * 

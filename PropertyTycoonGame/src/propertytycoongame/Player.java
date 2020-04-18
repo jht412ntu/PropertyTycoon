@@ -55,6 +55,18 @@ public class Player {
             else if (location == 21) {
             	CentralControl.board.getPark().collectFine(this);
 			}
+            else if (location == 5) {
+				try {
+					minusMoney(200);
+				} catch (lackMoneyException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+            else if (location == 31) {
+				CentralControl.board.getJail().put(this);
+				location = 11;
+			}
         }
     }
 
@@ -127,13 +139,24 @@ public class Player {
     }
 
     /**
-     *
      * @param money
+     * @description: add money to balance
      */
     public void addMoney(int money) {
-        this.money += money;
+        this.money = money + this.money;
     }
-
+    
+    /**
+    *
+    * @param money
+    * @description: minus money from balance
+    */
+    public void minusMoney(int money) throws lackMoneyException{
+   	if (this.money - money < 0) {
+			throw new lackMoneyException("lack money");
+		}
+       this.money = this.money - money;
+    }
     /**
      *
      * @return int
