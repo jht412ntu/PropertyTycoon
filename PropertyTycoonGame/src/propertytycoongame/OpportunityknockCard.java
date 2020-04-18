@@ -99,14 +99,6 @@ public class OpportunityknockCard extends Cards{
                 player.addAreleaseCard();
 
 
-
-
-
-
-
-
-
-
         }        }
 
 
