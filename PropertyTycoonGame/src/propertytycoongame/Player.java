@@ -112,6 +112,24 @@ public class Player {
         return Properties;
     }
 
+    /**
+     * Trading mechanic: selling properties between players
+     * used by the GUI when players defined an agreed price for a property
+     * 
+     * author: Haotian Jiao
+     * date: 20/04/2020
+     * 
+     * @param player The instance of Player
+     * @param p The instance of Property
+     * @param price A defined price(agreed between players)
+     */
+    public void sellPropertyToPlayer(Player player, Property p, int price) {
+        sellProperty(p);
+        player.buyProperty(p);
+        player.addMoney(-price);
+        addMoney(price);
+    }
+    
     /*
      * field getter and setter
      */
