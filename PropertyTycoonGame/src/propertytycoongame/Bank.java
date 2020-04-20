@@ -15,7 +15,9 @@ public class Bank {
     private int balance;
     private ArrayList<Property> properties;
     private int maxOffer;
+    private int sameMaxOffer;
     private Player currentBidder;
+    private Player sameOfferBidder;
 
     public Bank() {
         balance = 50000; // initial balance
@@ -268,15 +270,20 @@ public class Bank {
         if (p.isAvailable()) {
             if (currentBidder == null) {
                 if (player.getMoney() >= offer) {
-                    maxOffer = offer;
+                    maxOffer = offer; 
                     currentBidder = player;
                 }
             } else {
                 if (offer > maxOffer) {
                     if (player.getMoney() >= offer) {
                         maxOffer = offer;
+                        sameMaxOffer = 0;
                         currentBidder = player;
+                        sameOfferBidder = null;
                     }
+                } else if (offer == maxOffer) {
+                    sameMaxOffer = offer;
+                    sameOfferBidder = player;
                 }
             }
         } else {
