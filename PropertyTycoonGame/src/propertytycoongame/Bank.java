@@ -54,12 +54,7 @@ public class Bank {
     public void buyProperty(Player player, Property p) throws PropertyException {
         if (player.getMoney() >= p.getCost()) {
             p.sell(player);
-            try {
-				player.minusMoney(p.getCost());
-			} catch (lackMoneyException e) {
-				// TODO Auto-generated catch block
-				System.out.println("Purchase failed");
-			}
+            player.addMoney(- p.getCost());
             balance += p.getCost();
             player.buyProperty(p);
         }
