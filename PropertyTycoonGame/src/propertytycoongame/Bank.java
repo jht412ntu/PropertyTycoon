@@ -47,8 +47,9 @@ public class Bank {
      *
      * @return
      */
-    public int getBalance(){return balance;}
-    public void addBalance(int money){balance+=money;}
+    public void addBalance(int money){
+        balance+=money;
+    }
 
 
 
