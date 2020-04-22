@@ -63,7 +63,7 @@ public class Player implements Comparable<Player>{
 					minusMoney(200);
 				} catch (lackMoneyException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					raiseMoney();
 				}
 				break;
 			case 31:
@@ -73,20 +73,26 @@ public class Player implements Comparable<Player>{
 			default:
 				Property p = (Property)CentralControl.board.theboard.get(location);
 				Player owner = p.getOwner();
-				payrent(p, owner);
+				payRent(p, owner);
 			}
            }
         }
 
     /**
      * @author: Mingfeng
+     * @throws lackMoneyException 
      * @methodsName: payReleased
      * @description: pay 50$ for releasing and add money to Park
      */
-    public void payReleased() {
-        money -= 50;
+    public boolean payReleased() throws lackMoneyException {
+    	if (money > 50) {
+    		minusMoney(50);
+		}
+    	else 
+    		throw new lackMoneyException("Operation failed without enough money");
         CentralControl.board.getJail().release(this);
         CentralControl.board.getPark().addFine(50);
+        return true;
     }
 
     /**
@@ -94,11 +100,13 @@ public class Player implements Comparable<Player>{
      * @methodsName: released
      * @description: release yourself from jail
      */
-    public void released() {
+    public boolean released() {
         if (releaseCard > 0) {
             releaseCard -= 1;
             CentralControl.board.getJail().release(this);
+            return true;
         }
+        return false;
     }
 
     /**
@@ -132,11 +140,38 @@ public class Player implements Comparable<Player>{
         Properties.remove(property);
         return Properties;
     }
-    
-    public void raiseMoney() {
+    /**
+     * @author: Mingfeng
+     * @return	boolean wheather player raises money successes
+     * @methodsName: raiseMoney
+     * @description: sell something for raising money
+     */
+    public boolean raiseMoney() {
     	// need GUI finished (when player cannot pay rent, the mortage button and sell button will be hignlight
 		// player is not abole to act other behaviours but leave game
+    	boolean enough = false;
+    	return enough;
 	}
+    
+
+    /**
+     *
+     *
+     */
+    public void payRent(Property p,Player reciever){
+        if(CentralControl.board.getJail().turnInJail(reciever) == 0 && p.undermortgage!=true){
+            try {
+				minusMoney(p.getRent());
+			} catch (lackMoneyException e) {
+				if (raiseMoney()) {
+					
+				}
+				else 
+					return;
+			}
+            reciever.addMoney(p.getRent());
+        }
+    }
 
     /*
      * field getter and setter
@@ -222,24 +257,10 @@ public class Player implements Comparable<Player>{
         return Properties;
     }
 
-
-    /**
-     *
-     *
-     */
-    public void payrent(Property p,Player reciever){
-        if(CentralControl.board.getJail().turnInJail(reciever) == 0 && p.undermortgage!=true){
-            try {
-				minusMoney(p.getRent());
-			} catch (lackMoneyException e) {
-				raiseMoney();
-				return;
-			}
-            reciever.addMoney(p.getRent());
-        }
-    }
 	@Override
 	public int compareTo(Player o) {
 		// TODO Auto-generated method stub
-		return new Integer(this.getMoney()).compareTo(o.getMoney());
+		if(this.getMoney() > o.getMoney())
+			return 1;
+		return 0;
 	}}
