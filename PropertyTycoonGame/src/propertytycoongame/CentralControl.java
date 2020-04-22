@@ -21,15 +21,14 @@ public class CentralControl {
     private final Long duration;
     private Date endTime;
     private String mode;
+    private ArrayList<Player> rank = new ArrayList<Player>();
     protected static ArrayList<Player> players;
     private int currentPlayer = 0;
     private ArrayList<Player> passedGoPlayers; // players that completed at least a full circuit
     public static Board board  = new Board();
     public static Dice dices = new Dice();
     public static Bank bank = new Bank();
-    public static Jail jail =new Jail(11);
-    public static Park park =new Park(21);
-
+    
 
     public CentralControl(long duration) { // in minutes
         players = new ArrayList<Player>();
@@ -175,9 +174,25 @@ public class CentralControl {
             return false;
         }
     }
-
+    
+    /**
+     * Remove a player from the game
+     *
+     */
     public void leaveGame() {
         passedGoPlayers.remove(currentPlayer);
-        players.remove(currentPlayer);
+        players.remove(getCurrentPlayer());
+        rank.add(getCurrentPlayer());
     }
+    
+    /**
+     * Rank players when ends the game
+     * @return ArrayList<Player>
+     */
+    public ArrayList<Player> endGame() {
+    	ArrayList<Player> rankPlayers = (ArrayList<Player>) players.clone();
+    	Collections.sort(rankPlayers);
+		rank.addAll(rankPlayers);
+		return rank;
+	}
 }
