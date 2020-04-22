@@ -17,42 +17,10 @@ public class Player {
     private boolean passGo = false;
     private String name;
     private int releaseCard;
-    private ArrayList<Property> ownedProperties = new ArrayList<Property>();
+    protected ArrayList<Property> Properties = new ArrayList<Property>();
 
-    /**
-     *
-     */
     public enum Token {
-
-        /**
-         *
-         */
-        boot,
-
-        /**
-         *
-         */
-        smartphone,
-
-        /**
-         *
-         */
-        goblet,
-
-        /**
-         *
-         */
-        hatstand,
-
-        /**
-         *
-         */
-        cat,
-
-        /**
-         *
-         */
-        spoon;
+        boot,smartphone,goblet,hatstand,cat,spoon;
     }
 
     /**
@@ -65,7 +33,6 @@ public class Player {
         this.name = name;
         this.token = token;
     }
-
     /**
      * @author: Mingfeng
      * @methodsName: rollDices
@@ -80,14 +47,13 @@ public class Player {
             CentralControl.dices.rollDice();
             location += CentralControl.dices.getTotalVal();
             if (location > 40) {
-				passGo = true;
-				money += 200;
-				location -= 40;
-			}
+                passGo = true;
+                CentralControl.bank.distributeCash(this,200);
+                location -= 40;
+            }
             else if (location == 21) {
-            	//CentralControl.board.getPark().collectFine(this);
-                CentralControl.park.collectFine(this);
-			}
+                CentralControl.board.getPark().collectFine(this);
+            }
         }
     }
 
@@ -98,9 +64,8 @@ public class Player {
      */
     public void payReleased() {
         money -= 50;
-        
-        CentralControl.jail.release(this);
-        CentralControl.park.addFine(50);
+        CentralControl.board.getJail().release(this);
+        CentralControl.board.getPark().addFine(50);
     }
 
     /**
@@ -126,34 +91,52 @@ public class Player {
 
     /**
      * @author: Mingfeng
-     * @return
+     * @return	ArrayList<Property>, Properties this player owns
      * @methodsName: buyProperty
      * @description: add a house in your houses list
      */
     public ArrayList<Property> buyProperty(Property property) {
-        ownedProperties.add(property);
-        return ownedProperties;
+        Properties.add(property);
+        return Properties;
     }
 
     /**
      * @param property
      * @author: Mingfeng
-     * @return
+     * @return	ArrayList<Property>, Properties this player owns
      * @methodsName: sellProperty
      * @description: remove a house in your houses list
      */
     public ArrayList<Property> sellProperty(Property property) {
-        ownedProperties.remove(property);
-        return ownedProperties;
+        Properties.remove(property);
+        return Properties;
     }
 
+    /**
+     * Trading mechanic: selling properties between players
+     * used by the GUI when players defined an agreed price for a property
+     * 
+     * author: Haotian Jiao
+     * date: 20/04/2020
+     * 
+     * @param player The instance of Player
+     * @param p The instance of Property
+     * @param price A defined price(agreed between players)
+     */
+    public void sellPropertyToPlayer(Player player, Property p, int price) {
+        sellProperty(p);
+        player.buyProperty(p);
+        player.addMoney(-price);
+        addMoney(price);
+    }
+    
     /*
-	 * field getter and setter
+     * field getter and setter
      */
 
     /**
      *
-     * @return
+     * @return int
      */
 
     public int getMoney() {
@@ -170,7 +153,7 @@ public class Player {
 
     /**
      *
-     * @return
+     * @return int
      */
     public int getLocation() {
         return location;
@@ -186,7 +169,7 @@ public class Player {
 
     /**
      *
-     * @return
+     * @return boolean
      */
     public boolean isPassGo() {
         return passGo;
@@ -199,10 +182,10 @@ public class Player {
     public void setPassGo(boolean passGo) {
         this.passGo = passGo;
     }
-    
+
     /**
      *
-     * @return
+     * @return Token
      */
     public Token getToken() {
         return token;
@@ -210,10 +193,33 @@ public class Player {
 
     /**
      *
-     * @return
+     * @return String
      */
     public String getName() {
         return name;
     }
+    public ArrayList<Property> propertiesList() {
+        return Properties;
+    }
 
-}
+
+    /**
+     *
+     *
+     */
+    public void collectrent(Property p ,Player payer){
+        if(payer.getLocation()==p.location && p.undermortgage!=true){
+            payer.addMoney(-p.getRent());
+            addMoney(p.getRent());
+
+        }
+    }
+
+    public void payrent(Property p,Player reciever){
+        if(getLocation()==p.location && p.undermortgage!=true){
+            addMoney(-p.getRent());
+            reciever.addMoney(p.getRent());
+
+
+        }
+    }}

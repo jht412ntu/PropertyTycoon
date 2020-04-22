@@ -9,8 +9,13 @@ package propertytycoongame;
  *
  * @author Mingfeng
  */
-public class Park {
-	private int collectedFine = 0;
+public class Park extends Cell{
+	public Park(int position) {
+		super(position);
+		// TODO Auto-generated constructor stub
+	}
+
+	public int collectedFine = 0;
 	
 	
 	/**

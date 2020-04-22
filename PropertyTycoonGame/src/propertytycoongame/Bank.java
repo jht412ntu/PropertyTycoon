@@ -5,9 +5,9 @@ import java.util.Map;
 
 /**
  * Property Tycoon Game Bank
- * 
+ *
  * Class that provides functionality for banking.
- * 
+ *
  * @author Haotian Jiao
  * @version 1.0.2
  */
@@ -23,8 +23,10 @@ public class Bank {
     }
     private ArrayList<Property> properties;
     private int maxOffer;
+    private int sameMaxOffer;
     private Player currentBidder;
-    
+    private Player sameOfferBidder;
+
     public Bank() {
         balance = 50000; // initial balance
         properties = new ArrayList<>();
@@ -34,16 +36,25 @@ public class Bank {
 
     /**
      * Adds property to the property list
-     * 
+     *
      * @param p A Property instance
      */
     public void addProperty (Property p) {
         properties.add(p);
     }
-    
+
+    /**
+     *
+     * @return
+     */
+    public int getBalance(){return balance;}
+    public void addBalance(int money){balance+=money;}
+
+
+
     /**
      * Sells a property when the property is available and player has enough money
-     * 
+     *
      * @param player A Player instance
      * @param p A Property instance
      * @throws PropertyException Throwing when a property is not available
@@ -56,10 +67,10 @@ public class Bank {
             player.buyProperty(p);
         }
     }
-    
+
     /**
      * Buys a property when a player want to sell it
-     * 
+     *
      * @param player A Player instance
      * @param p A Property instance
      * @throws PropertyException Throwing when a player is not the owner
@@ -74,10 +85,10 @@ public class Bank {
             throw new PropertyException("The player does not own this property.");
         }
     }
-    
+
     /**
      * Builds a house when a player owned all the properties in a group and has enough money
-     * 
+     *
      * @param player A Player instance
      * @param p A Property instance
      * @throws PropertyException Throwing when "maximum houses exceeded", "player does not owned all properties in a group" and "the player is not the owner"
@@ -110,7 +121,7 @@ public class Bank {
 
     /**
      * Buys a house when a player has one.
-     * 
+     *
      * @param player A Player instance
      * @param p A Property instance
      * @throws PropertyException Throwing when "a property has none house" and "they are not the owner"
@@ -140,10 +151,10 @@ public class Bank {
             throw new PropertyException("The player does not owned this property.");
         }
     }
-    
+
     /**
      * Builds a hotel when a property has 4 houses and the player has enough money
-     * 
+     *
      * @param player A Player instance
      * @param p A Property instance
      * @throws PropertyException Throwing when "hotel already exists" and "not has four houses"
@@ -173,10 +184,10 @@ public class Bank {
             }
         }
     }
-    
+
     /**
      * Buys a hotel when a player has one
-     * 
+     *
      * @param player A Player instance
      * @param p A Property instance
      * @throws PropertyException Throwing when there isn't a hotel on the property
@@ -205,10 +216,10 @@ public class Bank {
             throw new PropertyException("The property does not have a hotel.");
         }
     }
-    
+
     /**
      * Checks if a player can build house(owned all properties in a group)
-     * 
+     *
      * @param player A Player instance
      * @param p A Property instance
      * @return if the player can build house or not
@@ -229,7 +240,7 @@ public class Bank {
 
     /**
      * Checks if a player has enough amount of money
-     * 
+     *
      * @param player A Player instance
      * @param amount Set amount
      * @throws BankException Throwing when the player does not have enough money
@@ -242,10 +253,10 @@ public class Bank {
             throw new BankException("The player does not have enough money to build.");
         }
     }
-    
+
     /**
      * Distributes amount of cash to certain player
-     * 
+     *
      * @param player A Player instance
      * @param amount Set amount
      */
@@ -253,11 +264,11 @@ public class Bank {
         player.addMoney(amount);
         balance -= amount;
     }
-    
+
     /**
      * Accepts new offer and refuses low offer
      * also keeps the current winner
-     * 
+     *
      * @param p A Property instance
      * @param player Current bidder
      * @param offer Current offer
@@ -267,15 +278,20 @@ public class Bank {
         if (p.isAvailable()) {
             if (currentBidder == null) {
                 if (player.getMoney() >= offer) {
-                    maxOffer = offer;
+                    maxOffer = offer; 
                     currentBidder = player;
                 }
             } else {
                 if (offer > maxOffer) {
                     if (player.getMoney() >= offer) {
                         maxOffer = offer;
+                        sameMaxOffer = 0;
                         currentBidder = player;
+                        sameOfferBidder = null;
                     }
+                } else if (offer == maxOffer) {
+                    sameMaxOffer = offer;
+                    sameOfferBidder = player;
                 }
             }
         } else {

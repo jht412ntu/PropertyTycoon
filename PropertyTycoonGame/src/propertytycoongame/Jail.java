@@ -15,8 +15,10 @@ public class Jail extends Cell{
 	/**
 	* @description: constructor
 	*/
-	public Jail() {
+	public Jail(int position) {
+		super(position);
 		prisoners = new HashMap<>();
+		
 	}
 	
 	/**
