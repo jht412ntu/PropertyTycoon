@@ -9,7 +9,7 @@ import java.util.ArrayList;
  *
  * @author Mingfeng
  */
-public class Player implements Comparable<Player>{
+public class Player {
 
     private int money = 1500;
     private int location = 0;
@@ -41,7 +41,7 @@ public class Player implements Comparable<Player>{
     public void rollDices() {
         if (CentralControl.dices.getNumDouble() > 2) {
             CentralControl.board.getJail().put(this);
-        } else if (CentralControl.board.getJail().turnInJail(this) > 0) {
+        } else if (CentralControl.board.getJail().inJail(this) > 0) {
             CentralControl.board.getJail().pass(this);
         } else {
             CentralControl.dices.rollDice();
@@ -50,33 +50,12 @@ public class Player implements Comparable<Player>{
                 passGo = true;
                 CentralControl.bank.distributeCash(this,200);
                 location -= 40;
-                CentralControl.bank.addBalance(-200);
             }
-            switch (location) {
-            //park fine collection
-			case 21:
-				CentralControl.board.getPark().collectFine(this);
-				break;
-				//income tax	
-			case 5:
-				try {
-					minusMoney(200);
-				} catch (lackMoneyException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				break;
-			case 31:
-				CentralControl.board.getJail().put(this);
-				location = 11;
-				break;
-			default:
-				Property p = (Property)CentralControl.board.theboard.get(location);
-				Player owner = p.getOwner();
-				payrent(p, owner);
-			}
-           }
+            else if (location == 21) {
+                CentralControl.board.getPark().collectFine(this);
+            }
         }
+    }
 
     /**
      * @author: Mingfeng
@@ -132,11 +111,6 @@ public class Player implements Comparable<Player>{
         Properties.remove(property);
         return Properties;
     }
-    
-    public void raiseMoney() {
-    	// need GUI finished (when player cannot pay rent, the mortage button and sell button will be hignlight
-		// player is not abole to act other behaviours but leave game
-	}
 
     /**
      * Trading mechanic: selling properties between players
@@ -170,24 +144,13 @@ public class Player implements Comparable<Player>{
     }
 
     /**
+     *
      * @param money
-     * @description: add money to balance
      */
     public void addMoney(int money) {
-        this.money = money + this.money;
+        this.money += money;
     }
-    
-    /**
-    *
-    * @param money
-    * @description: minus money from balance
-    */
-    public void minusMoney(int money) throws lackMoneyException{
-   	if (this.money - money < 0) {
-			throw new lackMoneyException("lack money");
-		}
-       this.money = this.money - money;
-    }
+
     /**
      *
      * @return int
@@ -235,7 +198,6 @@ public class Player implements Comparable<Player>{
     public String getName() {
         return name;
     }
-    
     public ArrayList<Property> propertiesList() {
         return Properties;
     }
@@ -245,19 +207,19 @@ public class Player implements Comparable<Player>{
      *
      *
      */
-    public void payrent(Property p,Player reciever){
-        if(CentralControl.board.getJail().turnInJail(reciever) == 0 && p.undermortgage!=true){
-            try {
-				minusMoney(p.getRent());
-			} catch (lackMoneyException e) {
-				raiseMoney();
-				return;
-			}
-            reciever.addMoney(p.getRent());
+    public void collectrent(Property p ,Player payer){
+        if(payer.getLocation()==p.location && p.undermortgage!=true){
+            payer.addMoney(-p.getRent());
+            addMoney(p.getRent());
+
         }
     }
-	@Override
-	public int compareTo(Player o) {
-		// TODO Auto-generated method stub
-		return new Integer(this.getMoney()).compareTo(o.getMoney());
-	}}
+
+    public void payrent(Property p,Player reciever){
+        if(getLocation()==p.location && p.undermortgage!=true){
+            addMoney(-p.getRent());
+            reciever.addMoney(p.getRent());
+
+
+        }
+    }}
