@@ -3,7 +3,7 @@ package propertytycoongame;
 /**
  * Cell
  *
- * The peice of board with location
+ * The piece of board with location
  *
  * @author Mingfeng
  */

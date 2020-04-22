@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Board {
 
-    public HashMap<Integer, Cell> theboard ;
+    public HashMap<Integer, Cell> theboard = new HashMap<>();
 
     private Park park = new Park(21);
     private PotluckCard potluckCard = new PotluckCard(3);
@@ -116,6 +116,10 @@ public class Board {
     public Park getPark() {
 		return park;
 	}
+    
+    public Cell getProperty(int loc){
+        return theboard.get(loc);
+    }
 
 
 }
