@@ -76,7 +76,6 @@ public class Bank {
         } else {
             throw new PropertyException("The player does not own this property.");
         }
-        player.sellProperty(p);
     }
 
     /**
@@ -218,11 +217,17 @@ public class Bank {
      * @return if the player can build house or not
      */
     public boolean checkPermission (Player player, Property p) {
-        for (Property pp:properties)
-            if (pp.getGroup().equals(p.getGroup())) 
-                if (pp.getOwner() != player) 
-                    return false;
-        return true;
+        boolean permitted = false;
+        for (Property pp:properties){
+            if (pp.getGroup().equals(p.getGroup())) {
+                if (pp.getOwner() == player) {
+                    permitted = true;
+                } else {
+                    permitted = false;
+                }
+            }
+        }
+        return permitted;
     }
 
     /**

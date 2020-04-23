@@ -8,7 +8,7 @@ package propertytycoongame;
  * @author Haotian Jiao
  * @version 1.0.1
  */
-public class Property extends Cell implements Comparable<Property>{
+public class Property extends Cell{
     protected final String name;
     private final String group;
     private final int cost;
@@ -262,18 +262,4 @@ public class Property extends Cell implements Comparable<Property>{
     public int getStatus() {
         return status;
     }
-
-	@Override
-	public int compareTo(Property o) {
-		// TODO Auto-generated method stub
-		int p1 = this.numOfHouse;
-		int p2 = o.getNumOfHouse();
-		if(this.ifHotelBuilded())
-			p1 += 5;
-		if(o.ifHotelBuilded())
-			p2 += 5;
-		if(this.numOfHouse > o.getNumOfHouse())
-			return 1;
-		return 0;
-	}
 }
