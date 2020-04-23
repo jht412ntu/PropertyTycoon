@@ -2,10 +2,8 @@ package propertytycoongame;
 
 import java.sql.Time;
 import java.time.ZoneId;
-import java.util.Collections;
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.TimeZone;
+import java.util.*;
+
 import propertytycoongame.Player;
 
 /**
@@ -61,6 +59,40 @@ public class CentralControl {
     public void initPlayers() {
         Collections.shuffle(players);
     }
+
+    public void firstroll(){
+        HashMap<Player, Integer> map = new HashMap<>();
+        ArrayList<Player> newplayers = new ArrayList<>();
+        for( Player player: players){
+            dices.rollDice();
+            player.totalvalue=dices.getTotalVal();  //each player's points
+            map.put(player,player.totalvalue);//put it in map
+        }
+        List<Map.Entry<Player, Integer>> orderedlist = new ArrayList<>(map.entrySet()); //trans to a list
+        Collections.sort(orderedlist, new Comparator<Map.Entry<Player, Integer>>() {
+            public int compare(Map.Entry<Player, Integer> o1, Map.Entry<Player, Integer> o2) {
+                return (o2.getValue() - o1.getValue()); }});
+           for(int i=0;i<orderedlist.size();i++){
+               newplayers.add(orderedlist.get(i).getKey());
+           }
+           players=newplayers;
+           for (int j=0;j>players.size();j++){
+               if(players.get(j).totalvalue == players.get(j + 1).totalvalue){
+                   dices.rollDice();
+                   players.get(j).totalvalue=dices.getTotalVal();
+                   dices.rollDice();
+                   players.get(j+1).totalvalue=dices.getTotalVal();
+                   if(players.get(j).totalvalue < players.get(j + 1).totalvalue){
+                       Collections.swap(players,j,j+1);
+                   }
+               }
+           }
+
+
+
+
+    }
+
 
     /**
      * Set the current player to the next
