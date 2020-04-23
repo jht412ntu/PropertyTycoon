@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Board {
 
-    public HashMap<Integer, Cell> theboard ;
+    public HashMap<Integer, Cell> theboard = new HashMap();
 
     private Park park = new Park(21);
     private Jail jail = new Jail(11);
