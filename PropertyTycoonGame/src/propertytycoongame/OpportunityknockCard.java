@@ -96,7 +96,7 @@ public class OpportunityknockCard extends Cards{
                   CentralControl.park.addFine(20);
 
             case  "Get out of jail free":
-                player.addAreleaseCard();
+                player.addReleaseCard();
 
 
         }        }

@@ -14,7 +14,7 @@ public class Cards extends Cell{
     protected HashMap<Integer, String> cards = new HashMap<>();
 
 
-    public String getAcard(){
+    public String getCard(){
         Random random = new Random();
         int index = random.nextInt(cards.size());
         return cards.get(index);

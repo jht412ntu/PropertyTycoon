@@ -38,7 +38,7 @@ public class Jail extends Cell{
 	* @param:  Player
 	* @return:  Int
 	*/
-	public int inJail(Player player) {
+	public int turnInJail(Player player) {
 		return prisoners.get(player);
 	}
 	

@@ -22,11 +22,11 @@ public class CentralControl {
     protected static ArrayList<Player> players;
     private int currentPlayer = 0;
     private ArrayList<Player> passedGoPlayers; // players that completed at least a full circuit
-    public static Board board  = new Board();
+    public static Board board = new Board();
     public static Dice dices = new Dice();
     public static Bank bank = new Bank();
-    public static Jail jail =new Jail(11);
-    public static Park park =new Park(21);
+    public static Jail jail = new Jail(11);
+    public static Park park = new Park(21);
 
 
     public CentralControl(long duration) { // in minutes
@@ -54,7 +54,6 @@ public class CentralControl {
 
     /**
      * Shuffling all the players
-     *
      */
     public void initPlayers() {
         Collections.shuffle(players);
@@ -96,19 +95,18 @@ public class CentralControl {
 
     /**
      * Set the current player to the next
-     *
      */
     public void nextPlayer() {
-        if(currentPlayer < players.size()-1){
+        if (currentPlayer < players.size() - 1) {
             currentPlayer += 1;
-        }else{
+        } else {
             currentPlayer = 0;
         }
     }
 
     /**
      * Set the final end time
-     *
+     * <p>
      * Uses only when the game is playing in normal mode
      */
     public void setEndTime() {
@@ -129,7 +127,7 @@ public class CentralControl {
      *
      * @return ArrayList
      */
-    public ArrayList getPlayers() {
+    public ArrayList<Player> getPlayers() {
         return players;
     }
 
@@ -193,7 +191,7 @@ public class CentralControl {
     }
 
     public void setPassedGoPlayer(Player player) {
-        for (Player p:players){
+        for (Player p : players) {
             if (p.isPassGo() && !passedGoPlayers.contains(p)) {
                 passedGoPlayers.add(player);
             }
@@ -211,5 +209,38 @@ public class CentralControl {
     public void leaveGame() {
         passedGoPlayers.remove(currentPlayer);
         players.remove(currentPlayer);
+    }
+
+    public void firstroll() {
+        HashMap<Player, Integer> map = new HashMap<>();
+        ArrayList<Player> newplayers = new ArrayList<>();
+        for (Player player : players) {
+            dices.rollDice();
+            player.totalvalue = dices.getTotalVal();  //each player's points
+            map.put(player, player.totalvalue);//put it in map
+        }
+        List<Map.Entry<Player, Integer>> orderedlist = new ArrayList<>(map.entrySet()); //trans to a list
+        Collections.sort(orderedlist, new Comparator<Map.Entry<Player, Integer>>() {
+            public int compare(Map.Entry<Player, Integer> o1, Map.Entry<Player, Integer> o2) {
+                return (o2.getValue() - o1.getValue());
+            }
+        });
+        for (int i = 0; i < orderedlist.size(); i++) {
+            newplayers.add(orderedlist.get(i).getKey());
+        }
+        players = newplayers;
+        for (int j = 0; j > players.size(); j++) {
+            if (players.get(j).totalvalue == players.get(j + 1).totalvalue) {
+                dices.rollDice();
+                players.get(j).totalvalue = dices.getTotalVal();
+                dices.rollDice();
+                players.get(j + 1).totalvalue = dices.getTotalVal();
+                if (players.get(j).totalvalue < players.get(j + 1).totalvalue) {
+                    Collections.swap(players, j, j + 1);
+                }
+            }
+        }
+
+
     }
 }

@@ -8,7 +8,7 @@ package propertytycoongame;
  * @author Haotian Jiao
  * @version 1.0.1
  */
-public class Property extends Cell{
+public class Property extends Cell implements Comparable<Property>{
     protected final String name;
     private final String group;
     private final int cost;
@@ -32,7 +32,7 @@ public class Property extends Cell{
         this.rent = rent;
         this.location=location;
         improvedRent = 0;
-        improvedRents = new int[4];
+        improvedRents = new int[5];
         improvedRents[0] = oneHouseRent;
         improvedRents[1] = twoHousesRent;
         improvedRents[2] = threeHousesRent;
@@ -44,6 +44,14 @@ public class Property extends Cell{
         status = 0;
         owner = null;
 
+    }
+
+    /**
+     * @author Hayden
+     * @return String of property name
+     */
+    public String getName() {
+        return name;
     }
 
     /**
@@ -262,4 +270,18 @@ public class Property extends Cell{
     public int getStatus() {
         return status;
     }
+
+	@Override
+	public int compareTo(Property o) {
+		// TODO Auto-generated method stub
+		int p1 = this.numOfHouse;
+		int p2 = o.getNumOfHouse();
+		if(this.ifHotelBuilded())
+			p1 += 5;
+		if(o.ifHotelBuilded())
+			p2 += 5;
+		if(this.numOfHouse > o.getNumOfHouse())
+			return 1;
+		return 0;
+	}
 }

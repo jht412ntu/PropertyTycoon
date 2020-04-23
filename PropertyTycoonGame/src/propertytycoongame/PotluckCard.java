@@ -9,15 +9,15 @@ public class PotluckCard extends Cards {
 	private Queue<String> shuffledqueue = new LinkedList<>();
 
 	//constructor
-	public PotluckCard() {
-		super(3);
+	public PotluckCard(int i, int position) {
+		super(position);
 
 		unshuffleList.add("Get out of jail free");
 		unshuffleList.add("You inherit £100");
 		unshuffleList.add("You have won 2nd prize in a beauty contest, collect £20");
 		unshuffleList.add("Go back to Crapper Street");
 		unshuffleList.add("Student loan refund. Collect £20");
-		unshuffleList.add( "Bank error in your favour. Collect £200");
+		unshuffleList.add("Bank error in your favour. Collect £200");
 		unshuffleList.add("Pay bill for text books of £100");
 		unshuffleList.add("Mega late night taxi bill pay £50");
 		unshuffleList.add("Advance to go");
@@ -100,7 +100,7 @@ public class PotluckCard extends Cards {
 					CentralControl.players.get(i).addMoney(-10);
 				}
 			case "Get out of jail free":
-				player.addAreleaseCard();//when user cost it put it back
+				player.addReleaseCard();//when user cost it put it back
 		}
 	}
 }

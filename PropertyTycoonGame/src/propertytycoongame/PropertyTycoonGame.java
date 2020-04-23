@@ -15,7 +15,7 @@ public class PropertyTycoonGame {
      * @param args the command line arguments
      */
 //    public static void main(String[] args) {
-//        
+//        CentralControl game = new CentralControl(0);
 //    }
 //    
 }
