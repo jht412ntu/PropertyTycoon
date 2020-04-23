@@ -7,7 +7,6 @@ public class Board {
     public HashMap<Integer, Cell> theboard ;
 
     private Park park = new Park(21);
-    private PotluckCard potluckCard = new PotluckCard(3);
     private Jail jail = new Jail(11);
     
     public  Board () {
@@ -15,7 +14,7 @@ public class Board {
         //theboard.put(cell.location,cell);
         Property p1=new Property(1,"go",null,0,0,0,0,0,0,0);
         Property p2=new Property(2,"Crapper Street","Brown",60,2,10,30,90, 160,250);
-        Property p3=new Property(18,"Pot Luck",null,0,0,0,0,0,0,0);
+        PotluckCard p3=new PotluckCard(3, 18);
         Property p4=new Property(4,"Gangsters Paradise","Brown",60,4,20,60,180,320,450);
         Property p5=new Property(5,"Income Tax",null,0,0,0,0,0,0,0);
         Property p6=new Property(6,"Brighton Station","Station",200,0,0,0,0,0,0);
@@ -46,7 +45,7 @@ public class Board {
         Property p31=new Property(31,"Go to Jail",null,0,0,0,0,0,0,0);
         Property p32=new Property(32,"Sirat Mews","Green",300,26,130,390,900,1100,1275);
         Property p33=new Property(33,"Ghengis Crescent","Green",300,26,130,390,900,1100,1275);
-        Property p34=new Property(34,"Pot Luck",null,0,0,0,0,0,0,0);
+        PotluckCard p34=new PotluckCard(34, 34);
         Property p35=new Property(35,"Ibis Close","Green",320,28,150,450,1000,1200,1400);
         Property p36=new Property(36,"Lewes Station","Station",200,0,0,0,0,0,0);
         Property p37=new Property(37,"Opportunity Knocks",null,0,0,0,0,0,0,0);
@@ -61,7 +60,6 @@ public class Board {
         p21.available=false;
         p23.available=false;
         p31.available=false;
-        p34.available=false;
         p37.available=false;
         p39.available=false;
 
@@ -70,7 +68,7 @@ public class Board {
 
         theboard.put(1,p1);
         theboard.put(2,p2);
-        theboard.put(3,potluckCard);
+        theboard.put(3,p3);
         theboard.put(4,p4);
         theboard.put(5,p5);
         theboard.put(6,p6);
@@ -101,7 +99,7 @@ public class Board {
         theboard.put(31,jail);
         theboard.put(32,p32);
         theboard.put(33,p33);
-        theboard.put(34,potluckCard);
+        theboard.put(34,p34);
         theboard.put(35,p35);
         theboard.put(36,p36);
         theboard.put(37,p37);
