@@ -9,11 +9,18 @@
             <file>file:/Users/Hayden/GitHub/PropertyTycoon/PropertyTycoonGame/test/tests/PlayerTest.java</file>
             <file>file:/Users/Hayden/GitHub/PropertyTycoon/PropertyTycoonGame/test/tests/CentralControlTest.java</file>
             <file>file:/Users/Hayden/GitHub/PropertyTycoon/PropertyTycoonGame/src/propertytycoongame/Bank.java</file>
+<<<<<<< Updated upstream
             <file>file:/Users/Hayden/GitHub/PropertyTycoon/PropertyTycoonGame/src/propertytycoongame/Player.java</file>
+=======
+>>>>>>> Stashed changes
             <file>file:/Users/Hayden/GitHub/PropertyTycoon/PropertyTycoonGame/src/propertytycoongame/CentralControl.java</file>
             <file>file:/Users/Hayden/GitHub/PropertyTycoon/PropertyTycoonGame/src/propertytycoongame/Property.java</file>
             <file>file:/Users/Hayden/GitHub/PropertyTycoon/PropertyTycoonGame/src/propertytycoongame/PropertyTycoonGame.java</file>
             <file>file:/Users/Hayden/GitHub/PropertyTycoon/PropertyTycoonGame/src/propertytycoongame/BankException.java</file>
+<<<<<<< Updated upstream
+=======
+            <file>file:/Users/Hayden/GitHub/PropertyTycoon/PropertyTycoonGame/src/propertytycoongame/Agent.java</file>
+>>>>>>> Stashed changes
         </group>
     </open-files>
 </project-private>
