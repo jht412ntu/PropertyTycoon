@@ -15,7 +15,9 @@ public class Bank {
     private int balance;
     private ArrayList<Property> properties;
     private int maxOffer;
+    private int sameMaxOffer;
     private Player currentBidder;
+    private Player sameOfferBidder;
 
     public Bank() {
         balance = 50000; // initial balance
@@ -52,12 +54,7 @@ public class Bank {
     public void buyProperty(Player player, Property p) throws PropertyException {
         if (player.getMoney() >= p.getCost()) {
             p.sell(player);
-            try {
-				player.minusMoney(p.getCost());
-			} catch (lackMoneyException e) {
-				// TODO Auto-generated catch block
-				System.out.println("Purchase failed");
-			}
+            player.addMoney(- p.getCost());
             balance += p.getCost();
             player.buyProperty(p);
         }
@@ -268,15 +265,20 @@ public class Bank {
         if (p.isAvailable()) {
             if (currentBidder == null) {
                 if (player.getMoney() >= offer) {
-                    maxOffer = offer;
+                    maxOffer = offer; 
                     currentBidder = player;
                 }
             } else {
                 if (offer > maxOffer) {
                     if (player.getMoney() >= offer) {
                         maxOffer = offer;
+                        sameMaxOffer = 0;
                         currentBidder = player;
+                        sameOfferBidder = null;
                     }
+                } else if (offer == maxOffer) {
+                    sameMaxOffer = offer;
+                    sameOfferBidder = player;
                 }
             }
         } else {

@@ -9,7 +9,7 @@ import java.util.ArrayList;
  *
  * @author Mingfeng
  */
-public class Player implements Comparable<Player>{
+public class Player {
 
     private int money = 1500;
     private int location = 0;
@@ -41,7 +41,7 @@ public class Player implements Comparable<Player>{
     public void rollDices() {
         if (CentralControl.dices.getNumDouble() > 2) {
             CentralControl.board.getJail().put(this);
-        } else if (CentralControl.board.getJail().turnInJail(this) > 0) {
+        } else if (CentralControl.board.getJail().inJail(this) > 0) {
             CentralControl.board.getJail().pass(this);
         } else {
             CentralControl.dices.rollDice();
@@ -50,8 +50,8 @@ public class Player implements Comparable<Player>{
                 passGo = true;
                 CentralControl.bank.distributeCash(this,200);
                 location -= 40;
-                CentralControl.bank.addBalance(-200);
             }
+
             switch (location) {
             //park fine collection
 			case 21:
@@ -76,7 +76,9 @@ public class Player implements Comparable<Player>{
 				payRent(p, owner);
 			}
            }
+
         }
+    }
 
     /**
      * @author: Mingfeng
@@ -173,6 +175,24 @@ public class Player implements Comparable<Player>{
         }
     }
 
+    /**
+     * Trading mechanic: selling properties between players
+     * used by the GUI when players defined an agreed price for a property
+     * 
+     * author: Haotian Jiao
+     * date: 20/04/2020
+     * 
+     * @param player The instance of Player
+     * @param p The instance of Property
+     * @param price A defined price(agreed between players)
+     */
+    public void sellPropertyToPlayer(Player player, Property p, int price) {
+        sellProperty(p);
+        player.buyProperty(p);
+        player.addMoney(-price);
+        addMoney(price);
+    }
+    
     /*
      * field getter and setter
      */
@@ -187,24 +207,13 @@ public class Player implements Comparable<Player>{
     }
 
     /**
+     *
      * @param money
-     * @description: add money to balance
      */
     public void addMoney(int money) {
-        this.money = money + this.money;
+        this.money += money;
     }
-    
-    /**
-    *
-    * @param money
-    * @description: minus money from balance
-    */
-    public void minusMoney(int money) throws lackMoneyException{
-   	if (this.money - money < 0) {
-			throw new lackMoneyException("lack money");
-		}
-       this.money = this.money - money;
-    }
+
     /**
      *
      * @return int
@@ -252,7 +261,6 @@ public class Player implements Comparable<Player>{
     public String getName() {
         return name;
     }
-    
     public ArrayList<Property> propertiesList() {
         return Properties;
     }
