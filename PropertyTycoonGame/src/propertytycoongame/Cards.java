@@ -14,17 +14,13 @@ public class Cards extends Cell{
     protected HashMap<Integer, String> cards = new HashMap<>();
 
 
-    public String getAcard(){
+    public String getCard(){
         Random random = new Random();
         int index = random.nextInt(cards.size());
         return cards.get(index);
     }//String.valueOf(card.get(index)
 
 
-    public void pay(Player player ,int amount){
-        player.addMoney(amount); 
-        //CentralControl.bank.setBalance(CentralControl.bank.getBalance() - amount); 
-    }
 
 
     public void move(Player player,int location){
