@@ -37,7 +37,7 @@ public class Player implements Comparable<Player> {
     /**
      * @author: Mingfeng
      * @methodsName: rollDices
-     * @description: Roll dices and check wheather play need to go to Jail
+     * @description: Roll dices and checks whether player needs to go to Jail
      */
     public void rollDices() {
         if (CentralControl.dices.getNumDouble() > 2) {

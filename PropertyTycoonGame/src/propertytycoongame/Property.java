@@ -32,7 +32,7 @@ public class Property extends Cell implements Comparable<Property>{
         this.rent = rent;
         this.location=location;
         improvedRent = 0;
-        improvedRents = new int[4];
+        improvedRents = new int[5];
         improvedRents[0] = oneHouseRent;
         improvedRents[1] = twoHousesRent;
         improvedRents[2] = threeHousesRent;
@@ -44,6 +44,14 @@ public class Property extends Cell implements Comparable<Property>{
         status = 0;
         owner = null;
 
+    }
+
+    /**
+     * @author Hayden
+     * @return String of property name
+     */
+    public String getName() {
+        return name;
     }
 
     /**

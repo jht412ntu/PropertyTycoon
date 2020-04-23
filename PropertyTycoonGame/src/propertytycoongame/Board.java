@@ -109,11 +109,13 @@ public class Board {
     }
     public Jail getJail() {
     	return jail;
-	}
+    }
     
     public Park getPark() {
-		return park;
-	}
+        return park;
+    }
 
-
+    public Cell getProperty(int loc){
+        return theboard.get(loc);
+    }
 }

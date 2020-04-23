@@ -97,7 +97,7 @@ public class CentralControl {
      *
      * @return ArrayList
      */
-    public ArrayList getPlayers() {
+    public ArrayList<Player> getPlayers() {
         return players;
     }
 

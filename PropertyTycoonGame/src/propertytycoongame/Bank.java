@@ -13,6 +13,14 @@ import java.util.Map;
  */
 public class Bank {
     private int balance;
+
+    public int getBalance() {
+        return balance;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
+    }
     private ArrayList<Property> properties;
     private int maxOffer;
     private int sameMaxOffer;
@@ -39,8 +47,9 @@ public class Bank {
      *
      * @return
      */
-    public int getBalance(){return balance;}
-    public void addBalance(int money){balance+=money;}
+    public void addBalance(int money){
+        balance+=money;
+    }
 
 
 
