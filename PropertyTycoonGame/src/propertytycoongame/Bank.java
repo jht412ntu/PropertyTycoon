@@ -54,7 +54,7 @@ public class Bank {
             p.sell(player);
             try {
 				player.minusMoney(p.getCost());
-			} catch (lackMoneyException e) {
+			} catch (LackMoneyException e) {
 				// TODO Auto-generated catch block
 				System.out.println("Purchase failed");
 			}

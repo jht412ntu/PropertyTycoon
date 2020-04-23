@@ -61,7 +61,7 @@ public class Player implements Comparable<Player>{
 			case 5:
 				try {
 					minusMoney(200);
-				} catch (lackMoneyException e) {
+				} catch (LackMoneyException e) {
 					// TODO Auto-generated catch block
 					raiseMoney();
 				}
@@ -84,12 +84,12 @@ public class Player implements Comparable<Player>{
      * @methodsName: payReleased
      * @description: pay 50$ for releasing and add money to Park
      */
-    public boolean payReleased() throws lackMoneyException {
+    public boolean payReleased() throws LackMoneyException {
     	if (money > 50) {
     		minusMoney(50);
 		}
     	else 
-    		throw new lackMoneyException("Operation failed without enough money");
+    		throw new LackMoneyException("Operation failed without enough money");
         CentralControl.board.getJail().release(this);
         CentralControl.board.getPark().addFine(50);
         return true;
@@ -162,7 +162,7 @@ public class Player implements Comparable<Player>{
         if(CentralControl.board.getJail().turnInJail(reciever) == 0 && p.undermortgage!=true){
             try {
 				minusMoney(p.getRent());
-			} catch (lackMoneyException e) {
+			} catch (LackMoneyException e) {
 				if (raiseMoney()) {
 					
 				}
@@ -199,9 +199,9 @@ public class Player implements Comparable<Player>{
     * @param money
     * @description: minus money from balance
     */
-    public void minusMoney(int money) throws lackMoneyException{
+    public void minusMoney(int money) throws LackMoneyException{
    	if (this.money - money < 0) {
-			throw new lackMoneyException("lack money");
+			throw new LackMoneyException("lack money");
 		}
        this.money = this.money - money;
     }

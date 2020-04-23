@@ -18,7 +18,7 @@ public class Agent extends Player{
      * @methodsName: run
      * @description: run agent
      */
-	public void run() throws PropertyException, lackMoneyException, BankException {
+	public void run() throws PropertyException, LackMoneyException, BankException {
 		// Stay in Jail two turns
 		if(CentralControl.board.getJail().turnInJail(this) == 2)
 			// Use card or money to release itself
