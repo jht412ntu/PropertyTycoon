@@ -51,50 +51,21 @@ public class Player {
                 CentralControl.bank.distributeCash(this,200);
                 location -= 40;
             }
-
-            switch (location) {
-            //park fine collection
-			case 21:
-				CentralControl.board.getPark().collectFine(this);
-				break;
-				//income tax	
-			case 5:
-				try {
-					minusMoney(200);
-				} catch (lackMoneyException e) {
-					// TODO Auto-generated catch block
-					raiseMoney();
-				}
-				break;
-			case 31:
-				CentralControl.board.getJail().put(this);
-				location = 11;
-				break;
-			default:
-				Property p = (Property)CentralControl.board.theboard.get(location);
-				Player owner = p.getOwner();
-				payRent(p, owner);
-			}
-           }
-
+            else if (location == 21) {
+                CentralControl.board.getPark().collectFine(this);
+            }
         }
     }
 
     /**
      * @author: Mingfeng
-     * @throws lackMoneyException 
      * @methodsName: payReleased
      * @description: pay 50$ for releasing and add money to Park
      */
-    public boolean payReleased() throws lackMoneyException {
-    	if (money > 50) {
-    		minusMoney(50);
-		}
-    	else 
-    		throw new lackMoneyException("Operation failed without enough money");
+    public void payReleased() {
+        money -= 50;
         CentralControl.board.getJail().release(this);
         CentralControl.board.getPark().addFine(50);
-        return true;
     }
 
     /**
@@ -102,13 +73,11 @@ public class Player {
      * @methodsName: released
      * @description: release yourself from jail
      */
-    public boolean released() {
+    public void released() {
         if (releaseCard > 0) {
             releaseCard -= 1;
             CentralControl.board.getJail().release(this);
-            return true;
         }
-        return false;
     }
 
     /**
@@ -141,38 +110,6 @@ public class Player {
     public ArrayList<Property> sellProperty(Property property) {
         Properties.remove(property);
         return Properties;
-    }
-    /**
-     * @author: Mingfeng
-     * @return	boolean wheather player raises money successes
-     * @methodsName: raiseMoney
-     * @description: sell something for raising money
-     */
-    public boolean raiseMoney() {
-    	// need GUI finished (when player cannot pay rent, the mortage button and sell button will be hignlight
-		// player is not abole to act other behaviours but leave game
-    	boolean enough = false;
-    	return enough;
-	}
-    
-
-    /**
-     *
-     *
-     */
-    public void payRent(Property p,Player reciever){
-        if(CentralControl.board.getJail().turnInJail(reciever) == 0 && p.undermortgage!=true){
-            try {
-				minusMoney(p.getRent());
-			} catch (lackMoneyException e) {
-				if (raiseMoney()) {
-					
-				}
-				else 
-					return;
-			}
-            reciever.addMoney(p.getRent());
-        }
     }
 
     /**
@@ -265,10 +202,24 @@ public class Player {
         return Properties;
     }
 
-	@Override
-	public int compareTo(Player o) {
-		// TODO Auto-generated method stub
-		if(this.getMoney() > o.getMoney())
-			return 1;
-		return 0;
-	}}
+
+    /**
+     *
+     *
+     */
+    public void collectrent(Property p ,Player payer){
+        if(payer.getLocation()==p.location && p.undermortgage!=true){
+            payer.addMoney(-p.getRent());
+            addMoney(p.getRent());
+
+        }
+    }
+
+    public void payrent(Property p,Player reciever){
+        if(getLocation()==p.location && p.undermortgage!=true){
+            addMoney(-p.getRent());
+            reciever.addMoney(p.getRent());
+
+
+        }
+    }}
