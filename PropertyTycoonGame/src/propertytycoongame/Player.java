@@ -86,11 +86,11 @@ public class Player implements Comparable<Player> {
      * @methodsName: payReleased
      * @description: pay 50$ for releasing and add money to Park
      */
-    public boolean payReleased() throws lackMoneyException {
+    public boolean payReleased() throws LackMoneyException {
         if (money > 50) {
             minusMoney(50);
         } else {
-            throw new lackMoneyException("Operation failed without enough money");
+            throw new LackMoneyException("Operation failed without enough money");
         }
         CentralControl.board.getJail().release(this);
         CentralControl.board.getPark().addFine(50);
@@ -223,7 +223,7 @@ public class Player implements Comparable<Player> {
      */
     public void minusMoney(int money) throws LackMoneyException {
         if (this.money - money < 0) {
-            throw new lackMoneyException("lack money");
+            throw new LackMoneyException("lack money");
         }
         this.money = this.money - money;
     }
