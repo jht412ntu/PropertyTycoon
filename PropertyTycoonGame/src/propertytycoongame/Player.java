@@ -18,7 +18,7 @@ public class Player implements Comparable<Player> {
     private String name;
     private int releaseCard;
     protected ArrayList<Property> Properties = new ArrayList<>();
-
+    protected int  totalvalue;
     public enum Token {
         boot, smartphone, goblet, hatstand, cat, spoon;
     }
