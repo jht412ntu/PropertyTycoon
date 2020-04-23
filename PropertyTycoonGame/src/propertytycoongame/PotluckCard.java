@@ -9,7 +9,7 @@ public class PotluckCard extends Cards {
 	private Queue<String> shuffledqueue = new LinkedList<>();
 
 	//constructor
-	public PotluckCard(int i) {
+	public PotluckCard() {
 		super(3);
 
 		unshuffleList.add("Get out of jail free");
