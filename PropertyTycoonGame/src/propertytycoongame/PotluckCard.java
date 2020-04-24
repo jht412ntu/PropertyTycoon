@@ -104,5 +104,3 @@ public class PotluckCard extends Cards {
 		}
 	}
 }
-
-
