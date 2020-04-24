@@ -223,18 +223,17 @@ public class Property extends Cell implements Comparable<Property>{
         }
     }
 
-    /*
-     *palyer need to land on a the property to mortage
+    /**
+     * Player needs to land on a the property to mortage
      *
-     * */
+     */
     public void mortgage(Bank bank,Player player){
-        ;
         if (player.getLocation()==location)
         {
             undermortgage=true;//when property under mortgage player can't collect rent
             bank.addBalance(-(cost/2));
             player.addMoney(cost/2);
-        };
+        }
     }
 
     /*
@@ -242,7 +241,7 @@ public class Property extends Cell implements Comparable<Property>{
      * property back to available
      *
      * */
-    public  void liquidate(Bank bank,Player player){
+    public void liquidate(Bank bank,Player player){
 
         player.Properties.remove(name);
         bank.addBalance(-(cost/2));
@@ -253,7 +252,7 @@ public class Property extends Cell implements Comparable<Property>{
         undermortgage=false;
         numOfHouse=0;
 
-    };
+    }
 
     /**
      * Gets the status of the property

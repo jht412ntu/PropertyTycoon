@@ -504,15 +504,15 @@ public class GameGUI extends javax.swing.JFrame {
 
     private void btnBuyPropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuyPropActionPerformed
         Player p = game.getCurrentPlayer();
-        gui.txtName.setText(((Property) game.board.getProperty(p.getLocation())).getName());
-        gui.txtPrice.setText(Integer.toString(((Property) game.board.getProperty(p.getLocation())).getCost()));
+        gui.txtName.setText(((Property) game.board.getCell(p.getLocation())).getName());
+        gui.txtPrice.setText(Integer.toString(((Property) game.board.getCell(p.getLocation())).getCost()));
         gui.buyDialog.setVisible(true);
         
-        p.buyProperty((Property) game.board.getProperty(p.getLocation()));
+        p.buyProperty((Property) game.board.getCell(p.getLocation()));
     }//GEN-LAST:event_btnBuyPropActionPerformed
 
     private void btnBuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuyActionPerformed
-        game.getCurrentPlayer().buyProperty((Property) game.board.getProperty(game.getCurrentPlayer().getLocation()));
+        game.getCurrentPlayer().buyProperty((Property) game.board.getCell(game.getCurrentPlayer().getLocation()));
         gui.buyDialog.setVisible(false);
     }//GEN-LAST:event_btnBuyActionPerformed
 
@@ -526,11 +526,11 @@ public class GameGUI extends javax.swing.JFrame {
         txtPlrBalance.setText("Balance: " + p.getMoney());
         txtRollValue.setText("Roll Value: " + game.dices.totalVal);
         txtCurrPlayer.setText("Player: " + p.getName());
-        txtCurrPos.setText("Current Position: " + ((Property) game.board.getProperty(p.getLocation())).getName());
+        txtCurrPos.setText("Current Position: " + ((Property) game.board.getCell(p.getLocation())).getName());
         tmrTime.setText(game.getRemainingTime().toString());
-        txtAvaliable.setText(Boolean.toString(((Property) game.board.getProperty(p.getLocation())).isAvailable()));    //Waiting for board class.
+        txtAvaliable.setText(Boolean.toString(((Property) game.board.getCell(p.getLocation())).isAvailable()));    //Waiting for board class.
         txtBankBalance.setText(Integer.toString(game.bank.getBalance()));
-        txtPrpCost.setText(Integer.toString(((Property) game.board.getProperty(p.getLocation())).getCost())); //Waiting for board class.
+        txtPrpCost.setText(Integer.toString(((Property) game.board.getCell(p.getLocation())).getCost())); //Waiting for board class.
         }catch(NullPointerException ex){
             
         }

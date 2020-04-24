@@ -18,7 +18,8 @@ public class Player implements Comparable<Player> {
     private String name;
     private int releaseCard;
     protected ArrayList<Property> Properties = new ArrayList<>();
-    protected int  totalvalue;
+    private boolean leavedGame;
+
     public enum Token {
         boot, smartphone, goblet, hatstand, cat, spoon;
     }
@@ -32,6 +33,7 @@ public class Player implements Comparable<Player> {
         // TODO Auto-generated constructor stub
         this.name = name;
         this.token = token;
+        leavedGame = false;
     }
 
     /**
@@ -80,9 +82,8 @@ public class Player implements Comparable<Player> {
     }
 
     /**
-     * @return 
-     * @author: Mingfeng
-     * @throws lackMoneyException
+     * @return @author: Mingfeng
+     * @throws LackMoneyException
      * @methodsName: payReleased
      * @description: pay 50$ for releasing and add money to Park
      */
@@ -98,8 +99,7 @@ public class Player implements Comparable<Player> {
     }
 
     /**
-     * @return 
-     * @author: Mingfeng
+     * @return @author: Mingfeng
      * @methodsName: released
      * @description: release yourself from jail
      */
@@ -146,8 +146,8 @@ public class Player implements Comparable<Player> {
     }
 
     /**
-     * Trading mechanic: selling properties between players
-     * used by the GUI when players defined an agreed price for a property
+     * Trading mechanic: selling properties between players used by the GUI
+     * when players defined an agreed price for a property
      *
      * author: Haotian Jiao
      * date: 20/04/2020
@@ -162,14 +162,15 @@ public class Player implements Comparable<Player> {
         player.addMoney(-price);
         addMoney(price);
     }
-    
+
     /**
      * @author: Mingfeng
-     * @return	boolean wheather player raises money successes
+     * @return	boolean wheather player raises money succeed
      * @methodsName: raiseMoney
      * @description: sell something for raising money
      */
     public boolean raiseMoney() {
+        // should include "sellPropertyToPlayer"
         // need GUI finished (when player cannot pay rent, the mortage button and sell button will be hignlight
         // player is not abole to act other behaviours but leave game
         boolean enough = false;
@@ -287,5 +288,16 @@ public class Player implements Comparable<Player> {
             return 1;
         }
         return 0;
+    }
+    
+    /**
+     * For players to mark themselves as leaved
+     * 
+     * author: Haotian Jiao
+     * date: 23/04/2020
+     * 
+     */
+    public void setLeaveGame() {
+        leavedGame = true;
     }
 }
