@@ -4,18 +4,18 @@ import java.util.HashMap;
 
 public class Board {
 
-    public HashMap<Integer, Cell> theboard ;
+    public HashMap<Integer, Cell> theboard = new HashMap<>();
 
     private Park park = new Park(21);
-    private PotluckCard potluckCard = new PotluckCard(3);
     private Jail jail = new Jail(11);
     
     public  Board () {
 
         //theboard.put(cell.location,cell);
-        Property p1=new Property(1,"go",null,0,0,0,0,0,0,0);
-        Property p2=new Property(2,"Crapper Street","Brown",60,2,10,30,90, 160,250);
-        Property p3=new Property(18,"Pot Luck",null,0,0,0,0,0,0,0);
+        //Property p1=new Property(1,"go",null,0,0,0,0,0,0,0);
+        Cell p2 = new Property(2,"Crapper Street","Brown",60,2,10,30,90, 160,250);
+        /**
+        PotluckCard potluck=new PotluckCard(3);
         Property p4=new Property(4,"Gangsters Paradise","Brown",60,4,20,60,180,320,450);
         Property p5=new Property(5,"Income Tax",null,0,0,0,0,0,0,0);
         Property p6=new Property(6,"Brighton Station","Station",200,0,0,0,0,0,0);
@@ -30,7 +30,7 @@ public class Board {
         Property p15=new Property(15,"Rey Lane","Purple",160,12,60,180,500,700,900);
         Property p16=new Property(16,"Hove Station","Station",200,0,0,0,0,0,0);
         Property p17=new Property(17,"Cooper Drive","Orange",180,14,70,200,550,750,900);
-        Property p18=new Property(18,"Pot Luck",null,0,0,0,0,0,0,0);
+        PotluckCard luck2=new PotluckCard(18);
         Property p19=new Property(19,"Wolowitz Street","Orange",180,14,70,200,550,750,950);
         Property p20=new Property(20,"Penny Lane","Orange",200,16,80,220,600,800,1000);
         Property p21=new Property(21,"Free Parking",null,0,0,0,0,0,0,0);
@@ -46,7 +46,7 @@ public class Board {
         Property p31=new Property(31,"Go to Jail",null,0,0,0,0,0,0,0);
         Property p32=new Property(32,"Sirat Mews","Green",300,26,130,390,900,1100,1275);
         Property p33=new Property(33,"Ghengis Crescent","Green",300,26,130,390,900,1100,1275);
-        Property p34=new Property(34,"Pot Luck",null,0,0,0,0,0,0,0);
+        PotluckCard luck3 = new PotluckCard(34);
         Property p35=new Property(35,"Ibis Close","Green",320,28,150,450,1000,1200,1400);
         Property p36=new Property(36,"Lewes Station","Station",200,0,0,0,0,0,0);
         Property p37=new Property(37,"Opportunity Knocks",null,0,0,0,0,0,0,0);
@@ -57,11 +57,9 @@ public class Board {
         p5.available=false;
         p8.available=false;
         p11.available=false;
-        p18.available=false;
         p21.available=false;
         p23.available=false;
         p31.available=false;
-        p34.available=false;
         p37.available=false;
         p39.available=false;
 
@@ -70,7 +68,7 @@ public class Board {
 
         theboard.put(1,p1);
         theboard.put(2,p2);
-        theboard.put(3,potluckCard);
+        theboard.put(3,potluck);
         theboard.put(4,p4);
         theboard.put(5,p5);
         theboard.put(6,p6);
@@ -85,7 +83,7 @@ public class Board {
         theboard.put(15,p15);
         theboard.put(16,p16);
         theboard.put(17,p17);
-        theboard.put(18,p18);
+        theboard.put(18,luck2);
         theboard.put(19,p19);
         theboard.put(20,p20);
         theboard.put(21,park);
@@ -101,21 +99,26 @@ public class Board {
         theboard.put(31,jail);
         theboard.put(32,p32);
         theboard.put(33,p33);
-        theboard.put(34,potluckCard);
+        theboard.put(34,luck3);
         theboard.put(35,p35);
         theboard.put(36,p36);
         theboard.put(37,p37);
         theboard.put(38,p38);
         theboard.put(39,p39);
         theboard.put(40,p40);
+        */
+        //theboard.put(1,p1);
+        theboard.put(2,p2);
     }
     public Jail getJail() {
     	return jail;
-	}
+    }
     
     public Park getPark() {
-		return park;
-	}
+        return park;
+    }
 
-
+    public Cell getCell(int loc){
+        return theboard.get(loc);
+    }
 }
