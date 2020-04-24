@@ -6,9 +6,12 @@
 package propertytycoongame;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.embed.swing.JFXPanel;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import propertytycoongame.Player.Token;
 
 /**
@@ -19,7 +22,6 @@ public class GameGUI extends javax.swing.JFrame {
 
     CentralControl game;
     static GameGUI gui;
-    //Dice dice = new Dice();
     Token st;
     Boolean fullGame;
     Boolean running = false;
@@ -41,15 +43,7 @@ public class GameGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buyDialog = new javax.swing.JDialog();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        btnBack = new javax.swing.JToggleButton();
-        btnBuy = new javax.swing.JToggleButton();
-        txtName = new javax.swing.JLabel();
-        txtPrice = new javax.swing.JLabel();
         playerSetup = new javax.swing.JPanel();
-        btnAddPlayer = new javax.swing.JToggleButton();
         btnStartGame = new javax.swing.JButton();
         txtFplayername = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -60,22 +54,23 @@ public class GameGUI extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         playerList = new javax.swing.JList<>();
+        btnAddPlayer = new javax.swing.JButton();
         startScreen = new javax.swing.JPanel();
         startFullGame = new javax.swing.JButton();
         startAbridgedGame = new javax.swing.JButton();
         txtGameLength = new javax.swing.JTextField();
         gameScreen = new javax.swing.JPanel();
-        btnRollDice = new javax.swing.JToggleButton();
         txtCurrPos = new javax.swing.JLabel();
         txtRollValue = new javax.swing.JLabel();
         txtCurrPlayer = new javax.swing.JLabel();
         txtPlrBalance = new javax.swing.JLabel();
-        btnNextPlayer = new javax.swing.JToggleButton();
         tmrTime = new javax.swing.JLabel();
         txtAvaliable = new javax.swing.JLabel();
-        btnBuyProp = new javax.swing.JToggleButton();
         txtBankBalance = new javax.swing.JLabel();
         txtPrpCost = new javax.swing.JLabel();
+        btnNextPlayer = new javax.swing.JButton();
+        btnRollDice = new javax.swing.JButton();
+        btnBuyProp = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         exitMenuItem = new javax.swing.JMenuItem();
@@ -83,88 +78,8 @@ public class GameGUI extends javax.swing.JFrame {
         contentsMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
 
-        buyDialog.setAlwaysOnTop(true);
-        buyDialog.setMinimumSize(new java.awt.Dimension(100, 100));
-
-        jLabel4.setText("Buy this property?");
-
-        btnBack.setText("Back");
-        btnBack.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBackActionPerformed(evt);
-            }
-        });
-
-        btnBuy.setText("Buy");
-        btnBuy.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuyActionPerformed(evt);
-            }
-        });
-
-        txtName.setText("jLabel5");
-
-        txtPrice.setText("jLabel6");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 30, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel4)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(btnBack)
-                            .addGap(67, 67, 67)))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(txtName)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtPrice))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addGap(97, 97, 97)
-                            .addComponent(btnBuy))))
-                .addGap(18, 18, 18))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtName)
-                    .addComponent(txtPrice))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBack)
-                    .addComponent(btnBuy))
-                .addGap(21, 21, 21))
-        );
-
-        javax.swing.GroupLayout buyDialogLayout = new javax.swing.GroupLayout(buyDialog.getContentPane());
-        buyDialog.getContentPane().setLayout(buyDialogLayout);
-        buyDialogLayout.setHorizontalGroup(
-            buyDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        buyDialogLayout.setVerticalGroup(
-            buyDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Property Tycoon Game");
-
-        btnAddPlayer.setText("Add Player");
-        btnAddPlayer.setFocusable(false);
-        btnAddPlayer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddPlayerActionPerformed(evt);
-            }
-        });
 
         btnStartGame.setText("Start Game");
         btnStartGame.addActionListener(new java.awt.event.ActionListener() {
@@ -193,6 +108,13 @@ public class GameGUI extends javax.swing.JFrame {
         playerList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(playerList);
 
+        btnAddPlayer.setText("Add Player");
+        btnAddPlayer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddPlayerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout playerSetupLayout = new javax.swing.GroupLayout(playerSetup);
         playerSetup.setLayout(playerSetupLayout);
         playerSetupLayout.setHorizontalGroup(
@@ -204,18 +126,24 @@ public class GameGUI extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(playerSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nPlayers)
                     .addGroup(playerSetupLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(playerSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnAddPlayer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtFplayername, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                            .addComponent(txtFplayername))
+                        .addGap(78, 78, 78)
                         .addGroup(playerSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnStartGame))))
-                .addContainerGap(142, Short.MAX_VALUE))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(108, 108, 108))
+                    .addGroup(playerSetupLayout.createSequentialGroup()
+                        .addGroup(playerSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(playerSetupLayout.createSequentialGroup()
+                                .addComponent(btnAddPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(104, 104, 104)
+                                .addComponent(btnStartGame))
+                            .addComponent(nPlayers, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         playerSetupLayout.setVerticalGroup(
             playerSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -265,7 +193,7 @@ public class GameGUI extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(txtGameLength, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(startFullGame))
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addContainerGap(293, Short.MAX_VALUE))
         );
         startScreenLayout.setVerticalGroup(
             startScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -279,14 +207,6 @@ public class GameGUI extends javax.swing.JFrame {
                 .addContainerGap(107, Short.MAX_VALUE))
         );
 
-        btnRollDice.setText("Roll Dice");
-        btnRollDice.setToolTipText("");
-        btnRollDice.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRollDiceActionPerformed(evt);
-            }
-        });
-
         txtCurrPos.setText("Current Position:");
 
         txtRollValue.setText("Roll Value:");
@@ -295,6 +215,12 @@ public class GameGUI extends javax.swing.JFrame {
 
         txtPlrBalance.setText("Balance:");
 
+        txtAvaliable.setText("Avaliable: ");
+
+        txtBankBalance.setText("Bank Balance");
+
+        txtPrpCost.setText("Cost:");
+
         btnNextPlayer.setText("Next Player");
         btnNextPlayer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -302,7 +228,12 @@ public class GameGUI extends javax.swing.JFrame {
             }
         });
 
-        txtAvaliable.setText("Avaliable: ");
+        btnRollDice.setText("Roll Dice");
+        btnRollDice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRollDiceActionPerformed(evt);
+            }
+        });
 
         btnBuyProp.setText("Buy Property");
         btnBuyProp.addActionListener(new java.awt.event.ActionListener() {
@@ -311,46 +242,47 @@ public class GameGUI extends javax.swing.JFrame {
             }
         });
 
-        txtBankBalance.setText("Bank Balance");
-
-        txtPrpCost.setText("Cost:");
-
         javax.swing.GroupLayout gameScreenLayout = new javax.swing.GroupLayout(gameScreen);
         gameScreen.setLayout(gameScreenLayout);
         gameScreenLayout.setHorizontalGroup(
             gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(gameScreenLayout.createSequentialGroup()
+                .addGap(67, 67, 67)
                 .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(gameScreenLayout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnNextPlayer)
-                            .addComponent(txtCurrPlayer)
-                            .addGroup(gameScreenLayout.createSequentialGroup()
-                                .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtCurrPos)
+                    .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gameScreenLayout.createSequentialGroup()
+                            .addComponent(txtCurrPlayer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(gameScreenLayout.createSequentialGroup()
+                            .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtCurrPos, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(gameScreenLayout.createSequentialGroup()
                                     .addComponent(btnRollDice)
-                                    .addComponent(txtAvaliable))
-                                .addGap(36, 36, 36)
-                                .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(gameScreenLayout.createSequentialGroup()
-                                        .addComponent(txtPrpCost)
-                                        .addGap(86, 86, 86)
-                                        .addComponent(btnBuyProp))
-                                    .addComponent(txtRollValue)
-                                    .addGroup(gameScreenLayout.createSequentialGroup()
-                                        .addComponent(txtPlrBalance)
-                                        .addGap(136, 136, 136)
-                                        .addComponent(txtBankBalance))))))
-                    .addGroup(gameScreenLayout.createSequentialGroup()
-                        .addGap(94, 94, 94)
-                        .addComponent(tmrTime)))
-                .addContainerGap(191, Short.MAX_VALUE))
+                                    .addGap(162, 162, 162)
+                                    .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(gameScreenLayout.createSequentialGroup()
+                                            .addComponent(txtPlrBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(30, 30, 30)
+                                            .addComponent(txtBankBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtRollValue, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gameScreenLayout.createSequentialGroup()
+                            .addComponent(txtAvaliable, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(txtPrpCost, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnBuyProp)
+                            .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(btnNextPlayer)))
+            .addGroup(gameScreenLayout.createSequentialGroup()
+                .addGap(94, 94, 94)
+                .addComponent(tmrTime)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         gameScreenLayout.setVerticalGroup(
             gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(gameScreenLayout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+                .addContainerGap(25, Short.MAX_VALUE)
                 .addComponent(tmrTime)
                 .addGap(18, 18, 18)
                 .addComponent(btnNextPlayer)
@@ -363,13 +295,13 @@ public class GameGUI extends javax.swing.JFrame {
                 .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRollDice)
                     .addComponent(txtRollValue))
-                .addGap(40, 40, 40)
+                .addGap(35, 35, 35)
                 .addComponent(txtCurrPos)
                 .addGap(18, 18, 18)
                 .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtAvaliable)
-                    .addComponent(btnBuyProp)
-                    .addComponent(txtPrpCost))
+                    .addComponent(txtPrpCost)
+                    .addComponent(btnBuyProp))
                 .addGap(31, 31, 31))
         );
 
@@ -435,17 +367,6 @@ public class GameGUI extends javax.swing.JFrame {
         gui.playerSetup.setVisible(true);
     }//GEN-LAST:event_startFullGameActionPerformed
 
-    private void btnRollDiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRollDiceActionPerformed
-        if (game.dices.rollAgain) {
-            game.dices.rollDice();
-            game.getCurrentPlayer().setLocation(game.getCurrentPlayer().getLocation() + game.dices.totalVal);
-            if (game.dices.goJail) {
-                game.getCurrentPlayer().setLocation(11);
-            }
-            //updateGUI();
-        }
-    }//GEN-LAST:event_btnRollDiceActionPerformed
-
     private void btnStartGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartGameActionPerformed
         Thread updGUI = new Thread(new Runnable() {
             @Override
@@ -472,16 +393,8 @@ public class GameGUI extends javax.swing.JFrame {
         updGUI.start();
         gui.playerSetup.setVisible(false);
         gui.gameScreen.setVisible(true);
-        
+
     }//GEN-LAST:event_btnStartGameActionPerformed
-
-    private void btnAddPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPlayerActionPerformed
-        Player p = new Player(txtFplayername.getText(), st);
-        game.addPlayer(p);
-        gui.nPlayers.setText("Number of Players: " + game.getPlayers().size());
-        createPlayerList();
-
-    }//GEN-LAST:event_btnAddPlayerActionPerformed
 
     private void tokenListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_tokenListValueChanged
         st = tokenList.getSelectedValue();
@@ -496,43 +409,51 @@ public class GameGUI extends javax.swing.JFrame {
         //tmr();
     }//GEN-LAST:event_startAbridgedGameActionPerformed
 
+    private void btnAddPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPlayerActionPerformed
+        Player p = new Player(txtFplayername.getText(), st);
+        game.addPlayer(p);
+        gui.nPlayers.setText("Number of Players: " + game.getPlayers().size());
+        createPlayerList();
+
+    }//GEN-LAST:event_btnAddPlayerActionPerformed
+
     private void btnNextPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextPlayerActionPerformed
         game.nextPlayer();
         game.dices.newPlayer();
-        //updateGUI();
     }//GEN-LAST:event_btnNextPlayerActionPerformed
+
+    private void btnRollDiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRollDiceActionPerformed
+        if (game.dices.rollAgain) {
+            game.dices.rollDice();
+            game.getCurrentPlayer().setLocation(game.getCurrentPlayer().getLocation() + game.dices.totalVal);
+            if (game.dices.goJail) {
+                game.getCurrentPlayer().setLocation(11);
+            }
+        }
+        //game.getCurrentPlayer().rollDices(); //Using roll dice method in player class
+    }//GEN-LAST:event_btnRollDiceActionPerformed
 
     private void btnBuyPropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuyPropActionPerformed
         Player p = game.getCurrentPlayer();
-        gui.txtName.setText(((Property) game.board.getCell(p.getLocation())).getName());
-        gui.txtPrice.setText(Integer.toString(((Property) game.board.getCell(p.getLocation())).getCost()));
-        gui.buyDialog.setVisible(true);
-        
-        p.buyProperty((Property) game.board.getCell(p.getLocation()));
+        String propName = (((Property) game.board.getCell(p.getLocation())).getName());
+        String propPrice = (Integer.toString(((Property) game.board.getCell(p.getLocation())).getCost()));
+        //gui.buyDialog.setVisible(true);
+
     }//GEN-LAST:event_btnBuyPropActionPerformed
 
-    private void btnBuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuyActionPerformed
-        game.getCurrentPlayer().buyProperty((Property) game.board.getCell(game.getCurrentPlayer().getLocation()));
-        gui.buyDialog.setVisible(false);
-    }//GEN-LAST:event_btnBuyActionPerformed
-
-    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        gui.buyDialog.setVisible(false);
-    }//GEN-LAST:event_btnBackActionPerformed
-
     private void updateGUI() {
-        try{
+        try {
             Player p = game.getCurrentPlayer();
-        txtPlrBalance.setText("Balance: " + p.getMoney());
-        txtRollValue.setText("Roll Value: " + game.dices.totalVal);
-        txtCurrPlayer.setText("Player: " + p.getName());
-        txtCurrPos.setText("Current Position: " + ((Property) game.board.getCell(p.getLocation())).getName());
-        tmrTime.setText(game.getRemainingTime().toString());
-        txtAvaliable.setText(Boolean.toString(((Property) game.board.getCell(p.getLocation())).isAvailable()));    //Waiting for board class.
-        txtBankBalance.setText(Integer.toString(game.bank.getBalance()));
-        txtPrpCost.setText(Integer.toString(((Property) game.board.getCell(p.getLocation())).getCost())); //Waiting for board class.
-        }catch(NullPointerException ex){
-            
+            txtPlrBalance.setText("Balance: " + p.getMoney());
+            txtRollValue.setText("Roll Value: " + game.dices.totalVal);
+            txtCurrPlayer.setText("Player: " + p.getName());
+            txtCurrPos.setText("Current Position: " + ((Property) game.board.getCell(p.getLocation())).getName());
+            tmrTime.setText(game.getRemainingTime().toString());
+            txtAvaliable.setText(Boolean.toString(((Property) game.board.getCell(p.getLocation())).isAvailable()));
+            txtBankBalance.setText(Integer.toString(game.bank.getBalance()));
+            txtPrpCost.setText(Integer.toString(((Property) game.board.getCell(p.getLocation())).getCost()));
+        } catch (NullPointerException ex) {
+
         }
     }
 
@@ -613,7 +534,6 @@ public class GameGUI extends javax.swing.JFrame {
                 gui.startScreen.setVisible(true);
                 gui.gameScreen.setVisible(false);
                 gui.playerSetup.setVisible(false);
-                
 
             }
         });
@@ -621,14 +541,11 @@ public class GameGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
-    private javax.swing.JToggleButton btnAddPlayer;
-    private javax.swing.JToggleButton btnBack;
-    private javax.swing.JToggleButton btnBuy;
-    private javax.swing.JToggleButton btnBuyProp;
-    private javax.swing.JToggleButton btnNextPlayer;
-    private javax.swing.JToggleButton btnRollDice;
+    private javax.swing.JButton btnAddPlayer;
+    private javax.swing.JButton btnBuyProp;
+    private javax.swing.JButton btnNextPlayer;
+    private javax.swing.JButton btnRollDice;
     private javax.swing.JButton btnStartGame;
-    private javax.swing.JDialog buyDialog;
     private javax.swing.JMenuItem contentsMenuItem;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
@@ -637,8 +554,6 @@ public class GameGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenuBar menuBar;
@@ -656,9 +571,7 @@ public class GameGUI extends javax.swing.JFrame {
     private javax.swing.JLabel txtCurrPos;
     private javax.swing.JTextField txtFplayername;
     private javax.swing.JTextField txtGameLength;
-    private javax.swing.JLabel txtName;
     private javax.swing.JLabel txtPlrBalance;
-    private javax.swing.JLabel txtPrice;
     private javax.swing.JLabel txtPrpCost;
     private javax.swing.JLabel txtRollValue;
     // End of variables declaration//GEN-END:variables
