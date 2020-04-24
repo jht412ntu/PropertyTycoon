@@ -435,8 +435,8 @@ public class GameGUI extends javax.swing.JFrame {
 
     private void btnBuyPropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuyPropActionPerformed
         Player p = game.getCurrentPlayer();
-        String propName = (((Property) game.board.getProperty(p.getLocation())).getName());
-        String propPrice = (Integer.toString(((Property) game.board.getProperty(p.getLocation())).getCost()));
+        String propName = (((Property) game.board.getCell(p.getLocation())).getName());
+        String propPrice = (Integer.toString(((Property) game.board.getCell(p.getLocation())).getCost()));
         //gui.buyDialog.setVisible(true);
 
     }//GEN-LAST:event_btnBuyPropActionPerformed
@@ -447,11 +447,11 @@ public class GameGUI extends javax.swing.JFrame {
             txtPlrBalance.setText("Balance: " + p.getMoney());
             txtRollValue.setText("Roll Value: " + game.dices.totalVal);
             txtCurrPlayer.setText("Player: " + p.getName());
-            txtCurrPos.setText("Current Position: " + ((Property) game.board.getProperty(p.getLocation())).getName());
+            txtCurrPos.setText("Current Position: " + ((Property) game.board.getCell(p.getLocation())).getName());
             tmrTime.setText(game.getRemainingTime().toString());
-            txtAvaliable.setText(Boolean.toString(((Property) game.board.getProperty(p.getLocation())).isAvailable()));
+            txtAvaliable.setText(Boolean.toString(((Property) game.board.getCell(p.getLocation())).isAvailable()));
             txtBankBalance.setText(Integer.toString(game.bank.getBalance()));
-            txtPrpCost.setText(Integer.toString(((Property) game.board.getProperty(p.getLocation())).getCost()));
+            txtPrpCost.setText(Integer.toString(((Property) game.board.getCell(p.getLocation())).getCost()));
         } catch (NullPointerException ex) {
 
         }
