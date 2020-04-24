@@ -7,8 +7,9 @@ public class OpportunityknockCard extends Cards{
     ArrayList unshuffleList1 = new ArrayList();
     Queue<String> shuffledqueue1 = new LinkedList<>();
 
-    public OpportunityknockCard() {
-        super(37);
+    public OpportunityknockCard(int position) {
+        super(position);
+        
         unshuffleList1.add("Bank pays you divided of £50");
         unshuffleList1.add("You have won a lip sync battle. Collect £100");
         unshuffleList1.add("Advance to Turing Heights");
