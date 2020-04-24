@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.TimeZone;
-import propertytycoongame.Player;
 
 /**
  * Property Tycoon Game Central Control
@@ -27,12 +26,12 @@ public class CentralControl {
     public static Board board  = new Board();
     public static Dice dices = new Dice();
     public static Bank bank = new Bank();
-    public static Jail jail =new Jail(11);
-    public static Park park =new Park(21);
+    public static Jail jail = new Jail(11);
+    public static Park park = new Park(21);
 
 
     public CentralControl(long duration) { // in minutes
-        players = new ArrayList<Player>();
+        players = new ArrayList<>();
         startTime = new Date(); // set start time to be current system time
         this.duration = duration * 60000; // time in milliseconds
 
