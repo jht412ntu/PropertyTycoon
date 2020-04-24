@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.TimeZone;
-import propertytycoongame.Player;
 
 /**
  * Property Tycoon Game Central Control
@@ -27,12 +26,12 @@ public class CentralControl {
     public static Board board  = new Board();
     public static Dice dices = new Dice();
     public static Bank bank = new Bank();
-    public static Jail jail =new Jail(11);
-    public static Park park =new Park(21);
+    public static Jail jail = new Jail(11);
+    public static Park park = new Park(21);
 
 
     public CentralControl(long duration) { // in minutes
-        players = new ArrayList<Player>();
+        players = new ArrayList<>();
         startTime = new Date(); // set start time to be current system time
         this.duration = duration * 60000; // time in milliseconds
 
@@ -61,6 +60,40 @@ public class CentralControl {
     public void initPlayers() {
         Collections.shuffle(players);
     }
+
+    public void firstroll(){
+        HashMap<Player, Integer> map = new HashMap<>();
+        ArrayList<Player> newplayers = new ArrayList<>();
+        for( Player player: players){
+            dices.rollDice();
+            player.totalvalue=dices.getTotalVal();  //each player's points
+            map.put(player,player.totalvalue);//put it in map
+        }
+        List<Map.Entry<Player, Integer>> orderedlist = new ArrayList<>(map.entrySet()); //trans to a list
+        Collections.sort(orderedlist, new Comparator<Map.Entry<Player, Integer>>() {
+            public int compare(Map.Entry<Player, Integer> o1, Map.Entry<Player, Integer> o2) {
+                return (o2.getValue() - o1.getValue()); }});
+           for(int i=0;i<orderedlist.size();i++){
+               newplayers.add(orderedlist.get(i).getKey());
+           }
+           players=newplayers;
+           for (int j=0;j>players.size();j++){
+               if(players.get(j).totalvalue == players.get(j + 1).totalvalue){
+                   dices.rollDice();
+                   players.get(j).totalvalue=dices.getTotalVal();
+                   dices.rollDice();
+                   players.get(j+1).totalvalue=dices.getTotalVal();
+                   if(players.get(j).totalvalue < players.get(j + 1).totalvalue){
+                       Collections.swap(players,j,j+1);
+                   }
+               }
+           }
+
+
+
+
+    }
+
 
     /**
      * Set the current player to the next
