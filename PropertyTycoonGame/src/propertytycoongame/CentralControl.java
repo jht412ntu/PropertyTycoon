@@ -5,6 +5,10 @@ import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 /**
@@ -16,6 +20,9 @@ import java.util.TimeZone;
  * @version 1.0.1
  */
 public class CentralControl {
+
+    static Cell opportunityknockCard;
+    static Cell potluckCard;
     private final Date startTime;
     private final Long duration;
     private Date endTime;
@@ -34,7 +41,6 @@ public class CentralControl {
         players = new ArrayList<>();
         startTime = new Date(); // set start time to be current system time
         this.duration = duration * 60000; // time in milliseconds
-
         if (duration == 0) { // Normal(survival) mode
             mode = "Normal";
             endTime = startTime; // the normal mode does not have specific end time
@@ -42,6 +48,7 @@ public class CentralControl {
             mode = "Abridged";
             endTime = new Date(startTime.getTime() + this.duration);
         }
+        csv.readCsvFile("src/propertytycoongame/csv_board.csv");
     }
 
     /**

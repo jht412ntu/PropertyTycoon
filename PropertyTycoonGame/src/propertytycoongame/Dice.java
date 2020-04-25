@@ -18,20 +18,8 @@ public class Dice {
     private final int[] sides = range(1,6).toArray();
     private int diceVal0, diceVal1;
     private int numDouble = 0;
-
-    /**
-     *
-     */
     public int totalVal;
-
-    /**
-     *
-     */
     public boolean goJail = false;
-
-    /**
-     *
-     */
     public boolean rollAgain = true;
     
     /**
