@@ -18,7 +18,7 @@
 &emsp;&emsp;Mingfeng didn't show up - on the way back to home
 
 9.   `06/04/2020` Initialise Sprint 4 - Online  
-&emsp;&emsp;Finished Sprint 3
+&emsp;&emsp;Finished Sprint 3  
 &emsp;&emsp;Discussed documentation  
 &emsp;&emsp;Basic Board GUI still missing - Hayden's part
 
@@ -42,7 +42,7 @@
 &emsp;&emsp;Decided to attend the Friday seminar support session  
 &emsp;&emsp;Basic Board GUI still missing - Hayden's part
 
-14.   `23/04/2020` Initialise Sprint 6 - Online  
+14.   `23/04/2020` Continue Sprint 7 - Online  
 &emsp;&emsp;[Audio Recording](https://drive.google.com/open?id=1egUVvr4VptAATCgJoT8FBmdk1uwlYjuX)  
 &emsp;&emsp;Tang didn't talk - computer was dead  
 &emsp;&emsp;Some conflicts that hard to fix appeared in Mingfeng's branch  
