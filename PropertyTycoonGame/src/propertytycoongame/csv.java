@@ -10,12 +10,15 @@ import com.csvreader.CsvReader;
 import java.util.HashMap;
 
 import com.csvreader.CsvReader;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 
 public class csv {
     public static void readCsvFile(String filePath){
         try {
-
+            //InputStream in = ClassLoader.getSystemResourceAsStream(filePath);
            Property p1;
             ArrayList<String[]> csvList = new ArrayList<String[]>();
             CsvReader reader = new CsvReader(filePath,',',Charset.forName("GBK"));

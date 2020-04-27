@@ -48,10 +48,15 @@ public class Bank {
         return balance;
     }
 
+    /**
+     * Sets the balance of the Banks balance.
+     *
+     * @param balance
+     */
     public void setBalance(int balance) {
         this.balance = balance;
     }
-    
+
     /**
      * Adds property to the property list
      *
@@ -62,15 +67,17 @@ public class Bank {
     }
 
     /**
+     * Adds money to Banks balance.
      *
-     * @return
+     * @param money The value to be added to the bank balance.
      */
     public void addBalance(int money) {
         balance += money;
     }
 
     /**
-     * Sells a property when the property is available and player has enough money
+     * Sells a property when the property is available and player has enough
+     * money
      *
      * @param player A Player instance
      * @param p A Property instance
@@ -104,11 +111,14 @@ public class Bank {
     }
 
     /**
-     * Builds a house when a player owned all the properties in a group and has enough money
+     * Builds a house when a player owned all the properties in a group and has
+     * enough money
      *
      * @param player A Player instance
      * @param p A Property instance
-     * @throws PropertyException Throwing when "maximum houses exceeded", "player does not owned all properties in a group" and "the player is not the owner"
+     * @throws PropertyException Throwing when "maximum houses exceeded",
+     * "player does not owned all properties in a group" and "the player is not
+     * the owner"
      * @throws BankException Throwing when the player does not have enough money
      */
     public void buildHouse(Player player, Property p) throws PropertyException, BankException {
@@ -186,10 +196,11 @@ public class Bank {
     }
 
     /**
-     * Changes the number of current houses can be built on one specific group when all properties in the group has the same houses
+     * Changes the number of current houses can be built on one specific group
+     * when all properties in the group has the same houses
      *
      * added on 23/04/2020 by Haotian Jiao
-     * 
+     *
      * @param group The specific property group
      */
     public void changePermittedHouses(String group) {
@@ -252,7 +263,8 @@ public class Bank {
      *
      * @param player A Player instance
      * @param p A Property instance
-     * @throws PropertyException Throwing when "a property has none house" and "they are not the owner"
+     * @throws PropertyException Throwing when "a property has none house" and
+     * "they are not the owner"
      */
     public void sellHouse(Player player, Property p) throws PropertyException {
         String currentGroup = p.getGroup();
@@ -281,11 +293,13 @@ public class Bank {
     }
 
     /**
-     * Builds a hotel when a property has 4 houses and the player has enough money
+     * Builds a hotel when a property has 4 houses and the player has enough
+     * money
      *
      * @param player A Player instance
      * @param p A Property instance
-     * @throws PropertyException Throwing when "hotel already exists" and "not has four houses"
+     * @throws PropertyException Throwing when "hotel already exists" and "not
+     * has four houses"
      * @throws BankException Throwing when the player does not have enough money
      */
     public void buildHotel(Player player, Property p) throws PropertyException, BankException {
@@ -318,7 +332,8 @@ public class Bank {
      *
      * @param player A Player instance
      * @param p A Property instance
-     * @throws PropertyException Throwing when there isn't a hotel on the property
+     * @throws PropertyException Throwing when there isn't a hotel on the
+     * property
      */
     public void sellHotel(Player player, Property p) throws PropertyException {
         String currentGroup = p.getGroup();
@@ -397,11 +412,11 @@ public class Bank {
     public void startAuction() {
         onAuction = true;
     }
-    
+
     public boolean isOnAuction() {
         return onAuction;
     }
-    
+
     /**
      * Accepts new offer and refuses low offer also keeps the current winner
      *
@@ -434,11 +449,11 @@ public class Bank {
             throw new PropertyException("The property has been sold.");
         }
     }
-    
+
     public Player getCurrentBidder() {
         return currentBidder;
     }
-    
+
     public int getMaxOffer() {
         return maxOffer;
     }
