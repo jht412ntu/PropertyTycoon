@@ -31,7 +31,7 @@ public class Park extends Cell{
 	/**
      * Player who lands on free parking area collect money
      * 
-     * @param player
+     * @param player Player that has landed on free parking
      */
 	public void collectFine(Player player) {
 		player.addMoney(collectedFine) ;
