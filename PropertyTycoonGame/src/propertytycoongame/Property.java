@@ -16,6 +16,8 @@ public class Property extends Cell implements Comparable<Property>{
     private int improvedRent;
     private final int[] improvedRents;
     protected  boolean available;
+
+    
     private boolean hotelBuilded;
     private int numOfHouse;
     private int status; // 1: one house 2: two houses 3: three houses 4: four houses 5: a hotel
@@ -32,7 +34,7 @@ public class Property extends Cell implements Comparable<Property>{
         this.rent = rent;
         this.location=location;
         improvedRent = 0;
-        improvedRents = new int[4];
+        improvedRents = new int[5];
         improvedRents[0] = oneHouseRent;
         improvedRents[1] = twoHousesRent;
         improvedRents[2] = threeHousesRent;
@@ -47,10 +49,18 @@ public class Property extends Cell implements Comparable<Property>{
     }
 
     /**
+     * @author Hayden
+     * @return String of property name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
      * Sells the property to a player
      *
-     * @param player
-     * @throws PropertyException
+     * @param player The player receiving the property
+     * @throws PropertyException The property cannot be sold
      */
     public void sell(Player player) throws PropertyException {
         if (available) {
@@ -215,18 +225,27 @@ public class Property extends Cell implements Comparable<Property>{
         }
     }
 
-    /*
-     *palyer need to land on a the property to mortage
+    /** Mortgages the property to the bank.
+     * 
+     * Note: The player needs to land on the property to mortgage
      *
-     * */
+     * @param bank The bank paying out the mortgage
+     * @param player The player mortgaging the property
+     */
     public void mortgage(Bank bank,Player player){
-        ;
         if (player.getLocation()==location)
         {
             undermortgage=true;//when property under mortgage player can't collect rent
             bank.addBalance(-(cost/2));
             player.addMoney(cost/2);
-        };
+        }
+    }
+    /**
+     * Sets availability of a property.
+     * @param available if the property is available.
+     */
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 
     /*
@@ -234,7 +253,7 @@ public class Property extends Cell implements Comparable<Property>{
      * property back to available
      *
      * */
-    public  void liquidate(Bank bank,Player player){
+    public void liquidate(Bank bank,Player player){
 
         player.Properties.remove(name);
         bank.addBalance(-(cost/2));
@@ -245,7 +264,7 @@ public class Property extends Cell implements Comparable<Property>{
         undermortgage=false;
         numOfHouse=0;
 
-    };
+    }
 
     /**
      * Gets the status of the property

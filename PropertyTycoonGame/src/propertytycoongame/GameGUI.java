@@ -5,6 +5,22 @@
  */
 package propertytycoongame;
 
+import java.awt.BorderLayout;
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import propertytycoongame.Player.Token;
 
 /**
@@ -12,16 +28,13 @@ import propertytycoongame.Player.Token;
  * @author Hayden
  */
 public class GameGUI extends javax.swing.JFrame {
-    
+
     CentralControl game;
     static GameGUI gui;
-    Dice dice = new Dice();
     Token st;
     Boolean fullGame;
     Boolean running = false;
-    
-    
-    
+
     /**
      * Creates new form GameGUI
      */
@@ -39,43 +52,169 @@ public class GameGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        statsFrame = new javax.swing.JFrame();
+        jPanel2 = new javax.swing.JPanel();
+        JScrollPane = new javax.swing.JScrollPane();
+        tblStats = new javax.swing.JTable();
+        propsFrame = new javax.swing.JFrame();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblOwnProp = new javax.swing.JTable();
+        btnMortgage = new javax.swing.JButton();
+        btnUpgrade = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         playerSetup = new javax.swing.JPanel();
-        btnAddPlayer = new javax.swing.JToggleButton();
         btnStartGame = new javax.swing.JButton();
         txtFplayername = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tokenList = new javax.swing.JList<>();
         nPlayers = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        playerList = new javax.swing.JList<>();
+        btnAddPlayer = new javax.swing.JButton();
         startScreen = new javax.swing.JPanel();
         startFullGame = new javax.swing.JButton();
         startAbridgedGame = new javax.swing.JButton();
         txtGameLength = new javax.swing.JTextField();
         gameScreen = new javax.swing.JPanel();
-        btnRollDice = new javax.swing.JToggleButton();
         txtCurrPos = new javax.swing.JLabel();
         txtRollValue = new javax.swing.JLabel();
         txtCurrPlayer = new javax.swing.JLabel();
         txtPlrBalance = new javax.swing.JLabel();
-        btnNextPlayer = new javax.swing.JToggleButton();
-        tmrTime = new javax.swing.JLabel();
         txtAvaliable = new javax.swing.JLabel();
-        btnBuyProp = new javax.swing.JToggleButton();
+        txtBankBalance = new javax.swing.JLabel();
+        txtPrpCost = new javax.swing.JLabel();
+        btnNextPlayer = new javax.swing.JButton();
+        btnRollDice = new javax.swing.JButton();
+        btnBuyProp = new javax.swing.JButton();
+        btnViewProp = new javax.swing.JButton();
+        txtDouble = new javax.swing.JLabel();
+        txtGroup = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
+        pauseMenuItem = new javax.swing.JMenuItem();
+        saveMenuItem = new javax.swing.JMenuItem();
+        loadMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
+        statsMenu = new javax.swing.JMenu();
+        statsMenuItem = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         contentsMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Property Tycoon Game");
+        statsFrame.setTitle("Game Statistics");
+        statsFrame.setMinimumSize(new java.awt.Dimension(476, 316));
 
-        btnAddPlayer.setText("Add Player");
-        btnAddPlayer.addActionListener(new java.awt.event.ActionListener() {
+        tblStats.setAutoCreateRowSorter(true);
+        JScrollPane.setViewportView(tblStats);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 330, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(JScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 318, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(JScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        javax.swing.GroupLayout statsFrameLayout = new javax.swing.GroupLayout(statsFrame.getContentPane());
+        statsFrame.getContentPane().setLayout(statsFrameLayout);
+        statsFrameLayout.setHorizontalGroup(
+            statsFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statsFrameLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        statsFrameLayout.setVerticalGroup(
+            statsFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statsFrameLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        propsFrame.setSize(new java.awt.Dimension(399, 318));
+
+        jScrollPane3.setViewportView(tblOwnProp);
+
+        btnMortgage.setText("Mortgage");
+        btnMortgage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddPlayerActionPerformed(evt);
+                btnMortgageActionPerformed(evt);
             }
         });
+
+        btnUpgrade.setText("Upgrade");
+        btnUpgrade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpgradeActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("jButton2");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnUpgrade)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnMortgage)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnMortgage)
+                    .addComponent(btnUpgrade)
+                    .addComponent(jButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout propsFrameLayout = new javax.swing.GroupLayout(propsFrame.getContentPane());
+        propsFrame.getContentPane().setLayout(propsFrameLayout);
+        propsFrameLayout.setHorizontalGroup(
+            propsFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(propsFrameLayout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        propsFrameLayout.setVerticalGroup(
+            propsFrameLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(propsFrameLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Property Tycoon Game");
 
         btnStartGame.setText("Start Game");
         btnStartGame.addActionListener(new java.awt.event.ActionListener() {
@@ -84,9 +223,8 @@ public class GameGUI extends javax.swing.JFrame {
             }
         });
 
-        txtFplayername.setText("Player Name");
-
         tokenList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tokenList.setVerifyInputWhenFocusTarget(false);
         tokenList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 tokenListValueChanged(evt);
@@ -96,39 +234,71 @@ public class GameGUI extends javax.swing.JFrame {
 
         nPlayers.setText("Number of Players: ");
 
+        jLabel1.setText("Name:");
+
+        jLabel2.setText("Token:");
+
+        jLabel3.setText("Players in current game:");
+
+        playerList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane2.setViewportView(playerList);
+
+        btnAddPlayer.setText("Add Player");
+        btnAddPlayer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddPlayerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout playerSetupLayout = new javax.swing.GroupLayout(playerSetup);
         playerSetup.setLayout(playerSetupLayout);
         playerSetupLayout.setHorizontalGroup(
             playerSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(playerSetupLayout.createSequentialGroup()
-                .addGap(98, 98, 98)
+                .addGap(30, 30, 30)
+                .addGroup(playerSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addGap(18, 32, Short.MAX_VALUE)
                 .addGroup(playerSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(playerSetupLayout.createSequentialGroup()
-                        .addComponent(nPlayers)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(playerSetupLayout.createSequentialGroup()
                         .addGroup(playerSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtFplayername, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1)
-                            .addComponent(btnAddPlayer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(txtFplayername, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnStartGame)
-                        .addGap(29, 29, 29))))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(108, 108, 108))
+                    .addGroup(playerSetupLayout.createSequentialGroup()
+                        .addGroup(playerSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nPlayers, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(playerSetupLayout.createSequentialGroup()
+                                .addComponent(btnAddPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(86, 86, 86)
+                                .addGroup(playerSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                    .addComponent(btnStartGame, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE))))
+                        .addContainerGap(135, Short.MAX_VALUE))))
         );
         playerSetupLayout.setVerticalGroup(
             playerSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(playerSetupLayout.createSequentialGroup()
                 .addGap(44, 44, 44)
-                .addComponent(txtFplayername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(playerSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtFplayername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(playerSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnStartGame)
-                    .addComponent(btnAddPlayer))
-                .addGap(18, 18, 18)
+                .addGroup(playerSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                    .addComponent(jLabel2)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(playerSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddPlayer)
+                    .addComponent(btnStartGame))
+                .addGap(14, 14, 14)
                 .addComponent(nPlayers)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         startFullGame.setText("Full Game");
@@ -157,7 +327,7 @@ public class GameGUI extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(txtGameLength, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(startFullGame))
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addContainerGap(293, Short.MAX_VALUE))
         );
         startScreenLayout.setVerticalGroup(
             startScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,16 +338,8 @@ public class GameGUI extends javax.swing.JFrame {
                 .addGroup(startScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(startAbridgedGame)
                     .addComponent(txtGameLength, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
-
-        btnRollDice.setText("Roll Dice");
-        btnRollDice.setToolTipText("");
-        btnRollDice.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRollDiceActionPerformed(evt);
-            }
-        });
 
         txtCurrPos.setText("Current Position:");
 
@@ -187,6 +349,12 @@ public class GameGUI extends javax.swing.JFrame {
 
         txtPlrBalance.setText("Balance:");
 
+        txtAvaliable.setText("Avaliable: ");
+
+        txtBankBalance.setText("Bank Balance:");
+
+        txtPrpCost.setText("Cost:");
+
         btnNextPlayer.setText("Next Player");
         btnNextPlayer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -194,7 +362,12 @@ public class GameGUI extends javax.swing.JFrame {
             }
         });
 
-        txtAvaliable.setText("Avaliable: ");
+        btnRollDice.setText("Roll Dice");
+        btnRollDice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRollDiceActionPerformed(evt);
+            }
+        });
 
         btnBuyProp.setText("Buy Property");
         btnBuyProp.addActionListener(new java.awt.event.ActionListener() {
@@ -203,62 +376,94 @@ public class GameGUI extends javax.swing.JFrame {
             }
         });
 
+        btnViewProp.setText("View Properties");
+        btnViewProp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewPropActionPerformed(evt);
+            }
+        });
+
+        txtGroup.setText("Group: ");
+
         javax.swing.GroupLayout gameScreenLayout = new javax.swing.GroupLayout(gameScreen);
         gameScreen.setLayout(gameScreenLayout);
         gameScreenLayout.setHorizontalGroup(
             gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(gameScreenLayout.createSequentialGroup()
+                .addGap(67, 67, 67)
                 .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(gameScreenLayout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnNextPlayer)
-                            .addComponent(txtCurrPlayer)
-                            .addGroup(gameScreenLayout.createSequentialGroup()
-                                .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtCurrPos)
+                    .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(gameScreenLayout.createSequentialGroup()
+                            .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(gameScreenLayout.createSequentialGroup()
+                                    .addComponent(txtCurrPos, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtGroup, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(gameScreenLayout.createSequentialGroup()
                                     .addComponent(btnRollDice)
-                                    .addComponent(txtAvaliable))
-                                .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(gameScreenLayout.createSequentialGroup()
-                                        .addGap(36, 36, 36)
-                                        .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtPlrBalance)
-                                            .addComponent(txtRollValue)))
-                                    .addGroup(gameScreenLayout.createSequentialGroup()
-                                        .addGap(60, 60, 60)
-                                        .addComponent(btnBuyProp))))))
-                    .addGroup(gameScreenLayout.createSequentialGroup()
-                        .addGap(94, 94, 94)
-                        .addComponent(tmrTime)))
-                .addGap(132, 132, 132))
+                                    .addGap(29, 29, 29)
+                                    .addComponent(txtDouble, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtRollValue, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(gameScreenLayout.createSequentialGroup()
+                                            .addGap(183, 183, 183)
+                                            .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(btnViewProp)
+                                                .addComponent(txtBankBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(txtPlrBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addContainerGap(51, Short.MAX_VALUE))
+                        .addGroup(gameScreenLayout.createSequentialGroup()
+                            .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(gameScreenLayout.createSequentialGroup()
+                                    .addComponent(txtAvaliable, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtPrpCost, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnBuyProp))
+                                .addComponent(txtCurrPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(btnNextPlayer)))
         );
         gameScreenLayout.setVerticalGroup(
             gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(gameScreenLayout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
-                .addComponent(tmrTime)
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addComponent(btnNextPlayer)
                 .addGap(18, 18, 18)
                 .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCurrPlayer)
-                    .addComponent(txtPlrBalance))
+                    .addComponent(txtCurrPlayer, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPlrBalance)
+                    .addComponent(txtBankBalance))
                 .addGap(18, 18, 18)
                 .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRollDice)
-                    .addComponent(txtRollValue))
-                .addGap(40, 40, 40)
-                .addComponent(txtCurrPos)
+                    .addComponent(txtRollValue, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDouble, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE))
+                .addGap(35, 35, 35)
+                .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCurrPos)
+                    .addComponent(txtGroup))
                 .addGap(18, 18, 18)
                 .addGroup(gameScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtAvaliable)
-                    .addComponent(btnBuyProp))
+                    .addComponent(txtPrpCost)
+                    .addComponent(btnBuyProp)
+                    .addComponent(btnViewProp))
                 .addGap(31, 31, 31))
         );
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
+
+        pauseMenuItem.setText("Pause");
+        fileMenu.add(pauseMenuItem);
+
+        saveMenuItem.setText("Save");
+        fileMenu.add(saveMenuItem);
+
+        loadMenuItem.setText("Load");
+        fileMenu.add(loadMenuItem);
 
         exitMenuItem.setMnemonic('x');
         exitMenuItem.setText("Exit");
@@ -270,6 +475,18 @@ public class GameGUI extends javax.swing.JFrame {
         fileMenu.add(exitMenuItem);
 
         menuBar.add(fileMenu);
+
+        statsMenu.setText("Stats");
+
+        statsMenuItem.setText("View Game Statistics");
+        statsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                statsMenuItemActionPerformed(evt);
+            }
+        });
+        statsMenu.add(statsMenuItem);
+
+        menuBar.add(statsMenu);
 
         helpMenu.setMnemonic('h');
         helpMenu.setText("Help");
@@ -319,28 +536,36 @@ public class GameGUI extends javax.swing.JFrame {
         gui.playerSetup.setVisible(true);
     }//GEN-LAST:event_startFullGameActionPerformed
 
-    private void btnRollDiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRollDiceActionPerformed
-        if(dice.rollAgain){
-            dice.rollDice();
-            game.getCurrentPlayer().setLocation(game.getCurrentPlayer().getLocation() + dice.totalVal);
-            if(dice.goJail){
-                game.getCurrentPlayer().setLocation(11);
-            }
-            updateGUI();
-        }
-    }//GEN-LAST:event_btnRollDiceActionPerformed
-
     private void btnStartGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartGameActionPerformed
+        Thread updGUI = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                new JFXPanel();
+                Runnable upd = new Runnable() {
+                    @Override
+                    public void run() {
+                        updateGUI();
+                        //System.out.println("Updated GUI");
+                    }
+                };
+                while (true) {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException ex) {
+                    }
+
+                    Platform.runLater(upd);
+                }
+            }
+
+        });
+        updGUI.setDaemon(true);
+        updGUI.start();
+        game.initPlayers();
         gui.playerSetup.setVisible(false);
         gui.gameScreen.setVisible(true);
-        updateGUI();
-    }//GEN-LAST:event_btnStartGameActionPerformed
 
-    private void btnAddPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPlayerActionPerformed
-        Player p = new Player(txtFplayername.getText(), st);
-        game.addPlayer(p);
-        gui.nPlayers.setText("Number of Players: " + game.getPlayers().size());
-    }//GEN-LAST:event_btnAddPlayerActionPerformed
+    }//GEN-LAST:event_btnStartGameActionPerformed
 
     private void tokenListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_tokenListValueChanged
         st = tokenList.getSelectedValue();
@@ -350,69 +575,202 @@ public class GameGUI extends javax.swing.JFrame {
         game = new CentralControl(90);
         gui.startScreen.setVisible(false);
         gui.playerSetup.setVisible(true);
-        
+
         //running = true;
         //tmr();
     }//GEN-LAST:event_startAbridgedGameActionPerformed
 
+    private void btnAddPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPlayerActionPerformed
+        Player p = new Player(txtFplayername.getText(), st);
+        game.addPlayer(p);
+        gui.nPlayers.setText("Number of Players: " + game.getPlayers().size());
+        gui.tokenList.clearSelection();
+        
+        createPlayerList();
+
+    }//GEN-LAST:event_btnAddPlayerActionPerformed
+
     private void btnNextPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextPlayerActionPerformed
         game.nextPlayer();
-        dice.newPlayer();
-        updateGUI();
+        CentralControl.dices.newPlayer();
     }//GEN-LAST:event_btnNextPlayerActionPerformed
 
+    private void btnRollDiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRollDiceActionPerformed
+        if (CentralControl.dices.rollAgain) {
+            CentralControl.dices.rollDice();
+            game.getCurrentPlayer().setLocation(game.getCurrentPlayer().getLocation() + CentralControl.dices.getTotalVal());
+            if (CentralControl.dices.goJail) {
+                game.getCurrentPlayer().setLocation(11);
+            }
+        }
+        //game.getCurrentPlayer().rollDices(); //Using roll dice method in player class
+        if (CentralControl.dices.doub) {
+            txtDouble.setText("Double!");
+        } 
+    }//GEN-LAST:event_btnRollDiceActionPerformed
+
     private void btnBuyPropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuyPropActionPerformed
+        try {
+            Player p = game.getCurrentPlayer();
+            CentralControl.bank.buyProperty(p, (Property) CentralControl.board.getCell(p.getLocation()));
+            createOwnedProp();
+        } catch (PropertyException ex) {
+            JOptionPane.showMessageDialog(gameScreen,ex.getMessage());
+        }
         
     }//GEN-LAST:event_btnBuyPropActionPerformed
 
-    private void updateGUI(){
-        gui.txtPlrBalance.setText("Balance: "+ game.getCurrentPlayer().getMoney());
-        txtRollValue.setText("Roll Value: " + dice.totalVal);
-        txtCurrPlayer.setText("Player:" + (game.getCurrentPlayer()).getName());
-        txtCurrPos.setText("Current Position: " + game.getCurrentPlayer().getLocation());
-        tmrTime.setText(game.getRemainingTime().toString());
-        //gui.txtAvaliable.setText(game.getCurrentPlayer().getLocation().avaliable);    Waiting for board class.
-        
+    private void btnViewPropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewPropActionPerformed
+        createOwnedProp();
+        propsFrame.setVisible(true);
+    }//GEN-LAST:event_btnViewPropActionPerformed
+
+    private void statsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statsMenuItemActionPerformed
+        createStatsTable();
+        statsFrame.setVisible(true);
+    }//GEN-LAST:event_statsMenuItemActionPerformed
+
+    private void btnUpgradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpgradeActionPerformed
+        Player p = game.getCurrentPlayer();
+        try {
+            CentralControl.bank.buildHouse(p,p.propertiesList().get(tblOwnProp.getSelectedRow()));
+        } catch (PropertyException ex) {
+            JOptionPane.showMessageDialog(gameScreen,ex.getMessage());
+        } catch (BankException ex) {
+            JOptionPane.showMessageDialog(gameScreen,ex.getMessage());
+        }
+    }//GEN-LAST:event_btnUpgradeActionPerformed
+
+    private void btnMortgageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMortgageActionPerformed
+        //(game.getCurrentPlayer().propertiesList().get(tblOwnProp.getSelectedRow()))
+    }//GEN-LAST:event_btnMortgageActionPerformed
+
+    private void updateGUI() {
+        try {
+            Player p = game.getCurrentPlayer();
+            txtPlrBalance.setText("Balance: " + p.getMoney());
+            txtRollValue.setText("Roll Value: " + CentralControl.dices.getTotalVal());
+            txtCurrPlayer.setText("Player: " + p.getName());
+            txtCurrPos.setText("Current Position: " + ((Property) CentralControl.board.getCell(p.getLocation())).getName());
+            setTitle("Property Tycoon Game - " + game.getRemainingTime().toString());
+            txtAvaliable.setText("Avaliable: " + Boolean.toString(((Property) CentralControl.board.getCell(p.getLocation())).isAvailable()));
+            txtBankBalance.setText("Bank Balance: " + Integer.toString(CentralControl.bank.getBalance()));
+            txtPrpCost.setText("Cost: " + Integer.toString(((Property) CentralControl.board.getCell(p.getLocation())).getCost()));
+            txtGroup.setText("Group: " + ((Property) CentralControl.board.getCell(p.getLocation())).getGroup());
+        } catch (NullPointerException ex) {
+            System.out.println("GUI not updated");
+        } catch (ClassCastException ex){
+            
+        }
     }
-    
-//    private void tmr(){
-//        while(running){
-//            gui.tmrTime.setText(game.getRemainingTime().toString());
-//        }
-//    }
-    
-    
-    private void createTokenList(){
+
+    public void createOwnedProp() {
+        Player p = game.getCurrentPlayer();
+        String[] colName = {"Name", "Group", "No Houses", "Rent"};
+        Object[] rowData;
+        ArrayList<Object[]> data = new ArrayList<>();
+        for(Property prop : p.propertiesList()){
+            rowData = new Object[]{prop.getName(),prop.getGroup(),prop.getNumOfHouse(),prop.getRent()};
+            data.add(rowData);
+        }
+        DefaultTableModel tableModel = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tableModel.setRowCount(0);
+        for(String col: colName){
+            tableModel.addColumn(col);
+        }
+        for(Object[] d: data){
+            tableModel.addRow(d);
+        }
+        tblOwnProp.setModel(tableModel);
+    }
+
+    private void createTokenList() {
         tokenList.setModel(new javax.swing.AbstractListModel<Token>() {
             Token[] ts = Token.values();
+
             @Override
             public int getSize() {
                 return ts.length;
             }
+
             @Override
             public Token getElementAt(int index) {
                 return ts[index];
             }
-            
+            public void removeElement(Token t){
+                for(int i = 0; i < ts.length; i++){
+                    if(ts[i].equals(t)){
+                        ts[i] = null;
+                    }
+                }
+            }
+
         });
-        //Token[] ts = Token.values();
-        
-        
-//        tokenList.setModel(new javax.swing.AbstractListModel<Token>() {
-//            String[] strings = { "token1", "token2" };
-//            public int getSize() { return strings.length; }
-//            public Object getElementAt(int i) { return strings[i]; }
-//        });
-       
+
     }
-   
-    
+
+    private void createPlayerList() {
+        ArrayList<String> pn = new ArrayList<>();
+        for (Player p : game.getPlayers()) {
+            pn.add(p.getName());
+        }
+
+        playerList.setModel(new javax.swing.AbstractListModel<String>() {
+
+            @Override
+            public int getSize() {
+                return pn.size();
+            }
+
+            @Override
+            public String getElementAt(int index) {
+                return pn.get(index);
+            }
+
+        });
+
+    }
+
+    private void createStatsTable() {
+        String[] colName = {"Player", "Cash", "Properties", "Location"};
+        Object[][] data = new Object[6][4];
+        for (int i = 0; i < game.getPlayers().size(); i++) {
+            Player p = game.getPlayers().get(i);
+            data[i][0] = p.getName();
+            data[i][1] = p.getMoney();
+            data[i][2] = p.propertiesList().size();
+            data[i][3] = p.getLocation();
+        }
+
+        DefaultTableModel tableModel = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tableModel.setRowCount(0);
+
+        for (String col : colName) {
+            tableModel.addColumn(col);
+        }
+        for (Object[] d : data) {
+            tableModel.addRow(d);
+        }
+        tblStats.setModel(tableModel);
+
+//        return data;
+    }
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
-        
+
         /* Set the Mac OS X look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -439,46 +797,71 @@ public class GameGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
-                
+
                 gui = new GameGUI();
                 gui.setVisible(true);
-                gui.startScreen.setVisible(true);
                 gui.gameScreen.setVisible(false);
                 gui.playerSetup.setVisible(false);
-                
-                
+                gui.statsFrame.setVisible(false);
+                gui.propsFrame.setVisible(false);
+                gui.startScreen.setVisible(true);
+
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane JScrollPane;
     private javax.swing.JMenuItem aboutMenuItem;
-    private javax.swing.JToggleButton btnAddPlayer;
-    private javax.swing.JToggleButton btnBuyProp;
-    private javax.swing.JToggleButton btnNextPlayer;
-    private javax.swing.JToggleButton btnRollDice;
+    private javax.swing.JButton btnAddPlayer;
+    private javax.swing.JButton btnBuyProp;
+    private javax.swing.JButton btnMortgage;
+    private javax.swing.JButton btnNextPlayer;
+    private javax.swing.JButton btnRollDice;
     private javax.swing.JButton btnStartGame;
+    private javax.swing.JButton btnUpgrade;
+    private javax.swing.JButton btnViewProp;
     private javax.swing.JMenuItem contentsMenuItem;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JPanel gameScreen;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JMenuItem loadMenuItem;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JLabel nPlayers;
+    private javax.swing.JMenuItem pauseMenuItem;
+    private javax.swing.JList<String> playerList;
     private javax.swing.JPanel playerSetup;
+    private javax.swing.JFrame propsFrame;
+    private javax.swing.JMenuItem saveMenuItem;
     private javax.swing.JButton startAbridgedGame;
     private javax.swing.JButton startFullGame;
     private javax.swing.JPanel startScreen;
-    private javax.swing.JLabel tmrTime;
+    private javax.swing.JFrame statsFrame;
+    private javax.swing.JMenu statsMenu;
+    private javax.swing.JMenuItem statsMenuItem;
+    private javax.swing.JTable tblOwnProp;
+    private javax.swing.JTable tblStats;
     private javax.swing.JList<Token> tokenList;
     private javax.swing.JLabel txtAvaliable;
+    private javax.swing.JLabel txtBankBalance;
     private javax.swing.JLabel txtCurrPlayer;
     private javax.swing.JLabel txtCurrPos;
+    private javax.swing.JLabel txtDouble;
     private javax.swing.JTextField txtFplayername;
     private javax.swing.JTextField txtGameLength;
+    private javax.swing.JLabel txtGroup;
     private javax.swing.JLabel txtPlrBalance;
+    private javax.swing.JLabel txtPrpCost;
     private javax.swing.JLabel txtRollValue;
     // End of variables declaration//GEN-END:variables
 

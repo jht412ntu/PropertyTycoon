@@ -7,8 +7,9 @@ public class OpportunityknockCard extends Cards{
     ArrayList unshuffleList1 = new ArrayList();
     Queue<String> shuffledqueue1 = new LinkedList<>();
 
-    public OpportunityknockCard() {
-        super(37);
+    public OpportunityknockCard(int position) {
+        super(position);
+        
         unshuffleList1.add("Bank pays you divided of £50");
         unshuffleList1.add("You have won a lip sync battle. Collect £100");
         unshuffleList1.add("Advance to Turing Heights");
@@ -22,9 +23,9 @@ public class OpportunityknockCard extends Cards{
         unshuffleList1.add("You are assessed for repairs, £25/house, £100/hotel");
         unshuffleList1.add("Go back 3 spaces");
         unshuffleList1.add("Advance to Skywalker Drive. If you pass GO collect £200");
-        unshuffleList1.add("Go to board.getJail().getPark(). Do not pass GO, do not collect £200");
+        unshuffleList1.add("Go to jail. Do not pass GO, do not collect £200");
         unshuffleList1.add("Drunk in charge of a skateboard. Fine £20");
-        unshuffleList1.add("Get out of board.getJail().getPark() free");
+        unshuffleList1.add("Get out of jail free");
         Collections.shuffle(unshuffleList1);
         Iterator it = unshuffleList1.iterator();
         while(it.hasNext()){
@@ -52,7 +53,7 @@ public class OpportunityknockCard extends Cards{
                 }
             case "Fined £15 for speeding":
                 player.addMoney(-15);
-                CentralControl.board.getPark().addFine(15);
+                CentralControl.park.addFine(15);
             case "Pay university fees of £150":
                 player.addMoney(150);
                 bank.addBalance(-150);
@@ -87,16 +88,16 @@ public class OpportunityknockCard extends Cards{
                 if (player.isPassGo()==true){
                     player.addMoney(200);
                 }
-            case   "Go to board.getJail().getPark(). Do not pass GO, do not collect £200":
-                 player.setLocation(31);//suppose we should have a method gotoboard.getJail().getPark()
-                 CentralControl.board.getJail().put(player);
+            case   "Go to jail. Do not pass GO, do not collect £200":
+                 player.setLocation(31);//suppose we should have a method gotojail
+                 CentralControl.jail.put(player);
                  shuffledqueue1.offer(topcard);
             case   "Drunk in charge of a skateboard. Fine £20":
                   player.addMoney(-20);
-                  CentralControl.board.getPark().addFine(20);
+                  CentralControl.park.addFine(20);
 
-            case  "Get out of board.getJail().getPark() free":
-                player.addAreleaseCard();
+            case  "Get out of jail free":
+                player.addReleaseCard();
 
 
         }        }
