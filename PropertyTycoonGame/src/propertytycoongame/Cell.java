@@ -17,15 +17,15 @@ public class Cell {
 
     /**
      * 
-     * @return 
+     * @return The position of the cell (integer)
      */
     public int getPosition() {
         return position;
     }
 
-    /**
+    /** Sets the location of the cell
      * 
-     * @param location 
+     * @param location The location to be set
      */
     public void setPosition(int location) {
         this.position = location;

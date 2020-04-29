@@ -14,11 +14,10 @@ public class Agent extends Player {
     }
 
     /**
-     * @throws propertytycoongame.PropertyException
+     * @throws propertytycoongame.PropertyException 
      * @author: Mingfeng
      * @throws BankException
-     * @methodsName: run
-     * @description: run agent
+     * run agent
      */
     public void run() throws PropertyException, LackMoneyException, BankException {
         Cell currentCell = CentralControl.board.getCell(this.getLocation());
@@ -40,9 +39,10 @@ public class Agent extends Player {
     }
 
     /**
+     * autoBuyProperty
      * @author: Mingfeng
      * @throws PropertyException
-     * @methodsName: autoBuyProperty
+     * 
      * @description: try automatically to buy property in suitable condition(as much as possible)
      */
     public void autoBuyProperty() throws PropertyException {

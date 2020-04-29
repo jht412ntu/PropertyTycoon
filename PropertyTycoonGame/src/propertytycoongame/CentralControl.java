@@ -20,6 +20,9 @@ import java.util.TimeZone;
  * @version 1.0.1
  */
 public class CentralControl {
+
+    static Cell opportunityknockCard;
+    static Cell potluckCard;
     private final Date startTime;
     private final Long duration;
     private Date endTime;
@@ -27,18 +30,16 @@ public class CentralControl {
     protected static ArrayList<Player> players;
     private int currentPlayer = 0;
     private ArrayList<Player> passedGoPlayers; // players that completed at least a full circuit
-    public static Board board  = new Board();
+    public static Board board = new Board();
     public static Dice dices = new Dice();
     public static Bank bank = new Bank();
     public static Jail jail = new Jail(11);
     public static Park park = new Park(21);
 
-
     public CentralControl(long duration) { // in minutes
         players = new ArrayList<>();
         startTime = new Date(); // set start time to be current system time
         this.duration = duration * 60000; // time in milliseconds
-
         if (duration == 0) { // Normal(survival) mode
             mode = "Normal";
             endTime = startTime; // the normal mode does not have specific end time
@@ -46,12 +47,13 @@ public class CentralControl {
             mode = "Abridged";
             endTime = new Date(startTime.getTime() + this.duration);
         }
+        csv.readCsvFile("src/propertytycoongame/csv_board.csv");
     }
 
     /**
      * Add player to the game
      *
-     * @param
+     * @param p The player to be added to the game
      */
     public void addPlayer(Player p) {
         players.add(p);
@@ -65,54 +67,52 @@ public class CentralControl {
         Collections.shuffle(players);
     }
 
-    public void firstroll(){
+    public void firstroll() {
         HashMap<Player, Integer> map = new HashMap<>();
         ArrayList<Player> newplayers = new ArrayList<>();
-        for( Player player: players){
+        for (Player player : players) {
             dices.rollDice();
-            player.totalvalue=dices.getTotalVal();  //each player's points
-            map.put(player,player.totalvalue);//put it in map
+            player.totalvalue = dices.getTotalVal();  //each player's points
+            map.put(player, player.totalvalue);//put it in map
         }
         List<Map.Entry<Player, Integer>> orderedlist = new ArrayList<>(map.entrySet()); //trans to a list
         Collections.sort(orderedlist, new Comparator<Map.Entry<Player, Integer>>() {
             public int compare(Map.Entry<Player, Integer> o1, Map.Entry<Player, Integer> o2) {
-                return (o2.getValue() - o1.getValue()); }});
-           for(int i=0;i<orderedlist.size();i++){
-               newplayers.add(orderedlist.get(i).getKey());
-           }
-           players=newplayers;
-           for (int j=0;j>players.size();j++){
-               if(players.get(j).totalvalue == players.get(j + 1).totalvalue){
-                   dices.rollDice();
-                   players.get(j).totalvalue=dices.getTotalVal();
-                   dices.rollDice();
-                   players.get(j+1).totalvalue=dices.getTotalVal();
-                   if(players.get(j).totalvalue < players.get(j + 1).totalvalue){
-                       Collections.swap(players,j,j+1);
-                   }
-               }
-           }
-
-
-
+                return (o2.getValue() - o1.getValue());
+            }
+        });
+        for (int i = 0; i < orderedlist.size(); i++) {
+            newplayers.add(orderedlist.get(i).getKey());
+        }
+        players = newplayers;
+        for (int j = 0; j > players.size(); j++) {
+            if (players.get(j).totalvalue == players.get(j + 1).totalvalue) {
+                dices.rollDice();
+                players.get(j).totalvalue = dices.getTotalVal();
+                dices.rollDice();
+                players.get(j + 1).totalvalue = dices.getTotalVal();
+                if (players.get(j).totalvalue < players.get(j + 1).totalvalue) {
+                    Collections.swap(players, j, j + 1);
+                }
+            }
+        }
 
     }
 
-
     /**
-     * Set the current player to the next
+     * Set the current player to the next player in the list of players.
      *
      */
     public void nextPlayer() {
-        if(currentPlayer < players.size()-1){
+        if (currentPlayer < players.size() - 1) {
             currentPlayer += 1;
-        }else{
+        } else {
             currentPlayer = 0;
         }
     }
 
     /**
-     * Set the final end time
+     * Set the final end time.
      *
      * Uses only when the game is playing in normal mode
      */
@@ -121,36 +121,36 @@ public class CentralControl {
     }
 
     /**
-     * Get the current player who should playing the game
+     * Get the current player who should playing the game.
      *
-     * @return Player
+     * @return Player The current players turn
      */
     public Player getCurrentPlayer() {
         return players.get(currentPlayer);
     }
 
     /**
-     * Get all the players
+     * Get all the players.
      *
-     * @return ArrayList
+     * @return ArrayList List of all players currently in the game
      */
     public ArrayList<Player> getPlayers() {
         return players;
     }
 
     /**
-     * Get the current system time
+     * Get the current system time.
      *
-     * @return Date
+     * @return Date Current system time
      */
     public Date getCurrentTime() {
         return new Date();
     }
 
     /**
-     * Get the start time of the game
+     * Get the start time of the game.
      *
-     * @return Date
+     * @return Date Start time of the game
      */
     public Date getStartTime() {
         return startTime;
@@ -188,7 +188,7 @@ public class CentralControl {
     /**
      * Format the time in milliseconds to 00:00:00(H:m:s)
      *
-     * @param milliseconds
+     * @param milliseconds 
      * @return Time
      */
     public Time timeFormat(long milliseconds) {
@@ -198,7 +198,7 @@ public class CentralControl {
     }
 
     public void setPassedGoPlayer(Player player) {
-        for (Player p:players){
+        for (Player p : players) {
             if (p.isPassGo() && !passedGoPlayers.contains(p)) {
                 passedGoPlayers.add(player);
             }

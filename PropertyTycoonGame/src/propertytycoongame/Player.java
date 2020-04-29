@@ -5,7 +5,8 @@ import java.util.ArrayList;
 /**
  * Player
  *
- * Enum tokens can only be choosen in a limited range Players` behaviour in game eg: roll dices, buy
+ * Enum tokens can only be choosen in a limited range Players` behaviour in game
+ * eg: roll dices, buy
  *
  * @author Mingfeng
  */
@@ -20,14 +21,15 @@ public class Player implements Comparable<Player> {
     protected ArrayList<Property> Properties = new ArrayList<>();
     private boolean leavedGame;
     protected int totalvalue;
+
     public enum Token {
         boot, smartphone, goblet, hatstand, cat, spoon;
     }
 
-    /**
+    /** Constructor for class Player.
      *
-     * @param name
-     * @param token
+     * @param name Name of the player
+     * @param token Token of the player
      */
     public Player(String name, Token token) {
         // TODO Auto-generated constructor stub
@@ -129,7 +131,9 @@ public class Player implements Comparable<Player> {
      * @description: add a house in your houses list
      */
     public ArrayList<Property> buyProperty(Property property) {
-        Properties.add(property);
+        this.Properties.add(property);
+        property.setAvailable(false);
+
         return Properties;
     }
 
@@ -146,11 +150,10 @@ public class Player implements Comparable<Player> {
     }
 
     /**
-     * Trading mechanic: selling properties between players used by the GUI
-     * when players defined an agreed price for a property
+     * Trading mechanic: selling properties between players used by the GUI when
+     * players defined an agreed price for a property
      *
-     * author: Haotian Jiao
-     * date: 20/04/2020
+     * author: Haotian Jiao date: 20/04/2020
      *
      * @param player The instance of Player
      * @param p The instance of Property
@@ -289,13 +292,12 @@ public class Player implements Comparable<Player> {
         }
         return 0;
     }
-    
+
     /**
      * For players to mark themselves as leaved
-     * 
-     * author: Haotian Jiao
-     * date: 23/04/2020
-     * 
+     *
+     * author: Haotian Jiao date: 23/04/2020
+     *
      */
     public void setLeaveGame() {
         leavedGame = true;
