@@ -10,7 +10,7 @@ public class OpportunityknockCard extends Cards{
     public OpportunityknockCard(int position) {
         super(position);
         
-        unshuffleList1.add("Bank pays you divided of £50");
+        unshuffleList1.add("CentralControl.bank pays you divided of £50");
         unshuffleList1.add("You have won a lip sync battle. Collect £100");
         unshuffleList1.add("Advance to Turing Heights");
         unshuffleList1.add("Advance to Han Xin Gardens. If you pass GO, collect £200");
@@ -33,16 +33,16 @@ public class OpportunityknockCard extends Cards{
             shuffledqueue1.offer(str);
             it.remove();
         }}
-        public void action(Player player ,Bank bank){
+        public void action(Player player){
         String topcard=shuffledqueue1.poll();
         switch (topcard) {
-            case "Bank pays you divided of £50":
+            case "CentralControl.bank pays you divided of £50":
                 player.addMoney(50);
-                bank.addBalance(-50);
+                CentralControl.bank.addBalance(-50);
                 shuffledqueue1.offer(topcard);
             case "You have won a lip sync battle. Collect £100":
                 player.addMoney(100);
-                bank.addBalance(-100);
+                CentralControl.bank.addBalance(-100);
                 shuffledqueue1.offer(topcard);
             case "Advance to Turing Heights":
                 player.setLocation(40);
@@ -53,10 +53,10 @@ public class OpportunityknockCard extends Cards{
                 }
             case "Fined £15 for speeding":
                 player.addMoney(-15);
-                CentralControl.park.addFine(15);
+                CentralControl.board.getPark().addFine(15);
             case "Pay university fees of £150":
                 player.addMoney(150);
-                bank.addBalance(-150);
+                CentralControl.bank.addBalance(-150);
                 shuffledqueue1.offer(topcard);
             case "Take a trip to Hove station. If you pass GO collect £200":
                 player.setLocation(16);
@@ -64,7 +64,7 @@ public class OpportunityknockCard extends Cards{
                     player.addMoney(200);
                 }
             case "Loan matures, collect £150":
-                bank.addBalance(-150);
+                CentralControl.bank.addBalance(-150);
                 player.addMoney(150);
             case "You are assessed for repairs, £40/house, £115/hotel":
                  for(Property property:player.Properties){
@@ -90,11 +90,11 @@ public class OpportunityknockCard extends Cards{
                 }
             case   "Go to jail. Do not pass GO, do not collect £200":
                  player.setLocation(31);//suppose we should have a method gotojail
-                 CentralControl.jail.put(player);
+                 CentralControl.board.getJail().put(player);
                  shuffledqueue1.offer(topcard);
             case   "Drunk in charge of a skateboard. Fine £20":
                   player.addMoney(-20);
-                  CentralControl.park.addFine(20);
+                  CentralControl.board.getPark().addFine(20);
 
             case  "Get out of jail free":
                 player.addReleaseCard();

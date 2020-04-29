@@ -2,13 +2,11 @@ package propertytycoongame;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Random;
 
 public class Agent extends Player {
 
-    public Agent(String name, Token token) {
+    public Agent(String name, Token token) throws DuplicateException {
         super(name, token);
         // TODO Auto-generated constructor stub
     }
@@ -16,28 +14,47 @@ public class Agent extends Player {
     /**
      * @throws propertytycoongame.PropertyException 
      * @author: Mingfeng
-     * @throws BankException
+     * @throws BankException,LackMoneyException 
      * run agent
      */
-    public void run() throws PropertyException, LackMoneyException, BankException {
+    public void run() throws PropertyException, LackMoneyException{
+        rollDices();
         Cell currentCell = CentralControl.board.getCell(this.getLocation());
-        // Stay in Jail two turns
-        if (CentralControl.board.getJail().turnInJail(this) == 2) // Use card or money to release itself
-        {
-            if (released() || payReleased()) {
-                run();
-            } else {
-                CentralControl.board.getJail().pass(this);
-            }
-        } else {
-            rollDices();
-            autoBuyProperty();
-            autoBuild();
-            autoPayRent(currentCell);
-            autoSelectCard (currentCell);
-        }
+        autoBuyProperty(currentCell);
+        autoBuild();
+        autoPayRent(currentCell);
+        autoSelectCard (currentCell);
     }
 
+    /**
+     * @methodsName:autoBuyProperty
+     * @author: Mingfeng
+     * @throws PropertyException
+     * 
+     * @description: roll dices
+     */
+    public void rollDices() {
+    	if (CentralControl.board.getJail().turnInJail(this) == 2) // Use card or money to release itself
+    		try {
+				if (released() || payReleased()) 
+				    rollDices();
+			} catch (LackMoneyException e) {
+				// TODO Auto-generated catch block
+				CentralControl.board.getJail().pass(this);
+			}
+    	else 
+    		CentralControl.dices.rollDice();
+    		int tLocation = getLocation() + CentralControl.dices.getTotalVal();
+            if (tLocation > 40) {
+                setPassGo(true);
+                CentralControl.bank.distributeCash(this, 200);
+                tLocation -= 40;
+                CentralControl.bank.addBalance(-200);
+            }
+            setLocation(tLocation);
+    }
+    
+    
     /**
      * autoBuyProperty
      * @author: Mingfeng
@@ -45,33 +62,31 @@ public class Agent extends Player {
      * 
      * @description: try automatically to buy property in suitable condition(as much as possible)
      */
-    public void autoBuyProperty() throws PropertyException {
-        Property p = (Property) CentralControl.board.theboard.get(getLocation());
-        if (p.isAvailable() == true && p.getOwner() == null && getMoney() >= p.getCost()) {
-            CentralControl.bank.buyProperty(this, p);
-        }
+    public void autoBuyProperty(Cell currentCell) throws PropertyException  {
+    	if (Property.class.isInstance(currentCell)) {
+    		Property p = (Property)currentCell;
+        	CentralControl.bank.buyProperty(this, p);
+    	}
+    	else
+    		return;
     }
 
     /**
-     * @throws propertytycoongame.BankException
      * @author: Mingfeng
-     * @throws PropertyException,BankException
+     * @throws PropertyException
+     * @throws LackMoneyException 
      * @methodsName: autoBuildHouse
      * @description: try automatically to buy house and hotel in suitable condition( money is greater than 400)
      */
-    public void autoBuild() throws PropertyException, BankException {
+    public void autoBuild() throws PropertyException, LackMoneyException {
         ArrayList<Property> propertiesBuild = searchPropertyBuild();
-        while (getMoney() >= 400) {
-            for (Property property : propertiesBuild) {
-                if (getMoney() >= 400) {
-                    if (property.getNumOfHouse() != 4) {
+        while (getMoney() >= 400) 
+            for (Property property : propertiesBuild) 
+                if (getMoney() >= 400) 
+                    if (property.getNumOfHouse() != 4) 
                         CentralControl.bank.buildHouse(this, property);
-                    } else {
+                    else 
                         CentralControl.bank.buildHotel(this, property);
-                    }
-                }
-            }
-        }
     }
 
     /**
@@ -100,19 +115,10 @@ public class Agent extends Player {
      * @param currentCell the cell of the current position
      */
     public void autoPayRent(Cell currentCell) {
-        if (currentCell.getClass().toString().endsWith("Property")) {
-            if (!((Property)currentCell).getOwner().equals(this) && ((Property)currentCell).getOwner() != null) {
-                if (getMoney() >= ((Property)currentCell).getRent()) {
+        if (currentCell.getClass().toString().endsWith("Property")) 
+            if (!((Property)currentCell).getOwner().equals(this) && ((Property)currentCell).getOwner() != null) 
+                if (getMoney() >= ((Property)currentCell).getRent()) 
                     payRent(((Property)currentCell), ((Property)currentCell).getOwner());
-                } else {
-                    if (raiseMoney()) {
-                        autoPayRent(currentCell);
-                    } else {
-                        setLeaveGame(); //The player will be removed(by GUI via CentralControl) after the current turn.
-                    }
-                }
-            }
-        }
     }
     
     /**
@@ -125,9 +131,9 @@ public class Agent extends Player {
      */
     public void autoSelectCard (Cell currentCell) {
         if (currentCell.getClass().toString().endsWith("PotluckCard")) {
-            ((PotluckCard)currentCell).action(this, CentralControl.bank);
+            ((PotluckCard)currentCell).action(this);
         } else if (currentCell.getClass().toString().endsWith("OpportunityknockCard")) {
-            ((OpportunityknockCard)currentCell).action(this, CentralControl.bank);
+            ((OpportunityknockCard)currentCell).action(this);
         }
     }
 

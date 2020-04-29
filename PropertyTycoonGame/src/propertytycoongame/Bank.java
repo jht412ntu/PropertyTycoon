@@ -119,9 +119,9 @@ public class Bank {
      * @throws PropertyException Throwing when "maximum houses exceeded",
      * "player does not owned all properties in a group" and "the player is not
      * the owner"
-     * @throws BankException Throwing when the player does not have enough money
+     * @throws LackMoneyException Throwing when the player does not have enough money
      */
-    public void buildHouse(Player player, Property p) throws PropertyException, BankException {
+    public void buildHouse(Player player, Property p) throws PropertyException, LackMoneyException {
         String currentGroup = p.getGroup();
         if (p.getOwner() == player) {
             if (checkPermission(player, p)) {
@@ -129,7 +129,7 @@ public class Bank {
                     throw new PropertyException("Maximum houses exceeded. If you wanted to build a hotel?");
                 } else {
                     if (currentGroup.equals("Brown") || currentGroup.equals("Blue")) {
-                        checkEnoughMoney(player, 50);
+                    	player.minusMoney(50);
                         switch (currentGroup) {
                             case "Brown":
                                 changePermittedHouses("Brown");
@@ -143,7 +143,7 @@ public class Bank {
                                 }
                         }
                     } else if (currentGroup.equals("Purple") || currentGroup.equals("Orange")) {
-                        checkEnoughMoney(player, 100);
+                    	player.minusMoney(100);
                         switch (currentGroup) {
                             case "Purple":
                                 changePermittedHouses("Purple");
@@ -157,7 +157,7 @@ public class Bank {
                                 }
                         }
                     } else if (currentGroup.equals("Red") || currentGroup.equals("Yellow")) {
-                        checkEnoughMoney(player, 150);
+                    	player.minusMoney(150);
                         switch (currentGroup) {
                             case "Red":
                                 changePermittedHouses("Red");
@@ -171,7 +171,7 @@ public class Bank {
                                 }
                         }
                     } else if (currentGroup.equals("Green") || currentGroup.equals("Deep blue")) {
-                        checkEnoughMoney(player, 200);
+                    	player.minusMoney(200);
                         switch (currentGroup) {
                             case "Green":
                                 changePermittedHouses("Green");
@@ -300,26 +300,26 @@ public class Bank {
      * @param p A Property instance
      * @throws PropertyException Throwing when "hotel already exists" and "not
      * has four houses"
-     * @throws BankException Throwing when the player does not have enough money
+     * @throws LackMoneyException Throwing when the player does not have enough money
      */
-    public void buildHotel(Player player, Property p) throws PropertyException, BankException {
+    public void buildHotel(Player player, Property p) throws PropertyException, LackMoneyException {
         String currentGroup = p.getGroup();
         if (p.ifHotelBuilded()) {
             throw new PropertyException("Hotel already exists. Each property can only has one hotel.");
         } else {
             if (p.getNumOfHouse() == 4) {
                 if (currentGroup.equals("Brown") || currentGroup.equals("Blue")) {
-                    checkEnoughMoney(player, 50);
+                    player.minusMoney(50);
                     p.buildHotel();
                 } else if (currentGroup.equals("Purple") || currentGroup.equals("Orange")) {
-                    checkEnoughMoney(player, 100);
+                	player.minusMoney(100);
                     p.buildHotel();
                 } else if (currentGroup.equals("Red") || currentGroup.equals("Yellow")) {
-                    checkEnoughMoney(player, 150);
-                    p.buildHotel();
+                    player.minusMoney(150);
+                	p.buildHotel();
                 } else if (currentGroup.equals("Green") || currentGroup.equals("Deep blue")) {
-                    checkEnoughMoney(player, 200);
-                    p.buildHotel();
+                    player.minusMoney(200);
+                	p.buildHotel();
                 }
             } else {
                 throw new PropertyException("Four houses needed before building a hotel.");
@@ -382,27 +382,13 @@ public class Bank {
         return permitted;
     }
 
-    /**
-     * Checks if a player has enough amount of money
-     *
-     * @param player A Player instance
-     * @param amount Set amount
-     * @throws BankException Throwing when the player does not have enough money
-     */
-    public void checkEnoughMoney(Player player, int amount) throws BankException {
-        if (player.getMoney() >= amount) {
-            player.addMoney(-amount);
-            balance += amount;
-        } else {
-            throw new BankException("The player does not have enough money to build.");
-        }
-    }
 
     /**
      * Distributes amount of cash to certain player
      *
      * @param player A Player instance
      * @param amount Set amount
+     * @throws LackMoneyException 
      */
     public void distributeCash(Player player, int amount) { // 1500 initial distribution and 200 when passes GO
         player.addMoney(amount);
