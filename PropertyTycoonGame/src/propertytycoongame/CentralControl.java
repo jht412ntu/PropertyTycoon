@@ -17,7 +17,7 @@ import java.util.TimeZone;
  * Class that provides functionality for starting and controlling the game.
  *
  * @author Haotian Jiao
- * @version 1.0.1
+ * @version 1.1.0
  */
 public class CentralControl {
 
@@ -206,21 +206,24 @@ public class CentralControl {
     
     /**
      * @description Rank players when ends the game
-     * @return ArrayList<Player>
+     * @return ArrayList
      */
     public ArrayList<Player> endGame() {
-    	ArrayList<Player> rankPlayers = (ArrayList<Player>) players.clone();
-    	Collections.sort(rankPlayers, new Comparator<Player>() {
-			@Override
-			public int compare(Player o1, Player o2) {
-				// TODO Auto-generated method stub
-				if (o1.getMoney() > o2.getMoney()) {
-		            return 1;
-		        }
-		        return 0;
-			}
+        ArrayList<Player> rankPlayers = (ArrayList<Player>) players.clone();
+        Collections.sort(rankPlayers, new Comparator<Player>() {
+            @Override
+            public int compare(Player o1, Player o2) {
+                if (o1.getMoney() > o2.getMoney()) {
+                    return 1;
+                }
+                return 0;
+            }
         });
-		rank.addAll(rankPlayers);
-		return rank;
-	}
+        rank.addAll(rankPlayers);
+        return rank;
+    }
+
+    public void auction() {
+        bank.startAuction();
+    }
 }
