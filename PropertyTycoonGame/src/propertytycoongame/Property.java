@@ -16,8 +16,6 @@ public class Property extends Cell implements Comparable<Property>{
     private int improvedRent;
     private final int[] improvedRents;
     protected  boolean available;
-
-    
     private boolean hotelBuilded;
     private int numOfHouse;
     private int status; // 1: one house 2: two houses 3: three houses 4: four houses 5: a hotel

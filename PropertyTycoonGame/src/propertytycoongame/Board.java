@@ -4,11 +4,12 @@ import java.util.HashMap;
 
 public class Board {
 
-    public HashMap<Integer, Cell> theboard = new HashMap<>();
+    protected HashMap<Integer, Cell> theboard = new HashMap<>();
 
     private Park park = new Park(21);
     private Jail jail = new Jail(11);
-    
+    private PotluckCard potluckCard = new PotluckCard(18);
+    private OpportunityknockCard opportunityknockCard = new OpportunityknockCard(8);
     public  Board () {
 
         //theboard.put(cell.location,cell);
@@ -62,10 +63,6 @@ public class Board {
         p31.available=false;
         p37.available=false;
         p39.available=false;
-
-
-
-
         theboard.put(1,p1);
         theboard.put(2,p2);
         theboard.put(3,potluck);
@@ -121,4 +118,12 @@ public class Board {
     public Cell getCell(int loc){
         return theboard.get(loc);
     }
+    
+    public PotluckCard getPotluckCard() {
+		return potluckCard;
+	}
+    
+    public OpportunityknockCard getOpportunityknockCard() {
+		return opportunityknockCard;
+	}
 }

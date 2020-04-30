@@ -21,20 +21,16 @@ import java.util.TimeZone;
  */
 public class CentralControl {
 
-    static Cell opportunityknockCard;
-    static Cell potluckCard;
     private final Date startTime;
     private final Long duration;
     private Date endTime;
     private String mode;
+    private static ArrayList<Player> rank = new ArrayList<Player>();
     protected static ArrayList<Player> players;
-    private int currentPlayer = 0;
-    private ArrayList<Player> passedGoPlayers; // players that completed at least a full circuit
+    private static int currentPlayer = 0;
     public static Board board = new Board();
     public static Dice dices = new Dice();
     public static Bank bank = new Bank();
-    public static Jail jail = new Jail(11);
-    public static Park park = new Park(21);
 
     public CentralControl(long duration) { // in minutes
         players = new ArrayList<>();
@@ -109,6 +105,7 @@ public class CentralControl {
         } else {
             currentPlayer = 0;
         }
+        dices.newPlayer();
     }
 
     /**
@@ -125,7 +122,7 @@ public class CentralControl {
      *
      * @return Player The current players turn
      */
-    public Player getCurrentPlayer() {
+    public static Player getCurrentPlayer() {
         return players.get(currentPlayer);
     }
 
@@ -197,24 +194,33 @@ public class CentralControl {
         return hms;
     }
 
-    public void setPassedGoPlayer(Player player) {
-        for (Player p : players) {
-            if (p.isPassGo() && !passedGoPlayers.contains(p)) {
-                passedGoPlayers.add(player);
-            }
-        }
+    
+    /**
+     * @description Remove a player from the game
+     *
+     */
+    public static void leaveGame() {
+        players.remove(getCurrentPlayer());
+        rank.add(getCurrentPlayer());
     }
-
-    public boolean isPlayerPassedGo(Player player) {
-        if (passedGoPlayers.contains(player)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public void leaveGame() {
-        passedGoPlayers.remove(currentPlayer);
-        players.remove(currentPlayer);
-    }
+    
+    /**
+     * @description Rank players when ends the game
+     * @return ArrayList<Player>
+     */
+    public ArrayList<Player> endGame() {
+    	ArrayList<Player> rankPlayers = (ArrayList<Player>) players.clone();
+    	Collections.sort(rankPlayers, new Comparator<Player>() {
+			@Override
+			public int compare(Player o1, Player o2) {
+				// TODO Auto-generated method stub
+				if (o1.getMoney() > o2.getMoney()) {
+		            return 1;
+		        }
+		        return 0;
+			}
+        });
+		rank.addAll(rankPlayers);
+		return rank;
+	}
 }
