@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class Agent extends Player {
 
-    public Agent(String name, Token token) {
+    public Agent(String name, Token token) throws Exception{
         super(name, token);
         // TODO Auto-generated constructor stub
     }

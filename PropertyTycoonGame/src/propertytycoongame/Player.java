@@ -31,10 +31,19 @@ public class Player implements Comparable<Player> {
      * @param name Name of the player
      * @param token Token of the player
      */
-    public Player(String name, Token token) {
+    public Player(String name, Token token) throws Exception{
         // TODO Auto-generated constructor stub
-        this.name = name;
-        this.token = token;
+        if(name.isEmpty()){
+            throw new Exception("Player must have name");
+        } else{
+            this.name = name;
+        }
+        if(token == null){
+            throw new Exception("Player must have token");
+        } else{
+            this.token = token;
+        }
+        
         leavedGame = false;
     }
 
