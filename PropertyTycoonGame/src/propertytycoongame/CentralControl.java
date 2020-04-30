@@ -51,16 +51,33 @@ public class CentralControl {
      *
      * @param p The player to be added to the game
      */
-    public void addPlayer(Player p) {
-        players.add(p);
+    public void addPlayer(Player p) throws Exception {
+        boolean used = false;
+        if (players.isEmpty()) {
+            players.add(p);
+        } else {
+            for (Player x : players) {
+                if (x.getToken().equals(p.getToken())) {
+                    used = true;
+                    throw new Exception("Token already selected by another player");
+                    
+                }
+            } if(!used){
+                players.add(p);
+            }
+        }
     }
 
     /**
      * Shuffling all the players
      *
      */
-    public void initPlayers() {
-        Collections.shuffle(players);
+    public void initPlayers() throws Exception{
+        if(players.size() < 1){
+            throw new Exception("Minimum of two players required to start game");
+        } else{
+            Collections.shuffle(players);
+        }
     }
 
     public void firstroll() {
@@ -185,7 +202,7 @@ public class CentralControl {
     /**
      * Format the time in milliseconds to 00:00:00(H:m:s)
      *
-     * @param milliseconds 
+     * @param milliseconds
      * @return Time
      */
     public Time timeFormat(long milliseconds) {
