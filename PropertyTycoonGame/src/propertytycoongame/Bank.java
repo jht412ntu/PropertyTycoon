@@ -443,4 +443,33 @@ public class Bank {
     public int getMaxOffer() {
         return maxOffer;
     }
+    
+    /**
+     * Gets the corresponding house price of a property
+     * 
+     * @param p A Property instance
+     * @return The property's corresponding house price
+     */
+    public int getHousePrice(Property p) {
+        switch(p.getGroup()) {
+            case "Brown":
+                return 50;
+            case "Blue":
+                return 50;
+            case "Purple":
+                return 100;
+            case "Orange":
+                return 100;
+            case "Red":
+                return 150;
+            case "Yellow":
+                return 150;
+            case "Green":
+                return 200;
+            case "Deep blue":
+                return 200;
+            default:
+                return 0;
+        }
+    }
  }
