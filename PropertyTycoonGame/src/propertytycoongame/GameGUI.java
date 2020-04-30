@@ -561,7 +561,11 @@ public class GameGUI extends javax.swing.JFrame {
         });
         updGUI.setDaemon(true);
         updGUI.start();
+        try{
         game.initPlayers();
+        }catch (Exception ex){
+            JOptionPane.showMessageDialog(playerSetup, ex.getMessage());
+        }
         gui.playerSetup.setVisible(false);
         gui.gameScreen.setVisible(true);
 
@@ -581,14 +585,16 @@ public class GameGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_startAbridgedGameActionPerformed
 
     private void btnAddPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPlayerActionPerformed
-        //upadate Non-duplicate player exist
-    	Player p = new Player(txtFplayername.getText(), st);
-        game.addPlayer(p);
-        gui.nPlayers.setText("Number of Players: " + game.getPlayers().size());
-        gui.tokenList.clearSelection();
-        
-        createPlayerList();
+        try {
+            Player p = new Player(txtFplayername.getText(), st);
+            game.addPlayer(p);
+            gui.nPlayers.setText("Number of Players: " + game.getPlayers().size());
+            gui.tokenList.clearSelection();
 
+            createPlayerList();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(playerSetup, ex.getMessage());
+        }
     }//GEN-LAST:event_btnAddPlayerActionPerformed
 
     private void btnNextPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextPlayerActionPerformed
@@ -607,7 +613,7 @@ public class GameGUI extends javax.swing.JFrame {
         //game.getCurrentPlayer().rollDices(); //Using roll dice method in player class
         if (CentralControl.dices.doub) {
             txtDouble.setText("Double!");
-        } 
+        }
     }//GEN-LAST:event_btnRollDiceActionPerformed
 
     private void btnBuyPropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuyPropActionPerformed
@@ -616,9 +622,9 @@ public class GameGUI extends javax.swing.JFrame {
             CentralControl.bank.buyProperty(p, (Property) CentralControl.board.getCell(p.getLocation()));
             createOwnedProp();
         } catch (PropertyException ex) {
-            JOptionPane.showMessageDialog(gameScreen,ex.getMessage());
+            JOptionPane.showMessageDialog(gameScreen, ex.getMessage());
         }
-        
+
     }//GEN-LAST:event_btnBuyPropActionPerformed
 
     private void btnViewPropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewPropActionPerformed
@@ -643,7 +649,9 @@ public class GameGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUpgradeActionPerformed
 
     private void btnMortgageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMortgageActionPerformed
-        //(game.getCurrentPlayer().propertiesList().get(tblOwnProp.getSelectedRow()))
+        Player p = game.getCurrentPlayer();
+
+        //(game.getCurrentPlayer().propertiesList().get(tblOwnProp.))
     }//GEN-LAST:event_btnMortgageActionPerformed
 
     private void updateGUI() {
@@ -660,8 +668,8 @@ public class GameGUI extends javax.swing.JFrame {
             txtGroup.setText("Group: " + ((Property) CentralControl.board.getCell(p.getLocation())).getGroup());
         } catch (NullPointerException ex) {
             System.out.println("GUI not updated");
-        } catch (ClassCastException ex){
-            
+        } catch (ClassCastException ex) {
+
         }
     }
 
@@ -681,10 +689,10 @@ public class GameGUI extends javax.swing.JFrame {
             }
         };
         tableModel.setRowCount(0);
-        for(String col: colName){
+        for (String col : colName) {
             tableModel.addColumn(col);
         }
-        for(Object[] d: data){
+        for (Object[] d : data) {
             tableModel.addRow(d);
         }
         tblOwnProp.setModel(tableModel);
@@ -703,9 +711,10 @@ public class GameGUI extends javax.swing.JFrame {
             public Token getElementAt(int index) {
                 return ts[index];
             }
-            public void removeElement(Token t){
-                for(int i = 0; i < ts.length; i++){
-                    if(ts[i].equals(t)){
+
+            public void removeElement(Token t) {
+                for (int i = 0; i < ts.length; i++) {
+                    if (ts[i].equals(t)) {
                         ts[i] = null;
                     }
                 }
