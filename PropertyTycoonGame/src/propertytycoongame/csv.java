@@ -43,19 +43,19 @@ public class csv {
                     p1.available=true;
                 }
                 if(csvList.get(row)[1] .equals( "Opportunity Knocks")){
-                   CentralControl.board.theboard.put(row,CentralControl.opportunityknockCard);
+                   CentralControl.board.theboard.put(row,CentralControl.board.getOpportunityknockCard());
                 }
                 if(csvList.get(row)[1].equals( "Pot Luck")){
-                    CentralControl.board.theboard.put(row,CentralControl.potluckCard);
+                    CentralControl.board.theboard.put(row,CentralControl.board.getPotluckCard());
                 }
                 if(csvList.get(row)[10].equals("No")){
                     p1.available=false;
                 }
                 if(csvList.get(row)[1].equals("Jail/Just visiting")){
-                    CentralControl.board.theboard.put(row,CentralControl.jail);
+                    CentralControl.board.theboard.put(row,CentralControl.board.getJail());
                 }
                 if(csvList.get(row)[1].equals( "Free Parking")){
-                    CentralControl.board.theboard.put(row,CentralControl.park);
+                    CentralControl.board.theboard.put(row,CentralControl.board.getPark());
                 }
 
             }

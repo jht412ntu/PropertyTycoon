@@ -640,11 +640,11 @@ public class GameGUI extends javax.swing.JFrame {
     private void btnUpgradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpgradeActionPerformed
         Player p = game.getCurrentPlayer();
         try {
-            CentralControl.bank.buildHouse(p, p.propertiesList().get(tblOwnProp.getSelectedRow()));
+            CentralControl.bank.buildHouse(p,p.getPropertiesList().get(tblOwnProp.getSelectedRow()));
         } catch (PropertyException ex) {
-            JOptionPane.showMessageDialog(gameScreen, ex.getMessage());
-        } catch (BankException ex) {
-            JOptionPane.showMessageDialog(gameScreen, ex.getMessage());
+            JOptionPane.showMessageDialog(gameScreen,ex.getMessage());
+        } catch (LackMoneyException ex) {
+            JOptionPane.showMessageDialog(gameScreen,ex.getMessage());
         }
     }//GEN-LAST:event_btnUpgradeActionPerformed
 
@@ -678,8 +678,8 @@ public class GameGUI extends javax.swing.JFrame {
         String[] colName = {"Name", "Group", "No Houses", "Rent"};
         Object[] rowData;
         ArrayList<Object[]> data = new ArrayList<>();
-        for (Property prop : p.propertiesList()) {
-            rowData = new Object[]{prop.getName(), prop.getGroup(), prop.getNumOfHouse(), prop.getRent()};
+        for(Property prop : p.getPropertiesList()){
+            rowData = new Object[]{prop.getName(),prop.getGroup(),prop.getNumOfHouse(),prop.getRent()};
             data.add(rowData);
         }
         DefaultTableModel tableModel = new DefaultTableModel() {
@@ -753,7 +753,7 @@ public class GameGUI extends javax.swing.JFrame {
             Player p = game.getPlayers().get(i);
             data[i][0] = p.getName();
             data[i][1] = p.getMoney();
-            data[i][2] = p.propertiesList().size();
+            data[i][2] = p.getPropertiesList().size();
             data[i][3] = p.getLocation();
         }
 
