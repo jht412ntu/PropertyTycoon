@@ -10,7 +10,7 @@ public class OpportunityknockCard extends Cards{
     public OpportunityknockCard(int position) {
         super(position);
         
-        unshuffleList1.add("CentralControl.bank pays you divided of £50");
+        unshuffleList1.add("Bank pays you divided of £50");
         unshuffleList1.add("You have won a lip sync battle. Collect £100");
         unshuffleList1.add("Advance to Turing Heights");
         unshuffleList1.add("Advance to Han Xin Gardens. If you pass GO, collect £200");
@@ -36,7 +36,7 @@ public class OpportunityknockCard extends Cards{
         public void action(Player player){
         String topcard=shuffledqueue1.poll();
         switch (topcard) {
-            case "CentralControl.bank pays you divided of £50":
+            case "Bank pays you divided of £50":
                 player.addMoney(50);
                 CentralControl.bank.addBalance(-50);
                 shuffledqueue1.offer(topcard);
