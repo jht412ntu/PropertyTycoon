@@ -406,33 +406,40 @@ public class Bank {
     /**
      * Accepts new offer and refuses low offer also keeps the current winner
      *
+     * modified date: 30/04/2020
+     * modified: checks if the player has completed a full circuit
+     * 
      * @param p A Property instance
      * @param player Current bidder
      * @param offer Current offer
      * @throws PropertyException
      */
-    public void bid(Property p, Player player, int offer) throws PropertyException {
-        if (p.isAvailable()) {
-            if (currentBidder == null) {
-                if (player.getMoney() >= offer) {
-                    maxOffer = offer;
-                    currentBidder = player;
-                }
-            } else {
-                if (offer > maxOffer) {
+    public void bid(Property p, Player player, int offer) throws PropertyException, BankException {
+        if (player.isPassGo()) {
+            if (p.isAvailable()) {
+                if (currentBidder == null) {
                     if (player.getMoney() >= offer) {
                         maxOffer = offer;
-                        sameMaxOffer = 0;
                         currentBidder = player;
-                        sameOfferBidder = null;
                     }
-                } else if (offer == maxOffer) {
-                    sameMaxOffer = offer;
-                    sameOfferBidder = player;
+                } else {
+                    if (offer > maxOffer) {
+                        if (player.getMoney() >= offer) {
+                            maxOffer = offer;
+                            sameMaxOffer = 0;
+                            currentBidder = player;
+                            sameOfferBidder = null;
+                        }
+                    } else if (offer == maxOffer) {
+                        sameMaxOffer = offer;
+                        sameOfferBidder = player;
+                    }
                 }
+            } else {
+                throw new PropertyException("The property has been sold.");
             }
         } else {
-            throw new PropertyException("The property has been sold.");
+            throw new BankException("A player has to completed a full circuit before join an auction.");
         }
     }
 
