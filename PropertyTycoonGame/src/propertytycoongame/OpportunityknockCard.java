@@ -67,7 +67,7 @@ public class OpportunityknockCard extends Cards{
                 CentralControl.bank.addBalance(-150);
                 player.addMoney(150);
             case "You are assessed for repairs, £40/house, £115/hotel":
-                 for(Property property:player.Properties){
+                 for(Property property:player.getPropertiesList()){
                      player.addMoney(-property.getNumOfHouse()*40);
                      if(property.ifHotelBuilded()!=false);
                      player.addMoney(-115);
@@ -76,7 +76,7 @@ public class OpportunityknockCard extends Cards{
                  player.setLocation(0);
                  shuffledqueue1.offer(topcard);
             case "You are assessed for repairs, £25/house, £100/hotel":
-                for(Property property:player.Properties){
+                for(Property property:player.getPropertiesList()){
                     player.addMoney(-property.getNumOfHouse()*40);
                     if(property.ifHotelBuilded()!=false);
                     player.addMoney(-115);

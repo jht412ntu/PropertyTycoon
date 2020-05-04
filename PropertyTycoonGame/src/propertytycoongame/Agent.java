@@ -6,18 +6,17 @@ import java.util.Random;
 
 public class Agent extends Player {
 
-    public Agent(String name, Token token) throws DuplicateException {
+    public Agent(String name, Token token) throws CreatePlayerException {
         super(name, token);
-        // TODO Auto-generated constructor stub
     }
 
     /**
      * @throws propertytycoongame.PropertyException 
      * @author: Mingfeng
      * @throws BankException,LackMoneyException 
-     * run agent
+     * @description: run agent like normal player in specify rules
      */
-    public void run() throws PropertyException, LackMoneyException{
+    public void run() {
         rollDices();
         Cell currentCell = CentralControl.board.getCell(this.getLocation());
         autoBuyProperty(currentCell);
@@ -30,15 +29,14 @@ public class Agent extends Player {
      * @methodsName:rollDices
      * @author: Mingfeng
      * @throws PropertyException
-     * 
-     * @description: roll dices
+     * @description: roll dices and act based what the game rules is required
      */
     public void rollDices() {
     	if (CentralControl.board.getJail().turnInJail(this) == 2) // Use card or money to release itself
     		try {
 				if (released() || payReleased()) 
 				    rollDices();
-			} catch (LackMoneyException e) {
+			} catch (LackMoneyException | NotInJailException e) {
 				// TODO Auto-generated catch block
 				CentralControl.board.getJail().pass(this);
 			}
@@ -62,13 +60,16 @@ public class Agent extends Player {
      * 
      * @description: try automatically to buy property in suitable condition(as much as possible)
      */
-    public void autoBuyProperty(Cell currentCell) throws PropertyException  {
+    public void autoBuyProperty(Cell currentCell)   {
     	if (Property.class.isInstance(currentCell)) {
     		Property p = (Property)currentCell;
-        	CentralControl.bank.buyProperty(this, p);
+    		try {
+        		if (p.isAvailable())
+        			CentralControl.bank.buyProperty(this, p);
+			} catch (PropertyException e) {
+				
+			}
     	}
-    	else
-    		return;
     }
 
     /**
@@ -78,15 +79,20 @@ public class Agent extends Player {
      * @methodsName: autoBuild
      * @description: try automatically to buy house and hotel in suitable condition( money is greater than 400)
      */
-    public void autoBuild() throws PropertyException, LackMoneyException {
+    public void autoBuild() {
         ArrayList<Property> propertiesBuild = searchPropertyBuild();
         while (getMoney() >= 400) 
             for (Property property : propertiesBuild) 
-                if (getMoney() >= 400) 
-                    if (property.getNumOfHouse() != 4) 
-                        CentralControl.bank.buildHouse(this, property);
-                    else 
-                        CentralControl.bank.buildHotel(this, property);
+            	try {
+            		 if (getMoney() >= 400) 
+                         if (property.getNumOfHouse() != 4)
+                        	 CentralControl.bank.buildHouse(this, property);
+                         else 
+                             CentralControl.bank.buildHotel(this, property);
+				} catch (PropertyException | LackMoneyException e) {
+					
+               }
+					
     }
 
     /**
@@ -118,7 +124,7 @@ public class Agent extends Player {
         if (currentCell.getClass().toString().endsWith("Property")) 
             if (!((Property)currentCell).getOwner().equals(this) && ((Property)currentCell).getOwner() != null) 
                 if (getMoney() >= ((Property)currentCell).getRent()) 
-                    payRent(((Property)currentCell), ((Property)currentCell).getOwner());
+                    payRent(((Property)currentCell));
     }
     
     /**

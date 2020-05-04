@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
+import propertytycoongame.Player.Token;
+
 /**
  * Property Tycoon Game Central Control
  *
@@ -19,21 +21,21 @@ import java.util.TimeZone;
  * @author Haotian Jiao
  * @version 1.0.1
  */
-public class CentralControl {
-
+public class CentralControl implements Runnable{
+	
     private final Date startTime;
     private final Long duration;
+    private int votes = 0;
     private Date endTime;
     private String mode;
     private static ArrayList<Player> rank = new ArrayList<Player>();
-    protected static ArrayList<Player> players;
+    public static ArrayList<Player> players = new ArrayList<>();
     private static int currentPlayer = 0;
     public static Board board = new Board();
     public static Dice dices = new Dice();
     public static Bank bank = new Bank();
 
     public CentralControl(long duration) { // in minutes
-        players = new ArrayList<>();
         startTime = new Date(); // set start time to be current system time
         this.duration = duration * 60000; // time in milliseconds
         if (duration == 0) { // Normal(survival) mode
@@ -51,21 +53,8 @@ public class CentralControl {
      *
      * @param p The player to be added to the game
      */
-    public void addPlayer(Player p) throws Exception {
-        boolean used = false;
-        if (players.isEmpty()) {
-            players.add(p);
-        } else {
-            for (Player x : players) {
-                if (x.getToken().equals(p.getToken())) {
-                    used = true;
-                    throw new Exception("Token already selected by another player");
-                    
-                }
-            } if(!used){
-                players.add(p);
-            }
-        }
+    public void addPlayer(Player p){
+        players.add(p);
     }
 
     /**
@@ -99,12 +88,12 @@ public class CentralControl {
         }
         players = newplayers;
         for (int j = 0; j > players.size(); j++) {
-            if (players.get(j).totalvalue == players.get(j + 1).totalvalue) {
+            if (players.get(j).getTotalValue() == players.get(j + 1).getTotalValue()) {
                 dices.rollDice();
-                players.get(j).totalvalue = dices.getTotalVal();
+                players.get(j).setotalValue(dices.getTotalVal());
                 dices.rollDice();
-                players.get(j + 1).totalvalue = dices.getTotalVal();
-                if (players.get(j).totalvalue < players.get(j + 1).totalvalue) {
+                players.get(j + 1).setotalValue(dices.getTotalVal());
+                if (players.get(j).getTotalValue() < players.get(j + 1).getTotalValue()) {
                     Collections.swap(players, j, j + 1);
                 }
             }
@@ -114,7 +103,7 @@ public class CentralControl {
 
     /**
      * Set the current player to the next player in the list of players.
-     *
+     * If player is an agent, start to run automatically
      */
     public void nextPlayer() {
         if (currentPlayer < players.size() - 1) {
@@ -123,6 +112,9 @@ public class CentralControl {
             currentPlayer = 0;
         }
         dices.newPlayer();
+        if (Agent.class.isInstance(getCurrentPlayer())) {
+			((Agent)getCurrentPlayer()).run();
+		}
     }
 
     /**
@@ -217,11 +209,23 @@ public class CentralControl {
      *
      */
     public static void leaveGame() {
+    	rank.add(getCurrentPlayer());
         players.remove(getCurrentPlayer());
-        rank.add(getCurrentPlayer());
     }
     
     /**
+     * @author: Mingfeng
+     * @methodsName: voteEnd
+     * @description: Vote to end this game
+     */
+    public void voteEnd() {
+		if (++votes == players.size()) {
+			endGame();
+		}
+	}
+    /**
+     * @author: Mingfeng
+     * @methodsName: endGame
      * @description Rank players when ends the game
      * @return ArrayList<Player>
      */
@@ -240,4 +244,29 @@ public class CentralControl {
 		rank.addAll(rankPlayers);
 		return rank;
 	}
+    
+    public void addAgent(String name,Token token) throws CreatePlayerException {
+		Agent agent = new Agent(name, token);
+		players.add(agent);
+	}
+    
+    /**
+     * @author: Mingfeng
+     * @methodsName: run
+     * @description: If it is timer mode. Start the timer
+     */
+	@Override
+	public void run() {
+		try {
+			Thread.sleep(duration);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			endGame();
+		}
+	}
+	
+	
 }

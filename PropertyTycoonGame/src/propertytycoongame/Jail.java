@@ -13,11 +13,16 @@ public class Jail extends Cell{
 	
 	
 	/**
-	* @description: constructor
+	* @author: Mingfeng
+	* @methodsName: Jail
+	* @description: Initilze prisoner with 0 turn in jail of each player 
 	*/
 	public Jail(int position) {
 		super(position);
 		prisoners = new HashMap<>();
+		for (Player player : CentralControl.players) {
+			prisoners.put(player, 0);
+		}
 		
 	}
 	
@@ -63,7 +68,7 @@ public class Jail extends Cell{
 	* @param:  Player
 	*/
 	public void release(Player player) {
-		prisoners.remove(player);
+		prisoners.replace(player, 0);
 	}
 		
 }

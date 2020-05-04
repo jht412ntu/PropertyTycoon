@@ -267,22 +267,11 @@ public class Bank {
      * "they are not the owner"
      */
     public void sellHouse(Player player, Property p) throws PropertyException {
-        String currentGroup = p.getGroup();
         if (p.getOwner().equals(player)) {
             if (p.getNumOfHouse() > 0) {
-                if (currentGroup.equals("Brown") || currentGroup.equals("Blue")) {
-                    balance -= 50;
-                    player.addMoney(50);
-                } else if (currentGroup.equals("Purple") || currentGroup.equals("Orange")) {
-                    balance -= 100;
-                    player.addMoney(100);
-                } else if (currentGroup.equals("Red") || currentGroup.equals("Yellow")) {
-                    balance -= 150;
-                    player.addMoney(150);
-                } else if (currentGroup.equals("Green") || currentGroup.equals("Deep blue")) {
-                    balance -= 200;
-                    player.addMoney(200);
-                }
+            	int price = getHousePrice(p);
+            	balance -= price;
+                player.addMoney(price);
                 p.sellHouse();
             } else {
                 throw new PropertyException("This property does not have any house.");
@@ -303,28 +292,19 @@ public class Bank {
      * @throws LackMoneyException Throwing when the player does not have enough money
      */
     public void buildHotel(Player player, Property p) throws PropertyException, LackMoneyException {
-        String currentGroup = p.getGroup();
         if (p.ifHotelBuilded()) {
             throw new PropertyException("Hotel already exists. Each property can only has one hotel.");
-        } else {
-            if (p.getNumOfHouse() == 4) {
-                if (currentGroup.equals("Brown") || currentGroup.equals("Blue")) {
-                    player.minusMoney(50);
-                    p.buildHotel();
-                } else if (currentGroup.equals("Purple") || currentGroup.equals("Orange")) {
-                	player.minusMoney(100);
-                    p.buildHotel();
-                } else if (currentGroup.equals("Red") || currentGroup.equals("Yellow")) {
-                    player.minusMoney(150);
-                	p.buildHotel();
-                } else if (currentGroup.equals("Green") || currentGroup.equals("Deep blue")) {
-                    player.minusMoney(200);
-                	p.buildHotel();
-                }
-            } else {
+        } 
+        else if (p.getNumOfHouse() == 4) {
+        	int price = getHousePrice(p);
+        	balance += price;
+            player.minusMoney(price);
+            p.buildHotel();
+        } 
+        else {
                 throw new PropertyException("Four houses needed before building a hotel.");
-            }
         }
+        
     }
 
     /**
@@ -336,25 +316,11 @@ public class Bank {
      * property
      */
     public void sellHotel(Player player, Property p) throws PropertyException {
-        String currentGroup = p.getGroup();
         if (p.ifHotelBuilded()) {
-            if (currentGroup.equals("Brown") || currentGroup.equals("Blue")) {
-                balance -= 50;
-                player.addMoney(50);
-                p.sellHotel();
-            } else if (currentGroup.equals("Purple") || currentGroup.equals("Orange")) {
-                balance -= 100;
-                player.addMoney(100);
-                p.sellHotel();
-            } else if (currentGroup.equals("Red") || currentGroup.equals("Yellow")) {
-                balance -= 150;
-                player.addMoney(150);
-                p.sellHotel();
-            } else if (currentGroup.equals("Green") || currentGroup.equals("Deep blue")) {
-                balance -= 200;
-                player.addMoney(200);
-                p.sellHotel();
-            }
+        	int price = getHousePrice(p);
+        	balance -= price;
+            player.addMoney(price);
+            p.sellHotel();
         } else {
             throw new PropertyException("The property does not have a hotel.");
         }

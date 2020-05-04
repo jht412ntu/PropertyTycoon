@@ -2,6 +2,7 @@ package propertytycoongame;
 
 import java.util.ArrayList;
 
+
 /**
  * Player
  *
@@ -19,7 +20,8 @@ public class Player {
     private String name;
     private int releaseCard;
     private ArrayList<Property> Properties = new ArrayList<>();
-    private int totalValue;
+    private int totalValue = 0;
+    private int totalAssets = 0;
 
     public enum Token {
         boot, smartphone, goblet, hatstand, cat, spoon;
@@ -31,16 +33,16 @@ public class Player {
      * @param token Token of the player
      * @throws DuplicateException 
      */
-    public Player(String name, Token token) throws DuplicateException {
-        // TODO Auto-generated constructor stub
+    public Player(String name, Token token) throws CreatePlayerException {
+        
     	for (Player player : CentralControl.players) {
 			if (name.equals(player.getName())) {
-				throw new DuplicateException(" name: " + name);
+				throw new CreatePlayerException("Duplicate name: " + name);
 			}
 		}
     	for (Player player : CentralControl.players) {
 			if (token.equals(player.getToken())) {
-				throw new DuplicateException(" token: " + token);
+				throw new CreatePlayerException("Duplicate token: " + token);
 			}
 		}
         this.name = name;
@@ -53,74 +55,84 @@ public class Player {
      * @description: Player rolls dices and acts as the rules require
      */
     public void rollDices() {
-        if (CentralControl.dices.getNumDouble() > 2) 
-            CentralControl.board.getJail().put(this);
-        else if (CentralControl.board.getJail().turnInJail(this) > 0) 
-            CentralControl.board.getJail().pass(this);
-        else {
-            CentralControl.dices.rollDice();
-            int tLocation = location + CentralControl.dices.getTotalVal();
-            if (tLocation > 40) {
-                passGo = true;
-                CentralControl.bank.distributeCash(this, 200);
-                tLocation -= 40;
-                CentralControl.bank.addBalance(-200);
+    	while (CentralControl.dices.rollAgain) {
+    		if (CentralControl.dices.getNumDouble() == 2) {
+                CentralControl.board.getJail().put(this);
+    			break;
+    		}
+            else if (CentralControl.board.getJail().turnInJail(this) > 0) {
+            	CentralControl.board.getJail().pass(this);
+            	break;
             }
-            location = tLocation;
-            Cell currentCell = CentralControl.board.getCell(this.getLocation());
-            
-            // take action based on cell landed
-            // land on the property
-            if (Property.class.isInstance(currentCell)) {
-            		Property p = (Property)currentCell;
-                	Player owner = p.getOwner();
-                	if (owner != null && !owner.equals(this)) 
-                    	payRent(p, owner);
-                	else 
-						;//  buy or bid (GUI)
+            else {
+                CentralControl.dices.rollDice();
+                int tLocation = location + CentralControl.dices.getTotalVal();
+                if (tLocation > 40) {
+                    passGo = true;
+                    CentralControl.bank.distributeCash(this, 200);
+                    tLocation -= 40;
+                    CentralControl.bank.addBalance(-200);
+                }
+                location = tLocation;
+                Cell currentCell = CentralControl.board.getCell(this.getLocation());
+                
+                // take action based on cell landed
+                // land on the property
+                if (Property.class.isInstance(currentCell)) {
+                		Property p = (Property)currentCell;
+                    	Player owner = p.getOwner();
+                    	if (owner != null && !owner.equals(this)) 
+                        	payRent(p);
+                    	else 
+    						;//  buy or bid (GUI)
+                }
+                // PotluckCard cell
+                else if (PotluckCard.class.isInstance(currentCell)) {
+    				((PotluckCard)currentCell).action(this);
+    			}
+                //OpportunityknockCard cell
+                else if (OpportunityknockCard.class.isInstance(currentCell)) {
+                	((OpportunityknockCard)currentCell).action(this);
+    			}
+                else 
+                	switch (location) {
+                    //park fine collection cell
+                    case 21:
+                        CentralControl.board.getPark().collectFine(this);
+                        break;
+                    //income tax
+                    case 5:
+                        try {
+                            minusMoney(200);
+                        } catch (LackMoneyException e) {
+                            if (raiseMoney(200 - money)) 
+    							money -= 200;
+                            else
+                            	CentralControl.leaveGame();
+                        }
+                        break;
+                   //go to Jail
+                    case 31:
+                        CentralControl.board.getJail().put(this);
+                        location = 11;
+                        break;
+                }
             }
-            // PotluckCard cell
-            else if (PotluckCard.class.isInstance(currentCell)) {
-				((PotluckCard)currentCell).action(this);
-			}
-            //OpportunityknockCard cell
-            else if (OpportunityknockCard.class.isInstance(currentCell)) {
-            	((OpportunityknockCard)currentCell).action(this);
-			}
-            else 
-            	switch (location) {
-                //park fine collection cell
-                case 21:
-                    CentralControl.board.getPark().collectFine(this);
-                    break;
-                //income tax
-                case 5:
-                    try {
-                        minusMoney(200);
-                    } catch (LackMoneyException e) {
-                        // TODO Auto-generated catch block
-                        if (raiseMoney(200 - money)) 
-							money -= 200;
-                        else
-                        	CentralControl.leaveGame();
-                    }
-                    break;
-               //go to Jail
-                case 31:
-                    CentralControl.board.getJail().put(this);
-                    location = 11;
-                    break;
-            }
-        }
+		}
+        
     }
 
     /**
      * @return @author: Mingfeng
      * @throws LackMoneyException
+     * @throws NotInJailException 
      * @methodsName: payReleased
      * @description: pay 50$ for releasing and add money to Park
      */
-    public boolean payReleased() throws LackMoneyException {
+    public boolean payReleased() throws LackMoneyException, NotInJailException {
+    	if (CentralControl.board.getJail().turnInJail(this) == 0) {
+			throw new NotInJailException("You are not in jail!");
+		}
         if (money > 50) {
             minusMoney(50);
         } else {
@@ -133,10 +145,15 @@ public class Player {
 
     /**
      * @return @author: Mingfeng
+     * @throws NotInJailException 
+     * @throws Exception 
      * @methodsName: released
-     * @description: release yourself from jail
+     * @description: release yourself from jail by free-prisoner card
      */
-    public boolean released() {
+    public boolean released() throws NotInJailException {
+    	if (CentralControl.board.getJail().turnInJail(this) == 0) {
+			throw new NotInJailException("You are not in jail!");
+		}
         if (releaseCard > 0) {
             releaseCard -= 1;
             CentralControl.board.getJail().release(this);
@@ -164,7 +181,6 @@ public class Player {
     public ArrayList<Property> buyProperty(Property property) {
         this.Properties.add(property);
         property.setAvailable(false);
-
         return Properties;
     }
 
@@ -197,19 +213,22 @@ public class Player {
         player.minusMoney(price);
         addMoney(price);
     }
-
+    
+    
     /**
      * @author: Mingfeng
      * @return	boolean wheather player raises money succeed
      * @methodsName: raiseMoney
-     * @description: sell something for raising money
+     * @description: sell or mortage something for raising money
      */
-    public boolean raiseMoney(int difference) {
+    public boolean raiseMoney(int rent) {
         // should include "sellPropertyToPlayer"
         // need GUI finished (when player cannot pay rent, the mortage button and sell button will be highlighted
         // player is unable to act other behaviours but leave the game
-        boolean enough = false;
-        while (!enough) {
+    	// TO-DO
+        boolean enough = money >= rent;
+        calculateAssets();
+        while (!enough && totalAssets >= rent) {
         	int choose = 0;
 			switch (choose) {
 			case 1:
@@ -221,8 +240,10 @@ public class Player {
 			case 3:
 	
 				break;
+			case 4:
+				return false;
 			default:
-				enough = money >= difference;
+				enough = totalValue >= rent;
 			}
 		}
         return enough;
@@ -233,15 +254,17 @@ public class Player {
      * @param Property,Player
      * @throws LackMoneyException 
      */
-    public void payRent(Property p, Player reciever) {
+    public void payRent(Property p) {
+    	Player reciever = p.getOwner();
         if (CentralControl.board.getJail().turnInJail(reciever) == 0 && p.undermortgage != true) {
             try {
                 minusMoney(p.getRent());
             } catch (LackMoneyException e) {
-                if (raiseMoney(p.getRent() - money)) {
-                	payRent(p, reciever);
+                if (raiseMoney(p.getRent())) {
+                	payRent(p);
                 } else {
                     CentralControl.leaveGame();
+                    return ;
                 }
             }
             reciever.addMoney(p.getRent());
@@ -276,6 +299,22 @@ public class Player {
             throw new LackMoneyException("lack money");
     	this.money -= money;
     }
+    
+    /**
+     * @param money
+     * @description: add money to balance
+     */
+    public void calculateAssets()  {
+    	totalAssets = 0;
+    	for (Property property : Properties) {
+			if (property.undermortgage) {
+				totalAssets += property.getCost();
+			}
+			else {
+				totalAssets += property.getStatus() * CentralControl.bank.getHousePrice(property);
+			}
+		}
+    }
 
     /**
      *
@@ -287,7 +326,7 @@ public class Player {
 
     /**
      *
-     * @param location
+     * @param int location
      */
     public void setLocation(int location) {
         this.location = location;
@@ -303,12 +342,19 @@ public class Player {
 
     /**
      *
-     * @param passGo
+     * @param boolean passGo
      */
     public void setPassGo(boolean passGo) {
         this.passGo = passGo;
     }
-
+    
+    /**
+    *
+    * @param int money
+    */
+   public void setMoeny(int money) {
+       this.money = money;
+   }
     /**
      *
      * @return Token

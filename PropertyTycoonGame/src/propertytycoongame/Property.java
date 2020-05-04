@@ -15,7 +15,7 @@ public class Property extends Cell implements Comparable<Property>{
     private int rent;
     private int improvedRent;
     private final int[] improvedRents;
-    protected  boolean available;
+    private  boolean available;
     private boolean hotelBuilded;
     private int numOfHouse;
     private int status; // 1: one house 2: two houses 3: three houses 4: four houses 5: a hotel
@@ -253,7 +253,7 @@ public class Property extends Cell implements Comparable<Property>{
      * */
     public void liquidate(Bank bank,Player player){
 
-        player.Properties.remove(name);
+        player.getPropertiesList().remove(name);
         bank.addBalance(-(cost/2));
         player.addMoney(cost/2);
         owner=null;
@@ -263,7 +263,12 @@ public class Property extends Cell implements Comparable<Property>{
         numOfHouse=0;
 
     }
-
+    
+    public void redeemed(Player player) throws LackMoneyException {
+    	player.minusMoney(cost/2);
+		CentralControl.bank.addBalance(cost/2);
+		undermortgage = false;
+	}
     /**
      * Gets the status of the property
      *
@@ -282,7 +287,6 @@ public class Property extends Cell implements Comparable<Property>{
 
 	@Override
 	public int compareTo(Property o) {
-		// TODO Auto-generated method stub
 		int p1 = this.numOfHouse;
 		int p2 = o.getNumOfHouse();
 		if(this.ifHotelBuilded())
