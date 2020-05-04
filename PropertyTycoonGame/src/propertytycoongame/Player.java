@@ -35,12 +35,12 @@ public class Player {
         // TODO Auto-generated constructor stub
     	for (Player player : CentralControl.players) {
 			if (name.equals(player.getName())) {
-				throw new DuplicateException("name: " + name);
+				throw new DuplicateException(" name: " + name);
 			}
 		}
     	for (Player player : CentralControl.players) {
 			if (token.equals(player.getToken())) {
-				throw new DuplicateException("token: " + token);
+				throw new DuplicateException(" token: " + token);
 			}
 		}
         this.name = name;
