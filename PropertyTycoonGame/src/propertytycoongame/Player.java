@@ -18,8 +18,8 @@ public class Player {
     private boolean passGo = false;
     private String name;
     private int releaseCard;
-    protected ArrayList<Property> Properties = new ArrayList<>();
-    protected int totalvalue;
+    private ArrayList<Property> Properties = new ArrayList<>();
+    private int totalValue;
 
     public enum Token {
         boot, smartphone, goblet, hatstand, cat, spoon;
@@ -332,5 +332,20 @@ public class Player {
     public ArrayList<Property> getPropertiesList() {
         return Properties;
     }
-
+    
+    /**
+    *
+    * @return int
+    */
+    public int getTotalValue() {
+        return totalValue;
+    }
+    
+    /**
+    *
+    * @return int
+    */
+    public void setotalValue(int totalValue) {
+    	this.totalValue = totalValue;
+	}
 }

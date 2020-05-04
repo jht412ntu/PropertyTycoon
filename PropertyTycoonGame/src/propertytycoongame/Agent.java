@@ -97,7 +97,7 @@ public class Agent extends Player {
      */
     public ArrayList<Property> searchPropertyBuild() {
         ArrayList<Property> propertiesBuild = new ArrayList<>();
-        for (Property property : Properties) {
+        for (Property property : getPropertiesList()) {
             if (CentralControl.bank.checkPermission(this, property)) {
                 propertiesBuild.add(property);
             }

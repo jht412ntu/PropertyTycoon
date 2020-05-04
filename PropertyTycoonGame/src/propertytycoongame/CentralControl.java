@@ -68,8 +68,8 @@ public class CentralControl {
         ArrayList<Player> newplayers = new ArrayList<>();
         for (Player player : players) {
             dices.rollDice();
-            player.totalvalue = dices.getTotalVal();  //each player's points
-            map.put(player, player.totalvalue);//put it in map
+            player.setotalValue(dices.getTotalVal());  //each player's points
+            map.put(player, player.getTotalValue());//put it in map
         }
         List<Map.Entry<Player, Integer>> orderedlist = new ArrayList<>(map.entrySet()); //trans to a list
         Collections.sort(orderedlist, new Comparator<Map.Entry<Player, Integer>>() {
