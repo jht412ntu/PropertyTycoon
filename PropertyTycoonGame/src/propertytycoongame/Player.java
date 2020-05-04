@@ -195,7 +195,7 @@ public class Player {
         sellProperty(p);
         player.buyProperty(p);
         player.minusMoney(price);
-        minusMoney(price);
+        addMoney(price);
     }
 
     /**
@@ -206,8 +206,8 @@ public class Player {
      */
     public boolean raiseMoney(int difference) {
         // should include "sellPropertyToPlayer"
-        // need GUI finished (when player cannot pay rent, the mortage button and sell button will be hignlight
-        // player is not abole to act other behaviours but leave game
+        // need GUI finished (when player cannot pay rent, the mortage button and sell button will be highlighted
+        // player is unable to act other behaviours but leave the game
         boolean enough = false;
         while (!enough) {
         	int choose = 0;

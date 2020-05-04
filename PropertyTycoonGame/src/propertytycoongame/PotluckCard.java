@@ -17,7 +17,7 @@ public class PotluckCard extends Cards {
 		unshuffleList.add("You have won 2nd prize in a beauty contest, collect £20");
 		unshuffleList.add("Go back to Crapper Street");
 		unshuffleList.add("Student loan refund. Collect £20");
-		unshuffleList.add("CentralControl.bank error in your favour. Collect £200");
+		unshuffleList.add("Bank error in your favour. Collect £200");
 		unshuffleList.add("Pay bill for text books of £100");
 		unshuffleList.add("Mega late night taxi bill pay £50");
 		unshuffleList.add("Advance to go");

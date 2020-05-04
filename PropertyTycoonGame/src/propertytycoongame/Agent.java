@@ -27,7 +27,7 @@ public class Agent extends Player {
     }
 
     /**
-     * @methodsName:autoBuyProperty
+     * @methodsName:rollDices
      * @author: Mingfeng
      * @throws PropertyException
      * 
@@ -75,7 +75,7 @@ public class Agent extends Player {
      * @author: Mingfeng
      * @throws PropertyException
      * @throws LackMoneyException 
-     * @methodsName: autoBuildHouse
+     * @methodsName: autoBuild
      * @description: try automatically to buy house and hotel in suitable condition( money is greater than 400)
      */
     public void autoBuild() throws PropertyException, LackMoneyException {
