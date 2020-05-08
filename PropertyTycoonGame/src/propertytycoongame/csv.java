@@ -7,16 +7,6 @@ import java.util.ArrayList;
 
 
 
-import com.csvreader.CsvReader;
-
-import java.util.HashMap;
-
-import com.csvreader.CsvReader;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-
 public class csv {
     public static void readCsvFile(String fileName){
         String line = "";
@@ -34,7 +24,7 @@ public class csv {
             }
             //delete head of csv
             csvList.remove(0);
-
+            br.close();
 
             for(int row=1;row<csvList.size();row++){
                p1=new Property(Integer.valueOf((csvList.get(row)[0])),csvList.get(row)[1],csvList.get(row)[2],Integer.valueOf(csvList.get(row)[3]),Integer.valueOf(csvList.get(row)[4]),Integer.valueOf(csvList.get(row)[5]),Integer.valueOf(csvList.get(row)[6]),Integer.parseInt(csvList.get(row)[7]),Integer.parseInt(csvList.get(row)[8]),Integer.parseInt(csvList.get(row)[9]));

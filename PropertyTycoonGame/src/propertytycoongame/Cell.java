@@ -12,9 +12,13 @@ public class Cell {
     private int position;
 
     public Cell(int position) {
-        position = this.position;
+    	this.position = position ;
     }
-
+    
+    public Cell() {
+    	
+    }
+    
     /**
      * 
      * @return The position of the cell (integer)

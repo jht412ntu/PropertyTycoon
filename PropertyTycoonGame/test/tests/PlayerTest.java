@@ -2,7 +2,6 @@ package tests;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -17,7 +16,9 @@ import propertytycoongame.Dice;
 import propertytycoongame.Jail;
 import propertytycoongame.LackMoneyException;
 import propertytycoongame.NotInJailException;
+import propertytycoongame.OpportunityknockCard;
 import propertytycoongame.Player;
+import propertytycoongame.PotluckCard;
 import propertytycoongame.Property;
 
 
@@ -26,8 +27,10 @@ import propertytycoongame.Property;
 * @author Mingfeng
 */
 public class PlayerTest {
-	private static Player player1;
-	private static CentralControl centralControl;
+	
+	private  Player player1;
+	private  CentralControl centralControl;
+	private  Jail jail;
 	
 	public PlayerTest() {
 		
@@ -45,10 +48,11 @@ public class PlayerTest {
     
 	@Before
     public void setUp() throws CreatePlayerException {
+		centralControl.board = new Board();
 		centralControl = new CentralControl(100);
-		CentralControl.players = new ArrayList<Player>();
+		CentralControl.getPlayers().clear();
 		player1 = new Player("1",Player.Token.boot);
-		CentralControl.board = new Board();
+		jail = CentralControl.board.getJail();
     }
 	
 	@After
@@ -63,13 +67,16 @@ public class PlayerTest {
     }
 	
 	@Test (expected = LackMoneyException.class)
-    public void payReleasedNoMoneyTests() throws LackMoneyException, NotInJailException {
+    public void payReleasedNoMoneyTests() throws LackMoneyException, NotInJailException, CreatePlayerException {
         centralControl.addPlayer(player1);
-        Jail jail = centralControl.board.getJail();
+        Player player2 = new Player("2",Player.Token.smartphone);
+        centralControl.addPlayer(player2);
         
         jail.put(player1);
         player1.payReleased();
         assertEquals(0,jail.turnInJail(player1));
+        Player currentPlayer = CentralControl.getCurrentPlayer();
+        assertEquals(currentPlayer, player2);
         
         jail.put(player1);
         player1.setMoeny(5);
@@ -81,29 +88,70 @@ public class PlayerTest {
 	
 	@Test (expected = NotInJailException.class)
     public void cardReleasedTests() throws NotInJailException {
-		Jail jail = CentralControl.board.getJail();
         jail.put(player1);
-        player1.addReleaseCard();
+        player1.addReleaseCard(new PotluckCard());
         player1.released();
         assertEquals(0,jail.turnInJail(player1));
-        player1.addReleaseCard();
+        assertEquals(0, player1.getCardSize());
+        int i = 1;
+        for (String card : CentralControl.board.getPotluckCard().getShuffledQueue()) {
+			if (i == CentralControl.board.getPotluckCard().getShuffledQueue().size() ) {
+				assertEquals("Get out of jail free", card);
+			}
+			else {
+				i++;
+			}
+		}
+        
+        jail.put(player1);
+        player1.addReleaseCard(new OpportunityknockCard());
+        player1.released();
+        i  = 1;
+        for (String card : CentralControl.board.getOpportunityknockCard().getShuffledQueue()) {
+			if (i == CentralControl.board.getPotluckCard().getShuffledQueue().size() ) {
+				assertEquals("Get out of jail free", card);
+			}
+			else {
+				i++;
+			}
+		}
+        
+        player1.addReleaseCard(new OpportunityknockCard());
         player1.released();
     }
 	
 	@Test
-	public void rollDicesTests() {
-		centralControl.dices = new Dice();
-		Jail jail = CentralControl.board.getJail();
+	public void inJailRollDiceTests() {
+		centralControl.dices.newPlayer();
         jail.put(player1);
         player1.rollDices();
         assertEquals(1, jail.turnInJail(player1));
         centralControl.dices.newPlayer();
         player1.rollDices();
-        
+	}
+	
+	@Test
+	public void RollDiceThreeDoubleJailTests() {
+		Dice dices = centralControl.dices;
+		dices.newPlayer();
+		dices.setNumDouble(2);
+        player1.rollDices();
+        assertEquals(2, jail.turnInJail(player1));
         centralControl.dices.newPlayer();
+        player1.rollDices();
+        assertEquals(1, jail.turnInJail(player1));
+        player1.rollDices();
+        assertEquals(0, jail.turnInJail(player1));
+	}
+	
+	
+	@Test
+	public void passGoTest() {
+		CentralControl.dices.newPlayer();
         player1.setLocation(38);
         player1.rollDices();
         assertEquals(true, player1.isPassGo());
+        assertEquals(1700, player1.getMoney());
 	}
 	
 	@Test
@@ -141,7 +189,6 @@ public class PlayerTest {
 		property.changeOwner(player1);
 		player1.setMoeny(1500);
 		Player player2 = new Player("2",Player.Token.goblet);
-		Jail jail = CentralControl.board.getJail();
         jail.put(player1);
         player2.payRent(property);
 		assertEquals(1500, player1.getMoney());
@@ -153,7 +200,7 @@ public class PlayerTest {
 		assertEquals(1498, player2.getMoney());
 		
 		player1.setLocation(2);
-		property.mortgage(centralControl.bank, player1);
+		property.mortgage(CentralControl.bank, player1);
 		player2.payRent(property);
 		assertEquals(1532, player1.getMoney());
 		assertEquals(1498, player2.getMoney());
@@ -165,7 +212,20 @@ public class PlayerTest {
 		player2.payRent(property);
 		assertEquals(1502, player1.getMoney());
 		assertEquals(1, centralControl.getPlayers().size());
-		
-		
+	}
+	
+	@Test
+	public void bankrupTest() throws CreatePlayerException {
+		Property property1  = (Property)CentralControl.board.getCell(2);
+		property1.changeOwner(player1);
+		centralControl.addPlayer(player1);
+		Player player2 = new Player("2",Player.Token.goblet);
+		centralControl.addPlayer(player2);
+		centralControl.board = new Board();
+		assertEquals(2, CentralControl.getPlayers().size());
+		player2.setMoeny(1);
+		player2.payRent(property1);
+		assertEquals(1501, player1.getMoney());
+		assertEquals(1, CentralControl.getPlayers().size());
 	}
 }

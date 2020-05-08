@@ -7,8 +7,7 @@ public class OpportunityknockCard extends Cards{
     ArrayList unshuffleList1 = new ArrayList();
     Queue<String> shuffledqueue1 = new LinkedList<>();
 
-    public OpportunityknockCard(int position) {
-        super(position);
+    public OpportunityknockCard() {
         
         unshuffleList1.add("Bank pays you divided of £50");
         unshuffleList1.add("You have won a lip sync battle. Collect £100");
@@ -97,7 +96,7 @@ public class OpportunityknockCard extends Cards{
                   CentralControl.board.getPark().addFine(20);
 
             case  "Get out of jail free":
-                player.addReleaseCard();
+            	player.addReleaseCard(new OpportunityknockCard());
 
 
         }        }
@@ -105,7 +104,9 @@ public class OpportunityknockCard extends Cards{
 
 
 
-
+        public Queue<String> getShuffledQueue() {
+    		return shuffledqueue1;
+    	}
 
 
 

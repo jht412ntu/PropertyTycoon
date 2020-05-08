@@ -18,8 +18,8 @@ public class Player {
     private Token token;
     private boolean passGo = false;
     private String name;
-    private int releaseCard;
-    private ArrayList<Property> Properties = new ArrayList<>();
+    private ArrayList releaseCard;
+    private ArrayList<Property> Properties;
     private int totalValue = 0;
     private int totalAssets = 0;
 
@@ -35,18 +35,20 @@ public class Player {
      */
     public Player(String name, Token token) throws CreatePlayerException {
         
-    	for (Player player : CentralControl.players) {
+    	for (Player player : CentralControl.getPlayers()) {
 			if (name.equals(player.getName())) {
 				throw new CreatePlayerException("Duplicate name: " + name);
 			}
 		}
-    	for (Player player : CentralControl.players) {
+    	for (Player player : CentralControl.getPlayers()) {
 			if (token.equals(player.getToken())) {
 				throw new CreatePlayerException("Duplicate token: " + token);
 			}
 		}
         this.name = name;
         this.token = token;
+        Properties = new ArrayList<>();
+        releaseCard = new ArrayList<>();
     }
 
     /**
@@ -76,7 +78,7 @@ public class Player {
                 location = tLocation;
                 Cell currentCell = CentralControl.board.getCell(this.getLocation());
                 
-                // take action based on cell landed
+                // take action based on landed cell 
                 // land on the property
                 if (Property.class.isInstance(currentCell)) {
                 		Property p = (Property)currentCell;
@@ -105,7 +107,7 @@ public class Player {
                         try {
                             minusMoney(200);
                         } catch (LackMoneyException e) {
-                            if (raiseMoney(200 - money)) 
+                            if (raiseMoney(200, null)) 
     							money -= 200;
                             else
                             	CentralControl.leaveGame();
@@ -134,13 +136,13 @@ public class Player {
 			throw new NotInJailException("You are not in jail!");
 		}
         if (money > 50) {
-            minusMoney(50);
+            minusMoney(50);CentralControl.board.getJail().release(this);
+            CentralControl.board.getPark().addFine(50);
+            CentralControl.nextPlayer();
+            return true;
         } else {
             throw new LackMoneyException("Operation failed without enough money");
         }
-        CentralControl.board.getJail().release(this);
-        CentralControl.board.getPark().addFine(50);
-        return true;
     }
 
     /**
@@ -148,17 +150,24 @@ public class Player {
      * @throws NotInJailException 
      * @throws Exception 
      * @methodsName: released
-     * @description: release yourself from jail by free-prisoner card
+     * @description: release yourself from jail by free-prisoner card and
+     * placed on the bottom of the corresponding pile
      */
     public boolean released() throws NotInJailException {
     	if (CentralControl.board.getJail().turnInJail(this) == 0) {
 			throw new NotInJailException("You are not in jail!");
 		}
-        if (releaseCard > 0) {
-            releaseCard -= 1;
+        if (releaseCard.size() > 0) {
+            if (PotluckCard.class.isInstance(releaseCard.remove(releaseCard.size()-1))) {
+				CentralControl.board.getPotluckCard().getShuffledQueue().add("Get out of jail free");
+			}
+            else {
+            	CentralControl.board.getOpportunityknockCard().shuffledqueue1.add("Get out of jail free");
+			}
             CentralControl.board.getJail().release(this);
             return true;
         }
+        //when the number of release card is 0, please set button unclickabel
         return false;
     }
 
@@ -167,8 +176,8 @@ public class Player {
      * @methodsName: addReleaseCard
      * @description: add a realeasd card in your hand
      */
-    public void addReleaseCard() {
-        releaseCard += 1;
+    public void addReleaseCard(Cards card) {
+        releaseCard.add(card);
     }
 
     /**
@@ -220,31 +229,42 @@ public class Player {
      * @return	boolean wheather player raises money succeed
      * @methodsName: raiseMoney
      * @description: sell or mortage something for raising money
+     * @description: If player does not have enough money, initialize all his propety and give money to receiver
      */
-    public boolean raiseMoney(int rent) {
+    public boolean raiseMoney(int rent, Player reciever) {
         // should include "sellPropertyToPlayer"
         // need GUI finished (when player cannot pay rent, the mortage button and sell button will be highlighted
         // player is unable to act other behaviours but leave the game
     	// TO-DO
-        boolean enough = money >= rent;
-        calculateAssets();
-        while (!enough && totalAssets >= rent) {
-        	int choose = 0;
-			switch (choose) {
-			case 1:
-				
-				break;
-			case 2:
-				
-				break;
-			case 3:
-	
-				break;
-			case 4:
-				return false;
-			default:
-				enough = totalValue >= rent;
-			}
+        boolean enough = false;
+        if (calculateAssets() >= rent) {
+        	while (!enough) {
+            	int choose = 0;
+    			switch (choose) {
+    			case 1:
+    				
+    				break;
+    			case 2:
+    				
+    				break;
+    			case 3:
+    	
+    				break;
+    			case 4:
+    				return false;
+    			default:
+    				enough = money >= rent;
+    			}
+    		}
+		}
+        else {
+        	// If it is not paid to bank
+        	if (reciever != null) 
+        		reciever.addMoney(calculateAssets());
+            else 
+				CentralControl.bank.addBalance(calculateAssets());
+			for (Property property : Properties) 
+				property.initilized();
 		}
         return enough;
     }
@@ -259,15 +279,15 @@ public class Player {
         if (CentralControl.board.getJail().turnInJail(reciever) == 0 && p.undermortgage != true) {
             try {
                 minusMoney(p.getRent());
+                reciever.addMoney(p.getRent());
             } catch (LackMoneyException e) {
-                if (raiseMoney(p.getRent())) {
+                if (raiseMoney(p.getRent(),reciever)) {
                 	payRent(p);
                 } else {
                     CentralControl.leaveGame();
                     return ;
                 }
             }
-            reciever.addMoney(p.getRent());
         }
     }
 
@@ -304,8 +324,8 @@ public class Player {
      * @param money
      * @description: add money to balance
      */
-    public void calculateAssets()  {
-    	totalAssets = 0;
+    public int calculateAssets()  {
+    	totalAssets = money;
     	for (Property property : Properties) {
 			if (property.undermortgage) {
 				totalAssets += property.getCost();
@@ -314,6 +334,7 @@ public class Player {
 				totalAssets += property.getStatus() * CentralControl.bank.getHousePrice(property);
 			}
 		}
+    	return totalAssets;
     }
 
     /**
@@ -385,6 +406,14 @@ public class Player {
     */
     public int getTotalValue() {
         return totalValue;
+    }
+
+    /**
+    *
+    * @return int
+    */
+    public int getCardSize() {
+        return releaseCard.size();
     }
     
     /**

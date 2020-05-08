@@ -21,7 +21,6 @@ public class Property extends Cell implements Comparable<Property>{
     private int status; // 1: one house 2: two houses 3: three houses 4: four houses 5: a hotel
     private Player owner;
     protected boolean undermortgage;//if property undermortage player cant collect money;
-    protected final int location;
 
 
     public Property(int location,String propertyname, String group, int cost, int rent, int oneHouseRent, int twoHousesRent, int threeHousesRent, int fourHousesRent, int hotelRent) {
@@ -30,7 +29,6 @@ public class Property extends Cell implements Comparable<Property>{
         this.group = group;
         this.cost = cost;
         this.rent = rent;
-        this.location=location;
         improvedRent = 0;
         improvedRents = new int[5];
         improvedRents[0] = oneHouseRent;
@@ -231,7 +229,7 @@ public class Property extends Cell implements Comparable<Property>{
      * @param player The player mortgaging the property
      */
     public void mortgage(Bank bank,Player player){
-        if (player.getLocation()==location)
+        if (player.getLocation()== super.getPosition())
         {
             undermortgage=true;//when property under mortgage player can't collect rent
             bank.addBalance(-(cost/2));
@@ -264,11 +262,33 @@ public class Property extends Cell implements Comparable<Property>{
 
     }
     
+    /**
+     * @author: Mingfeng
+     * @methodsName: redeemed
+     * @description: redeemed the mortagaed property from bank
+     * @param Player
+     * @throws LackMoneyException 
+     */
     public void redeemed(Player player) throws LackMoneyException {
     	player.minusMoney(cost/2);
 		CentralControl.bank.addBalance(cost/2);
 		undermortgage = false;
 	}
+    
+    /**
+     * @author: Mingfeng
+     * @methodsName: initilized
+     * @description: initialize this property, no owner, no houses or hotels
+     * @description: no mortgage		
+     */
+    public void initilized() {
+    	owner = null;
+    	numOfHouse = 0;
+    	undermortgage = false;
+    	status = 0;
+    	hotelBuilded = false;
+	}
+    
     /**
      * Gets the status of the property
      *

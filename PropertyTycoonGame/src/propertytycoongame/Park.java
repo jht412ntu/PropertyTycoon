@@ -12,10 +12,11 @@ package propertytycoongame;
 public class Park extends Cell{
 	public Park(int position) {
 		super(position);
+		collectedFine = 0;
 		// TODO Auto-generated constructor stub
 	}
 
-	public int collectedFine = 0;
+	private int collectedFine ;
 	
 	/**
      * Add money to the parking area
@@ -35,5 +36,9 @@ public class Park extends Cell{
 	public void collectFine(Player player) {
 		player.addMoney(collectedFine) ;
 		collectedFine = 0;
+	}
+	
+	public int getMoney() {
+		return collectedFine;
 	}
 }

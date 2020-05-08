@@ -29,7 +29,7 @@ public class CentralControl implements Runnable{
     private Date endTime;
     private String mode;
     private static ArrayList<Player> rank = new ArrayList<Player>();
-    public static ArrayList<Player> players = new ArrayList<>();
+    private static  ArrayList<Player> players = new ArrayList<>();
     private static int currentPlayer = 0;
     public static Board board = new Board();
     public static Dice dices = new Dice();
@@ -45,7 +45,6 @@ public class CentralControl implements Runnable{
             mode = "Abridged";
             endTime = new Date(startTime.getTime() + this.duration);
         }
-        csv.readCsvFile("src/propertytycoongame/csv_board.csv");
     }
 
     /**
@@ -105,7 +104,7 @@ public class CentralControl implements Runnable{
      * Set the current player to the next player in the list of players.
      * If player is an agent, start to run automatically
      */
-    public void nextPlayer() {
+    public static void nextPlayer() {
         if (currentPlayer < players.size() - 1) {
             currentPlayer += 1;
         } else {
@@ -140,7 +139,7 @@ public class CentralControl implements Runnable{
      *
      * @return ArrayList List of all players currently in the game
      */
-    public ArrayList<Player> getPlayers() {
+    public static ArrayList<Player> getPlayers() {
         return players;
     }
 
@@ -190,7 +189,7 @@ public class CentralControl implements Runnable{
         long interval = endTime.getTime() - startTime.getTime();
         return timeFormat(interval);
     }
-
+    
     /**
      * Format the time in milliseconds to 00:00:00(H:m:s)
      *

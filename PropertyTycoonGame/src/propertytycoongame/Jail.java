@@ -20,10 +20,6 @@ public class Jail extends Cell{
 	public Jail(int position) {
 		super(position);
 		prisoners = new HashMap<>();
-		for (Player player : CentralControl.players) {
-			prisoners.put(player, 0);
-		}
-		
 	}
 	
 	/**
@@ -44,7 +40,12 @@ public class Jail extends Cell{
 	* @return:  Int
 	*/
 	public int turnInJail(Player player) {
-		return prisoners.get(player);
+		try {
+			return prisoners.get(player);
+		} catch (NullPointerException e) {
+			return 0;
+		}
+		
 	}
 	
 	

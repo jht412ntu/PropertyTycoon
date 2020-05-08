@@ -23,6 +23,7 @@ public class Agent extends Player {
         autoBuild();
         autoPayRent(currentCell);
         autoSelectCard (currentCell);
+        CentralControl.nextPlayer();
     }
 
     /**
@@ -35,7 +36,7 @@ public class Agent extends Player {
     	if (CentralControl.board.getJail().turnInJail(this) == 2) // Use card or money to release itself
     		try {
 				if (released() || payReleased()) 
-				    rollDices();
+					;
 			} catch (LackMoneyException | NotInJailException e) {
 				// TODO Auto-generated catch block
 				CentralControl.board.getJail().pass(this);

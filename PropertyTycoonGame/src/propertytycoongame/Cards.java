@@ -3,8 +3,7 @@ import java.util.HashMap;
 import java.util.Random;
 public class Cards extends Cell{
 
-    public Cards(int position) {
-        super(position);
+    public Cards() {
         // TODO Auto-generated constructor stub
     }
 
