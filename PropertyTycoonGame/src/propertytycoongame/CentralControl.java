@@ -72,12 +72,12 @@ public class CentralControl {
             mode = "Abridged";
             endTime = new Date(startTime.getTime() + this.duration);
         }
-        csv.readCsvFile("src/propertytycoongame/csv_board.csv");
-        currentPlayer = 0;
         rank = new ArrayList<>();
         board = new Board();
         dices = new Dice();
         bank = new Bank();
+        Csv.readCsvFile("src/propertytycoongame/csv_board.csv");
+        currentPlayer = 0;
     }
 
     /**
