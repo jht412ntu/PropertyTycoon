@@ -1,15 +1,17 @@
 package propertytycoongame;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
- * Property Tycoon Game Bank
+ * Bank
  *
  * Class that provides functionality for banking.
+ * 
+ * Documented by Haotian Jiao
  *
  * @author Haotian Jiao
- * @version 1.0.2
+ * @version 1.1.0
+ * 
  */
 public class Bank {
 
@@ -29,6 +31,9 @@ public class Bank {
     private int greenHousesCanBeBuild;
     private int deepblueHousesCanBeBuild;
 
+    /**
+     * Constructor for Bank.
+     */
     public Bank() {
         balance = 50000; // initial balance
         properties = new ArrayList<>();
@@ -44,6 +49,11 @@ public class Bank {
         deepblueHousesCanBeBuild = 0;
     }
 
+    /**
+     * Accesses and returns the balance of the Bank.
+     * 
+     * @return int - The current balance of the bank
+     */
     public int getBalance() {
         return balance;
     }
@@ -51,14 +61,14 @@ public class Bank {
     /**
      * Sets the balance of the Banks balance.
      *
-     * @param balance
+     * @param balance A new value of the balance
      */
     public void setBalance(int balance) {
         this.balance = balance;
     }
 
     /**
-     * Adds property to the property list
+     * Adds property to the property list.
      *
      * @param p A Property instance
      */
@@ -76,8 +86,8 @@ public class Bank {
     }
 
     /**
-     * Sells a property when the property is available and player has enough
-     * money
+     * Sells a property when the property is available
+     * and player has enough money.
      *
      * @param player A Player instance
      * @param p A Property instance
@@ -93,7 +103,7 @@ public class Bank {
     }
 
     /**
-     * Buys a property when a player want to sell it
+     * Buys a property when a player want to sell it.
      *
      * @param player A Player instance
      * @param p A Property instance
@@ -111,8 +121,8 @@ public class Bank {
     }
 
     /**
-     * Builds a house when a player owned all the properties in a group and has
-     * enough money
+     * Builds a house when a player owned all the properties in a group
+     * and has enough money.
      *
      * @param player A Player instance
      * @param p A Property instance
@@ -197,7 +207,7 @@ public class Bank {
 
     /**
      * Changes the number of current houses can be built on one specific group
-     * when all properties in the group has the same houses
+     * when all properties in the group has the same houses.
      *
      * added on 23/04/2020 by Haotian Jiao
      *
@@ -293,8 +303,8 @@ public class Bank {
     }
 
     /**
-     * Builds a hotel when a property has 4 houses and the player has enough
-     * money
+     * Builds a hotel when a property has 4 houses
+     * and the player has enough money.
      *
      * @param player A Player instance
      * @param p A Property instance
@@ -328,7 +338,7 @@ public class Bank {
     }
 
     /**
-     * Buys a hotel when a player has one
+     * Buys a hotel when a player has one.
      *
      * @param player A Player instance
      * @param p A Property instance
@@ -361,11 +371,11 @@ public class Bank {
     }
 
     /**
-     * Checks if a player can build house(owned all properties in a group)
+     * Checks if a player can build house(owned all properties in a group).
      *
      * @param player A Player instance
      * @param p A Property instance
-     * @return if the player can build house or not
+     * @return boolean - if the player can build house or not
      */
     public boolean checkPermission(Player player, Property p) {
         boolean permitted = false;
@@ -384,71 +394,96 @@ public class Bank {
 
 
     /**
-     * Distributes amount of cash to certain player
+     * Distributes amount of cash to certain player.
      *
      * @param player A Player instance
-     * @param amount Set amount
-     * @throws LackMoneyException 
+     * @param amount Set amount 
      */
     public void distributeCash(Player player, int amount) { // 1500 initial distribution and 200 when passes GO
         player.addMoney(amount);
         balance -= amount;
     }
 
+    /**
+     * Sets the field 'onAuction' to be true.
+     */
     public void startAuction() {
         onAuction = true;
     }
 
+    /**
+     * Checks the status of 'onAuction'.
+     * 
+     * @return boolean - if the auction is on
+     */
     public boolean isOnAuction() {
         return onAuction;
     }
 
     /**
-     * Accepts new offer and refuses low offer also keeps the current winner
+     * Accepts new offer and refuses low offer also keeps the current winner.
      *
+     * modified date: 30/04/2020
+     * modified: checks if the player has completed a full circuit
+     * 
      * @param p A Property instance
      * @param player Current bidder
      * @param offer Current offer
      * @throws PropertyException
+     * @throws propertytycoongame.BankException
      */
-    public void bid(Property p, Player player, int offer) throws PropertyException {
-        if (p.isAvailable()) {
-            if (currentBidder == null) {
-                if (player.getMoney() >= offer) {
-                    maxOffer = offer;
-                    currentBidder = player;
-                }
-            } else {
-                if (offer > maxOffer) {
+    public void bid(Property p, Player player, int offer) throws PropertyException, BankException {
+        if (player.isPassGo()) {
+            if (p.isAvailable()) {
+                if (currentBidder == null) {
                     if (player.getMoney() >= offer) {
                         maxOffer = offer;
-                        sameMaxOffer = 0;
                         currentBidder = player;
-                        sameOfferBidder = null;
                     }
-                } else if (offer == maxOffer) {
-                    sameMaxOffer = offer;
-                    sameOfferBidder = player;
+                } else {
+                    if (offer > maxOffer) {
+                        if (player.getMoney() >= offer) {
+                            maxOffer = offer;
+                            sameMaxOffer = 0;
+                            currentBidder = player;
+                            sameOfferBidder = null;
+                        }
+                    } else if (offer == maxOffer) {
+                        sameMaxOffer = offer;
+                        sameOfferBidder = player;
+                    }
                 }
+            } else {
+                throw new PropertyException("The property has been sold.");
             }
         } else {
-            throw new PropertyException("The property has been sold.");
+            throw new BankException("A player has to completed a full circuit before join an auction.");
         }
     }
 
+    /**
+     * Accesses and returns the current bidder of the auction.
+     * 
+     * @return Player - the current Bidder's Player instance
+     */
     public Player getCurrentBidder() {
         return currentBidder;
     }
 
+    /**
+     * Accesses and returns the current maximum offer of the auction.
+     * 
+     * @return int - the current maximum offer
+     */
     public int getMaxOffer() {
         return maxOffer;
     }
     
     /**
-     * Gets the corresponding house price of a property
+     * Accesses and returns the corresponding house price of a property.
      * 
      * @param p A Property instance
-     * @return The property's corresponding house price
+     * @return int - the property's corresponding house price
      */
     public int getHousePrice(Property p) {
         switch(p.getGroup()) {
