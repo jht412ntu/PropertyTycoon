@@ -31,10 +31,10 @@ public class CentralControlTest {
     private CentralControl normal;
     private CentralControl timed;
     
-    public CentralControlTest() {
-//        p1 = new Player(0, Player.Token.boot);
-//        p2 = new Player(10, Player.Token.cat);
-//        p3 = new Player(10, Player.Token.spoon);
+    public CentralControlTest() throws DuplicateException {
+        p1 = new Player("Player1", Player.Token.boot);
+        p2 = new Player("Player2", Player.Token.cat);
+        p3 = new Player("Player3", Player.Token.spoon);
         normal = new CentralControl(0);
         timed = new CentralControl(90);
     }
@@ -60,7 +60,7 @@ public class CentralControlTest {
      */
     @Test
     public void test0GetCurrentTime() {
-        System.out.println("getCurrentTime");
+        //System.out.println("getCurrentTime");
         CentralControl instance = new CentralControl(0);
         Date expResult = new Date();
         Date result = instance.getCurrentTime();
@@ -72,7 +72,7 @@ public class CentralControlTest {
      */
     @Test
     public void test1AddPlayer() {
-        System.out.println("addPlayer");
+        //System.out.println("addPlayer");
         try{
         p1 = new Player("Player1", Player.Token.boot);
         normal.addPlayer(p1);
@@ -89,7 +89,7 @@ public class CentralControlTest {
      */
     @Test
     public void test2GetCurrentPlayer() {
-        System.out.println("getCurrentPlayer");
+        //System.out.println("getCurrentPlayer");
 //        normal.addPlayer(p2);
 //        normal.addPlayer(p1);
         //Player result = normal.getCurrentPlayer();
@@ -101,7 +101,7 @@ public class CentralControlTest {
      */
     @Test
     public void test3NextPlayer() {
-        System.out.println("nextPlayer");
+        //System.out.println("nextPlayer");
 //        normal.addPlayer(p2);
 //        normal.addPlayer(p1);
         normal.nextPlayer();
@@ -112,7 +112,7 @@ public class CentralControlTest {
      */
     @Test
     public void test4InitPlayers() {
-        System.out.println("initPlayers");
+        //System.out.println("initPlayers");
 //        normal.addPlayer(p3);
 //        normal.addPlayer(p2);
 //        normal.addPlayer(p1);
@@ -124,7 +124,7 @@ public class CentralControlTest {
      */
     @Test
     public void test5GetPlayers() {
-        System.out.println("getPlayers");
+        //System.out.println("getPlayers");
 //        normal.addPlayer(p3);
 //        normal.addPlayer(p2);
 //        normal.addPlayer(p1);
@@ -136,7 +136,7 @@ public class CentralControlTest {
      */
     @Test
     public void test6GetStartTime() {
-        System.out.println("getStartTime");
+        //System.out.println("getStartTime");
         Date result = normal.getStartTime();      
         assertEquals(new Date(), result);
         System.out.println(result);
@@ -147,7 +147,7 @@ public class CentralControlTest {
      */
     @Test
     public void test7SetEndTime() {
-        System.out.println("setEndTime");
+        //System.out.println("setEndTime");
         normal.setEndTime();
     }
 
@@ -156,7 +156,7 @@ public class CentralControlTest {
      */
     @Test
     public void test8GetRemainingTime() {
-        System.out.println("getRemainingTime");
+        //System.out.println("getRemainingTime");
         Time result = timed.getRemainingTime();
         Time expResult = timed.timeFormat(90*60000);
         System.out.println(result);
@@ -168,7 +168,7 @@ public class CentralControlTest {
      */
     @Test
     public void test9GetDuration() throws InterruptedException {
-        System.out.println("getDuration");
+        //System.out.println("getDuration");
         //Thread.currentThread().sleep(1000);
         Time result = timed.getDuration();
         Time expResult = timed.timeFormat(90*60000);

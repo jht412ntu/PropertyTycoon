@@ -13,7 +13,7 @@ import java.io.BufferedReader;
  *
  * @author Zhenyu
  */
-public class Csv {
+public class csv {
 
     /**
      * Constructor for Csv.

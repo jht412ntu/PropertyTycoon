@@ -12,7 +12,7 @@ import propertytycoongame.Player;
 * @author Mingfeng
 */
 public class PlayerTest {
-	//Player player = new Player("Foret",Token.boot);
+//Player player = new Player("Foret",Token.boot);
 	public PlayerTest() {
 		
 	}
