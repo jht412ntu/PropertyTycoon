@@ -592,7 +592,9 @@ public class GameGUI extends javax.swing.JFrame {
             gui.tokenList.clearSelection();
 
             createPlayerList();
-        } catch (Exception ex) {
+        } catch (DuplicateException ex) {
+            JOptionPane.showMessageDialog(playerSetup, ex.getMessage());
+        } catch (Exception ex){
             JOptionPane.showMessageDialog(playerSetup, ex.getMessage());
         }
     }//GEN-LAST:event_btnAddPlayerActionPerformed
@@ -621,6 +623,8 @@ public class GameGUI extends javax.swing.JFrame {
             Player p = game.getCurrentPlayer();
             CentralControl.bank.buyProperty(p, (Property) CentralControl.board.getCell(p.getLocation()));
             createOwnedProp();
+        } catch (ClassCastException ex) {
+            JOptionPane.showMessageDialog(gameScreen, "You cannot buy this property");
         } catch (PropertyException ex) {
             JOptionPane.showMessageDialog(gameScreen, ex.getMessage());
         }
@@ -641,9 +645,7 @@ public class GameGUI extends javax.swing.JFrame {
         Player p = game.getCurrentPlayer();
         try {
             CentralControl.bank.buildHouse(p,p.getPropertiesList().get(tblOwnProp.getSelectedRow()));
-        } catch (PropertyException ex) {
-            JOptionPane.showMessageDialog(gameScreen,ex.getMessage());
-        } catch (LackMoneyException ex) {
+        } catch (PropertyException | LackMoneyException ex) {
             JOptionPane.showMessageDialog(gameScreen,ex.getMessage());
         }
     }//GEN-LAST:event_btnUpgradeActionPerformed
@@ -793,15 +795,11 @@ public class GameGUI extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(GameGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GameGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GameGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GameGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
