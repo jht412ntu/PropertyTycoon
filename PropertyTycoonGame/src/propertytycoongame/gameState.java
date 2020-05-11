@@ -9,7 +9,7 @@ package propertytycoongame;
  *
  * @author Hayden
  */
-public class gameState {
+public class GameState {
     public void loadGame(){
         
     }
