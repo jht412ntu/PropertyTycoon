@@ -34,7 +34,7 @@ public class PropertyTycoonGame {
 
         ptg.reader = new BufferedReader(new InputStreamReader(System.in));
         ptg.mainmenu = true;
-        System.out.println("? for help\n \n ");
+        System.out.println("? for help\n\n ");
         //System.out.println("")
         while (ptg.mainmenu) {
 
@@ -46,7 +46,7 @@ public class PropertyTycoonGame {
                 String input[] = ptg.reader.readLine().split(" ");
                 switch (input[0]) {
                     case "gui":
-                        System.out.println("Starting GUI \n\n\n");
+                        System.out.println("Starting GUI\n\n");
 
                         GameGUI.Start();
                         ptg.mainmenu = false;
@@ -127,6 +127,10 @@ public class PropertyTycoonGame {
                         default:
                             game.addPlayer(new Player(input[0], Token.valueOf(input[1].toLowerCase())));
                             break;
+                        case "q":
+                            setup = false;
+                            break;
+                            
                     }
                 }
 
