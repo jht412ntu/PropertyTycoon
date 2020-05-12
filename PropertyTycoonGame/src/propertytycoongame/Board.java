@@ -18,7 +18,7 @@ public class Board {
     private Jail jail = new Jail(11);
     private PotluckCard potluckCard = new PotluckCard(18);
     private OpportunityknockCard opportunityknockCard = new OpportunityknockCard(8);
-
+    
     /**
      * Accesses and returns the field jail.
      *

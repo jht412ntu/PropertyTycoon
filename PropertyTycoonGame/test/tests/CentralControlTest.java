@@ -7,10 +7,6 @@ package tests;
 
 import java.sql.Time;
 import java.util.Date;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.FixMethodOrder;
@@ -20,8 +16,9 @@ import propertytycoongame.DuplicateException;
 import propertytycoongame.Player;
 
 /**
- *
- * @author Hallton-PC
+ * Sprint1 test and some methods test.
+ * 
+ * @author Haotian Jiao
  */
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 public class CentralControlTest {
@@ -32,29 +29,37 @@ public class CentralControlTest {
     private CentralControl timed;
     
     public CentralControlTest() {
-//        p1 = new Player(0, Player.Token.boot);
-//        p2 = new Player(10, Player.Token.cat);
-//        p3 = new Player(10, Player.Token.spoon);
+        try {
+            p1 = new Player("Player 1", Player.Token.boot);
+            p2 = new Player("Player 2", Player.Token.cat);
+            p3 = new Player("Player 3", Player.Token.spoon);
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        
         normal = new CentralControl(0);
         timed = new CentralControl(90);
     }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
 
+    /**
+     * Sprint1: TC4: Central Control
+     * 
+     * TC4-F1: Determine who’s turn it is.
+     * 
+     * @throws Exception 
+     */
+    @Test
+    public void testWhosTurnItIs() throws Exception {
+        System.out.println("Who's turn it is:");
+        normal.addPlayer(p1);
+        normal.addPlayer(p2);
+        normal.addPlayer(p3);
+        normal.nextPlayer();
+        Player expResult = p2;
+        Player result = normal.getCurrentPlayer();
+        System.out.println("Expected result: " + expResult + "\nResult: " + result);
+    }
+    
     /**
      * Test of getCurrentTime method, of class CentralControl.
      */
@@ -71,7 +76,7 @@ public class CentralControlTest {
      * Test of addPlayer method, of class CentralControl.
      */
     @Test
-    public void test1AddPlayer() {
+    public void test1AddPlayer() throws Exception {
         System.out.println("addPlayer");
         try{
         p1 = new Player("Player1", Player.Token.boot);

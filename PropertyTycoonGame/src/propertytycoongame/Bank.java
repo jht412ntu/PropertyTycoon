@@ -99,6 +99,8 @@ public class Bank {
             player.addMoney(-p.getCost());
             balance += p.getCost();
             player.buyProperty(p);
+        } else {
+            throw new PropertyException("Your balance is not enough to buy this.");
         }
     }
 
@@ -435,23 +437,27 @@ public class Bank {
     public void bid(Property p, Player player, int offer) throws PropertyException, BankException {
         if (player.isPassGo()) {
             if (p.isAvailable()) {
-                if (currentBidder == null) {
-                    if (player.getMoney() >= offer) {
-                        maxOffer = offer;
-                        currentBidder = player;
-                    }
-                } else {
-                    if (offer > maxOffer) {
+                if (offer >= 0) {
+                    if (currentBidder == null) {
                         if (player.getMoney() >= offer) {
                             maxOffer = offer;
-                            sameMaxOffer = 0;
                             currentBidder = player;
-                            sameOfferBidder = null;
                         }
-                    } else if (offer == maxOffer) {
-                        sameMaxOffer = offer;
-                        sameOfferBidder = player;
+                    } else {
+                        if (offer > maxOffer) {
+                            if (player.getMoney() >= offer) {
+                                maxOffer = offer;
+                                sameMaxOffer = 0;
+                                currentBidder = player;
+                                sameOfferBidder = null;
+                            }
+                        } else if (offer == maxOffer) {
+                            sameMaxOffer = offer;
+                            sameOfferBidder = player;
+                        }
                     }
+                } else {
+                    throw new BankException("The offer can't be negative number.");
                 }
             } else {
                 throw new PropertyException("The property has been sold.");
