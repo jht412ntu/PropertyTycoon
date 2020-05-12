@@ -4,103 +4,127 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+/**
+ * Agent
+ *
+ * Class that provides functionality for running a game agent.
+ *
+ * Documented by Haotian Jiao
+ *
+ * @author Mingfeng & Haotian Jiao
+ */
 public class Agent extends Player {
 
-    public Agent(String name, Token token) throws CreatePlayerException {
+    /**
+     * Constructor for Agent.
+     * 
+     * @param name The name of the agent
+     * @param token A specific token
+     * @throws DuplicateException
+     */
+    public Agent(String name, Token token) throws DuplicateException {
         super(name, token);
     }
 
     /**
-     * @throws propertytycoongame.PropertyException 
-     * @author: Mingfeng
-     * @throws BankException,LackMoneyException 
-     * @description: run agent like normal player in specify rules
+     * The main function for running the agent.
+     * 
+     * author: Mingfeng
+     * 
+     * @throws propertytycoongame.PropertyException
+     * @throws propertytycoongame.LackMoneyException
      */
-    public void run() {
+    public void run() throws PropertyException, LackMoneyException {
         rollDices();
         Cell currentCell = CentralControl.board.getCell(this.getLocation());
         autoBuyProperty(currentCell);
         autoBuild();
         autoPayRent(currentCell);
-        autoSelectCard (currentCell);
-        CentralControl.nextPlayer();
+        autoSelectCard(currentCell);
     }
 
     /**
+     * The overrode rollDices method.
+     * 
      * @methodsName:rollDices
      * @author: Mingfeng
-     * @throws PropertyException
-     * @description: roll dices and act based what the game rules is required
+     *
+     * @description: roll dices
      */
+    @Override
     public void rollDices() {
-    	if (CentralControl.board.getJail().turnInJail(this) == 2) // Use card or money to release itself
-    		try {
-				if (released() || payReleased()) 
+        if (CentralControl.board.getJail().turnInJail(this) == 2) // Use card or money to release itself
+        {
+            try {
+                if (released() || payReleased()) 
 					;
-			} catch (LackMoneyException | NotInJailException e) {
-				// TODO Auto-generated catch block
-				CentralControl.board.getJail().pass(this);
-			}
-    	else 
-    		CentralControl.dices.rollDice();
-    		int tLocation = getLocation() + CentralControl.dices.getTotalVal();
-            if (tLocation > 40) {
-                setPassGo(true);
-                CentralControl.bank.distributeCash(this, 200);
-                tLocation -= 40;
-                CentralControl.bank.addBalance(-200);
+            } catch (LackMoneyException | NotInJailException e) {
+                CentralControl.board.getJail().pass(this);
             }
-            setLocation(tLocation);
-    }
-    
-    
-    /**
-     * autoBuyProperty
-     * @author: Mingfeng
-     * @throws PropertyException
-     * 
-     * @description: try automatically to buy property in suitable condition(as much as possible)
-     */
-    public void autoBuyProperty(Cell currentCell)   {
-    	if (Property.class.isInstance(currentCell)) {
-    		Property p = (Property)currentCell;
-    		try {
-        		if (p.isAvailable())
-        			CentralControl.bank.buyProperty(this, p);
-			} catch (PropertyException e) {
-				
-			}
-    	}
+        } else {
+            CentralControl.dices.rollDice();
+        }
+        int tLocation = getLocation() + CentralControl.dices.getTotalVal();
+        if (tLocation > 40) {
+            setPassGo(true);
+            CentralControl.bank.distributeCash(this, 200);
+            tLocation -= 40;
+            CentralControl.bank.addBalance(-200);
+        }
+        setLocation(tLocation);
     }
 
     /**
-     * @author: Mingfeng
-     * @throws PropertyException
-     * @throws LackMoneyException 
-     * @methodsName: autoBuild
-     * @description: try automatically to buy house and hotel in suitable condition( money is greater than 400)
+     * Trys automatically to buy property in suitable condition(as much as possible).
+     *
+     * author: Mingfeng
+     * 
+     * @param currentCell The current landed cell
+     * @throws PropertyException 
+     */
+    public void autoBuyProperty(Cell currentCell) {
+        if (Property.class.isInstance(currentCell)) {
+            Property p = (Property) currentCell;
+            try {
+                if (p.isAvailable()) {
+                    CentralControl.bank.buyProperty(this, p);
+                }
+            } catch (PropertyException e) {
+
+            }
+        }
+    }
+
+    /**
+     * Trys automatically to buy house and hotel in suitable condition( money is greater than 400).
+     * 
+     * author: Mingfeng
+     * 
      */
     public void autoBuild() {
         ArrayList<Property> propertiesBuild = searchPropertyBuild();
-        while (getMoney() >= 400) 
-            for (Property property : propertiesBuild) 
-            	try {
-            		 if (getMoney() >= 400) 
-                         if (property.getNumOfHouse() != 4)
-                        	 CentralControl.bank.buildHouse(this, property);
-                         else 
-                             CentralControl.bank.buildHotel(this, property);
-				} catch (PropertyException | LackMoneyException e) {
-					
-               }
-					
+        while (getMoney() >= 400) {
+            for (Property property : propertiesBuild) {
+                try {
+                    if (getMoney() >= 400) {
+                        if (property.getNumOfHouse() != 4) {
+                            CentralControl.bank.buildHouse(this, property);
+                        } else {
+                            CentralControl.bank.buildHotel(this, property);
+                        }
+                    }
+                } catch (PropertyException | LackMoneyException e) {
+
+                }
+            }
+        }
     }
 
     /**
-     * @author: Mingfeng
-     * @return ArrayList
-     * @methodsName: searchPropertyBuild
-     * @description: search properties can be build
+     * Searches properties that can be built.
+     * 
+     * author: Mingfeng
+     * @return ArrayList - the properties list
      */
     public ArrayList<Property> searchPropertyBuild() {
         ArrayList<Property> propertiesBuild = new ArrayList<>();
@@ -112,53 +136,56 @@ public class Agent extends Player {
         Collections.sort(propertiesBuild);
         return propertiesBuild;
     }
-    
+
     /**
-     * Pays the rent if the current cell is a property owned by a player
-     * 
+     * Pays the rent if the current cell is a property owned by a player.
+     *
      * author: Haotian Jiao
      * date: 23/04/2020
-     * 
+     *
      * @param currentCell the cell of the current position
      */
     public void autoPayRent(Cell currentCell) {
-        if (currentCell.getClass().toString().endsWith("Property")) 
-            if (!((Property)currentCell).getOwner().equals(this) && ((Property)currentCell).getOwner() != null) 
-                if (getMoney() >= ((Property)currentCell).getRent()) 
-                    payRent(((Property)currentCell));
-    }
-    
-    /**
-     * Selects a card from Potluck or Opportunity
-     * 
-     * author: Haotian Jiao
-     * date: 23/04/2020
-     * 
-     * @param currentCell the cell of the current position
-     */
-    public void autoSelectCard (Cell currentCell) {
-        if (currentCell.getClass().toString().endsWith("PotluckCard")) {
-            ((PotluckCard)currentCell).action(this);
-        } else if (currentCell.getClass().toString().endsWith("OpportunityknockCard")) {
-            ((OpportunityknockCard)currentCell).action(this);
+        if (currentCell.getClass().toString().endsWith("Property")) {
+            if (!((Property) currentCell).getOwner().equals(this) && ((Property) currentCell).getOwner() != null) {
+                if (getMoney() >= ((Property) currentCell).getRent()) {
+                    payRent(((Property) currentCell));
+                }
+            }
         }
     }
 
     /**
-     * Generates an offer when an auction is on
-     * 
+     * Selects a card from Potluck or Opportunity.
+     *
      * author: Haotian Jiao
      * date: 23/04/2020
-     * 
-     * @return an offer for the auction
+     *
+     * @param currentCell the cell of the current position
      */
-    public int autoAuction () {
+    public void autoSelectCard(Cell currentCell) {
+        if (currentCell.getClass().toString().endsWith("PotluckCard")) {
+            ((PotluckCard) currentCell).action(this);
+        } else if (currentCell.getClass().toString().endsWith("OpportunityknockCard")) {
+            ((OpportunityknockCard) currentCell).action(this);
+        }
+    }
+
+    /**
+     * Generates an offer when an auction is on.
+     *
+     * author: Haotian Jiao
+     * date: 23/04/2020
+     *
+     * @return int - an offer for the auction
+     */
+    public int autoAuction() {
         Bank bank = CentralControl.bank;
         Random rand = new Random();
         int oneOrZero = rand.nextInt(2);
         int offer = 0;
         if (bank.isOnAuction()) {
-            if(bank.getCurrentBidder() == null) {
+            if (bank.getCurrentBidder() == null) {
                 if (oneOrZero == 1) {
                     offer = Math.round(getMoney() / 100 * 5); // the initial offer will be 5% of its total balance
                 } else {
