@@ -4,13 +4,13 @@ package propertytycoongame;
  * Property
  *
  * Class that provides functionality to access and manage a property.
- * 
+ *
  * Documented by Haotian Jiao
- * 
+ *
  * @author Haotian Jiao
  * @version 1.1.0
  */
-public class Property extends Cell implements Comparable<Property>{
+public class Property extends Cell implements Comparable<Property> {
 
     protected final String name;
     private final String group;
@@ -18,18 +18,16 @@ public class Property extends Cell implements Comparable<Property>{
     private int rent;
     private int improvedRent;
     private final int[] improvedRents;
-    protected  boolean available;
+    private boolean available;
     private boolean hotelBuilded;
     private int numOfHouse;
     private int status; // 1: one house 2: two houses 3: three houses 4: four houses 5: a hotel
     private Player owner;
     protected boolean undermortgage;//if property undermortage player cant collect money;
-    protected final int location;
-
 
     /**
      * Constructor for Property
-     * 
+     *
      * @param location The property's cell location
      * @param propertyname The property's name
      * @param group The property's group
@@ -47,7 +45,6 @@ public class Property extends Cell implements Comparable<Property>{
         this.group = group;
         this.cost = cost;
         this.rent = rent;
-        this.location=location;
         improvedRent = 0;
         improvedRents = new int[5];
         improvedRents[0] = oneHouseRent;
@@ -65,7 +62,7 @@ public class Property extends Cell implements Comparable<Property>{
 
     /**
      * Accesses and returns the name of the property.
-     * 
+     *
      * @author Hayden
      * @return String - property's name
      */
@@ -156,8 +153,7 @@ public class Property extends Cell implements Comparable<Property>{
     }
 
     /**
-     * Builds a house on the property
-     * and changes the current rent.
+     * Builds a house on the property and changes the current rent.
      *
      */
     public void buildHouse() {
@@ -167,8 +163,7 @@ public class Property extends Cell implements Comparable<Property>{
     }
 
     /**
-     * Sells a house on the property
-     * and changes the current rent.
+     * Sells a house on the property and changes the current rent.
      *
      */
     public void sellHouse() {
@@ -182,9 +177,7 @@ public class Property extends Cell implements Comparable<Property>{
     }
 
     /**
-     * Builds a hotel on the property and
-     * change the current rent and
-     * number of house.
+     * Builds a hotel on the property and change the current rent and number of house.
      *
      */
     public void buildHotel() {
@@ -195,9 +188,7 @@ public class Property extends Cell implements Comparable<Property>{
     }
 
     /**
-     * Sells a hotel on the property and
-     * recovers the houses and
-     * changes the current rent.
+     * Sells a hotel on the property and recovers the houses and changes the current rent.
      */
     public void sellHotel() {
         numOfHouse = 4;
@@ -218,12 +209,7 @@ public class Property extends Cell implements Comparable<Property>{
     /**
      * Sets the status of the property.
      *
-     * 0: empty
-     * 1: one house
-     * 2: two houses
-     * 3: three houses
-     * 4: four houses
-     * 5: a hotel
+     * 0: empty 1: one house 2: two houses 3: three houses 4: four houses 5: a hotel
      *
      */
     public void setStatus() {
@@ -242,25 +228,25 @@ public class Property extends Cell implements Comparable<Property>{
         }
     }
 
-    /** 
+    /**
      * Mortgages the property to the bank.
-     * 
+     *
      * Note: The player needs to land on the property to mortgage
      *
      * @param bank The bank paying out the mortgage
      * @param player The player mortgaging the property
      */
-    public void mortgage(Bank bank,Player player){
-        if (player.getLocation()==location)
-        {
-            undermortgage=true;//when property under mortgage player can't collect rent
-            bank.addBalance(-(cost/2));
-            player.addMoney(cost/2);
+    public void mortgage(Bank bank, Player player) {
+        if (player.getLocation() == super.getPosition()) {
+            undermortgage = true;//when property under mortgage player can't collect rent
+            bank.addBalance(-(cost / 2));
+            player.addMoney(cost / 2);
         }
     }
+
     /**
      * Sets availability of a property.
-     * 
+     *
      * @param available if the property is available
      */
     public void setAvailable(boolean available) {
@@ -268,32 +254,54 @@ public class Property extends Cell implements Comparable<Property>{
     }
 
     /**
-     * Player resells the property to bank
-     * and property back to available.
+     * Player resells the property to bank and property back to available.
      *
      * @param bank The Bank instance
      * @param player The player sells the property
      */
-    public void liquidate(Bank bank,Player player){
-        player.Properties.remove(name);
-        bank.addBalance(-(cost/2));
-        player.addMoney(cost/2);
-        owner=null;
-        status=0;
-        available=true;
-        undermortgage=false;
-        numOfHouse=0;
+    public void liquidate(Bank bank, Player player) {
+        player.getPropertiesList().remove(name);
+        bank.addBalance(-(cost / 2));
+        player.addMoney(cost / 2);
+        owner = null;
+        status = 0;
+        available = true;
+        undermortgage = false;
+        numOfHouse = 0;
+    }
+
+    /**
+     * Redeems the mortagaed property from bank
+     *
+     * author: Mingfeng
+     *
+     * @param player The Player instance
+     * @throws LackMoneyException
+     */
+    public void redeemed(Player player) throws LackMoneyException {
+        player.minusMoney(cost / 2);
+        CentralControl.bank.addBalance(cost / 2);
+        undermortgage = false;
+    }
+
+    /**
+     * Initialises this property, no owner, no houses or hotels no mortgage.
+     *
+     * author: Mingfeng
+     *
+     */
+    public void initilized() {
+        owner = null;
+        numOfHouse = 0;
+        undermortgage = false;
+        status = 0;
+        hotelBuilded = false;
     }
 
     /**
      * Gets the status of the property
      *
-     * 0: an empty property
-     * 1: one house
-     * 2: two houses
-     * 3: three houses
-     * 4: four houses
-     * 5: a hotel
+     * 0: an empty property 1: one house 2: two houses 3: three houses 4: four houses 5: a hotel
      *
      * @return int - the status of the property in integer
      */
@@ -307,6 +315,7 @@ public class Property extends Cell implements Comparable<Property>{
      * @param o The property that need to be compared
      * @return int - the number of differences
      */
+    @Override
     public int compareTo(Property o) {
         int p1 = this.numOfHouse;
         int p2 = o.getNumOfHouse();

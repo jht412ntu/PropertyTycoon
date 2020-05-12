@@ -7,11 +7,11 @@ import java.util.*;
 
 /**
  * OpportunityknockCard
- * 
+ *
  * Class that provides actions that make the opportunity cards work.
  *
  * Documented by Haotian Jiao
- * 
+ *
  * @author Zhenyu
  */
 public class OpportunityknockCard extends Cards {
@@ -21,7 +21,7 @@ public class OpportunityknockCard extends Cards {
 
     /**
      * Constructor for OpportunityknockCard
-     * 
+     *
      * @param position The position of the OpportunityknockCard
      */
     public OpportunityknockCard(int position) {
@@ -54,7 +54,7 @@ public class OpportunityknockCard extends Cards {
 
     /**
      * Picks a card from the top of the cards set and takes the action.
-     * 
+     *
      * @param player The player that takes the card
      */
     public void action(Player player) {
@@ -91,7 +91,7 @@ public class OpportunityknockCard extends Cards {
                 CentralControl.bank.addBalance(-150);
                 player.addMoney(150);
             case "You are assessed for repairs, £40/house, £115/hotel":
-                for (Property property : player.Properties) {
+                for (Property property : player.getPropertiesList()) {
                     player.addMoney(-property.getNumOfHouse() * 40);
                     if (property.ifHotelBuilded() != false);
                     player.addMoney(-115);
@@ -100,7 +100,7 @@ public class OpportunityknockCard extends Cards {
                 player.setLocation(0);
                 shuffledqueue1.offer(topcard);
             case "You are assessed for repairs, £25/house, £100/hotel":
-                for (Property property : player.Properties) {
+                for (Property property : player.getPropertiesList()) {
                     player.addMoney(-property.getNumOfHouse() * 40);
                     if (property.ifHotelBuilded() != false);
                     player.addMoney(-115);
@@ -121,9 +121,13 @@ public class OpportunityknockCard extends Cards {
                 CentralControl.board.getPark().addFine(20);
 
             case "Get out of jail free":
-                player.addReleaseCard();
+                player.addReleaseCard(new OpportunityknockCard());
 
         }
+    }
+
+    public Queue<String> getShuffledQueue() {
+        return shuffledqueue1;
     }
 
 }

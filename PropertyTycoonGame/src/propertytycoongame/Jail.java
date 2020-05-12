@@ -6,7 +6,7 @@ import java.util.HashMap;
  * Jail
  *
  * This class is resposible for putting or releasing prisoner in Jail Also pass a turn for a prisoner.
- * 
+ *
  * Documented by Haotian Jiao
  *
  * @author Mingfeng
@@ -17,7 +17,7 @@ public class Jail extends Cell {
 
     /**
      * Constructor for Jail.
-     * 
+     *
      * @param position The position of the jail
      */
     public Jail(int position) {
@@ -28,9 +28,9 @@ public class Jail extends Cell {
 
     /**
      * Puts a player in jail.
-     * 
+     *
      * author: Mingfeng
-     * 
+     *
      * @param player the player that need to be put in the jail
      */
     public void put(Player player) {
@@ -39,21 +39,25 @@ public class Jail extends Cell {
 
     /**
      * Gets the remaining stay turns of the player.
-     * 
+     *
      * author: Mingfeng
-     * 
+     *
      * @param player The player that need to be checked
      * @return int - the remaining turns of the player
      */
     public int turnInJail(Player player) {
-        return prisoners.get(player);
+        try {
+		return prisoners.get(player);
+	} catch (NullPointerException e) {
+		return 0;
+	}
     }
 
     /**
      * Passes one turn for prisioner.
-     * 
+     *
      * author: Mingfeng
-     * 
+     *
      * @param player The player that need to be passed
      * @return int - the remaining turns
      */
@@ -65,13 +69,13 @@ public class Jail extends Cell {
 
     /**
      * Releases a player.
-     * 
+     *
      * author: Mingfeng
-     * 
+     *
      * @param player The player that need to be released
      */
     public void release(Player player) {
-        prisoners.remove(player);
+        prisoners.replace(player, 0);
     }
 
 }

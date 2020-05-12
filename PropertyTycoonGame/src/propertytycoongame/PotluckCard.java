@@ -1,31 +1,27 @@
 package propertytycoongame;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.*;
 
 /**
  * PotluckCard
- * 
+ *
  * Class that provides actions that make the potluck cards work.
- * 
+ *
  * Documented by Haotian Jiao
- * 
+ *
  * @author Zhenyu
  */
 public class PotluckCard extends Cards {
 
-    private ArrayList unshuffleList = new ArrayList();
+    private ArrayList<String> unshuffleList = new ArrayList<String>();
     private Queue<String> shuffledqueue = new LinkedList<>();
 
     /**
      * Constructor for PotluckCard
-     * 
+     *
      * @param position The position of the PotluckCard
      */
-    public PotluckCard(int position) {
-        super(position);
+    public PotluckCard() {
 
         unshuffleList.add("Get out of jail free");
         unshuffleList.add("You inherit £100");
@@ -44,7 +40,7 @@ public class PotluckCard extends Cards {
         unshuffleList.add("Received interest on shares of £25");
         unshuffleList.add("It's your birthday. Collect £10 from each player");
         Collections.shuffle(unshuffleList);
-        Iterator it = unshuffleList.iterator();
+        Iterator<String> it = unshuffleList.iterator();
         while (it.hasNext()) {
             String str = (String) it.next();
             shuffledqueue.offer(str);
@@ -54,7 +50,7 @@ public class PotluckCard extends Cards {
 
     /**
      * Picks a card from the top of the cards set and takes the action.
-     * 
+     *
      * @param player The player that takes the card
      */
     public void action(Player player) {
@@ -112,12 +108,22 @@ public class PotluckCard extends Cards {
                 CentralControl.bank.addBalance(-25);
                 shuffledqueue.offer(topcard);
             case "It's your birthday. Collect £10 from each player":
-                player.addMoney(10 * CentralControl.players.size());
-                for (int i = 0; i < CentralControl.players.size(); i += 1) {
-                    CentralControl.players.get(i).addMoney(-10);
+                player.addMoney(+10 * CentralControl.getPlayers().size());
+                for (Player another : CentralControl.getPlayers()) {
+                    if (!another.equals(player)) {
+                        try {
+                            another.minusMoney(-10);
+                        } catch (LackMoneyException e) {
+                            another.raiseMoney(10, player);
+                        }
+                    }
                 }
             case "Get out of jail free":
-                player.addReleaseCard();//when user cost it put it back
+                player.addReleaseCard(new PotluckCard());//when user cost it put it back
         }
+    }
+
+    public Queue<String> getShuffledQueue() {
+        return shuffledqueue;
     }
 }

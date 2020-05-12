@@ -49,7 +49,7 @@ public class Dice {
 
     /**
      * Calculates the total value of the two dice.
-     * 
+     *
      */
     public void totalValue() {
         totalVal = diceVal0 + diceVal1;
@@ -58,7 +58,7 @@ public class Dice {
     /**
      * Resets all Dice variables,
      * so the dice are ready for the next player.
-     * 
+     *
      */
     public void newPlayer() {
         diceVal0 = 0;
@@ -81,7 +81,7 @@ public class Dice {
     /**
      * Decides if the player can roll again,
      * if not they can't roll again and should go to jail.
-     * 
+     *
      */
     public void rollAgain() {
         if (numDouble <= 2) {
@@ -94,7 +94,7 @@ public class Dice {
 
     /**
      * Accesses and returns the field 'numDouble'.
-     * 
+     *
      * @return int - the number of times a double has been rolled under the current player
      */
     public int getNumDouble() {
@@ -113,7 +113,7 @@ public class Dice {
     /*
      * The methods below are for testing purposes only.
      */
-    
+
     /**
      * FOR TESTING ONLY. Returns the value of dice0
      *
