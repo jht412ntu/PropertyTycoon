@@ -33,10 +33,7 @@ public class DiceTest {
         //Dice dice = new Dice();
     }
     
-    @After
-    public void tearDown(){
-            
-    }
+    
 
     @Test
     public void rollDiceTest() {

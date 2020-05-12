@@ -13,6 +13,7 @@ import propertytycoongame.Player;
 import propertytycoongame.Property;
 import propertytycoongame.PropertyException;
 import propertytycoongame.CentralControl;
+import propertytycoongame.CreatePlayerException;
 
 /**
  * Testing for sprint 6.
@@ -26,15 +27,11 @@ public class TradingTest {
     private Property pp;
     private CentralControl normal;
     
-    public TradingTest() {
+    public TradingTest() throws CreatePlayerException {
         bank = new Bank();
         normal = new CentralControl(0);
-        try {
-            p = new Player("Player 1", Player.Token.boot);
-            p2 = new Player("Player 2", Player.Token.cat);
-        } catch (DuplicateException e) {
-            System.err.println(e);
-        }
+        p = new Player("Player 1", Player.Token.boot);
+        p2 = new Player("Player 2", Player.Token.cat);
         pp = new Property(2, "Crapper Street", "Brown", 60, 2, 10, 30, 90, 160, 250);
     }
     

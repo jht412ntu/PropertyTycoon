@@ -10,47 +10,49 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+import propertytycoongame.Player.Token;
 
 /**
  * CentralControl
  *
  * Class that provides functionality for starting and controlling the game.
- * 
+ *
  * Documented by Haotian Jiao
- * 
+ *
  * @author Haotian Jiao
  * @version 1.1.0
- *  
+ *
  */
 public class CentralControl {
 
     private final Date startTime;
     private final Long duration;
+    private int votes = 0;
     private Date endTime;
     private String mode;
-    private static ArrayList<Player> rank;
-    private static int currentPlayer;
+    private static ArrayList<Player> rank = new ArrayList<>();
+    private static int currentPlayer = 0;
 
     /**
      * All players saved in the list.
      */
-    protected static ArrayList<Player> players;
-    
+    private static ArrayList<Player> players = new ArrayList<>();
+
     /**
      * An instance of the Board Class.
      */
-    public static Board board;
+    public static Board board = new Board();
 
     /**
      * An instance of the Dice Class.
      */
-    public static Dice dices;
+    public static Dice dices = new Dice();
 
     /**
      * An instance of the Bank Class.
      */
-    public static Bank bank;
-    
+    public static Bank bank = new Bank();
+
     /**
      * An instance of the Jail Class.
      */
@@ -58,11 +60,11 @@ public class CentralControl {
 
     /**
      * Constructor for CentralControl
-     * 
+     *
      * @param duration An input value of the game duration
      */
     public CentralControl(long duration) { // in minutes
-        players = new ArrayList<>();
+        //players 
         startTime = new Date(); // set start time to be current system time
         this.duration = duration * 60000; // time in milliseconds
         if (duration == 0) { // Normal(survival) mode
@@ -72,11 +74,6 @@ public class CentralControl {
             mode = "Abridged";
             endTime = new Date(startTime.getTime() + this.duration);
         }
-        rank = new ArrayList<>();
-        board = new Board();
-        dices = new Dice();
-        bank = new Bank();
-        currentPlayer = 0;
         Csv.readCsvFile("csv_board.csv");
     }
 
@@ -84,23 +81,9 @@ public class CentralControl {
      * Add player to the game
      *
      * @param p The player to be added to the game
-     * @throws java.lang.Exception
      */
-    public void addPlayer(Player p) throws Exception {
-        boolean used = false;
-        if (players.isEmpty()) {
-            players.add(p);
-        } else {
-            for (Player x : players) {
-                if (x.getToken().equals(p.getToken())) {
-                    used = true;
-                    throw new Exception("Token already selected by another player");
-                    
-                }
-            } if(!used){
-                players.add(p);
-            }
-        }
+    public void addPlayer(Player p) {
+        players.add(p);
     }
 
     /**
@@ -108,26 +91,25 @@ public class CentralControl {
      *
      * @throws java.lang.Exception
      */
-    public void initPlayers() throws Exception{
-        if(players.size() < 1){
+    public void initPlayers() throws Exception {
+        if (players.size() < 1) {
             throw new Exception("Minimum of two players required to start game");
-        } else{
+        } else {
             Collections.shuffle(players);
         }
     }
 
     /**
-     * The initial rolling of the game
-     * to decided the order of the players' turn.
-     * 
+     * The initial rolling of the game to decided the order of the players' turn.
+     *
      */
     public void firstroll() {
         HashMap<Player, Integer> map = new HashMap<>();
         ArrayList<Player> newplayers = new ArrayList<>();
         for (Player player : players) {
             dices.rollDice();
-            player.totalvalue = dices.getTotalVal();  //each player's points
-            map.put(player, player.totalvalue);//put it in map
+            player.setotalValue(dices.getTotalVal());  //each player's points
+            map.put(player, player.getTotalValue());//put it in map
         }
         List<Map.Entry<Player, Integer>> orderedlist = new ArrayList<>(map.entrySet()); //trans to a list
         Collections.sort(orderedlist, new Comparator<Map.Entry<Player, Integer>>() {
@@ -140,12 +122,12 @@ public class CentralControl {
         }
         players = newplayers;
         for (int j = 0; j > players.size(); j++) {
-            if (players.get(j).totalvalue == players.get(j + 1).totalvalue) {
+            if (players.get(j).getTotalValue() == players.get(j + 1).getTotalValue()) {
                 dices.rollDice();
-                players.get(j).totalvalue = dices.getTotalVal();
+                players.get(j).setotalValue(dices.getTotalVal());
                 dices.rollDice();
-                players.get(j + 1).totalvalue = dices.getTotalVal();
-                if (players.get(j).totalvalue < players.get(j + 1).totalvalue) {
+                players.get(j + 1).setotalValue(dices.getTotalVal());
+                if (players.get(j).getTotalValue() < players.get(j + 1).getTotalValue()) {
                     Collections.swap(players, j, j + 1);
                 }
             }
@@ -154,16 +136,19 @@ public class CentralControl {
     }
 
     /**
-     * Sets the current player to the next player in the list of players.
-     *
+     * Sets the current player to the next player in the list of players. If player is an agent, start to run automatically
+     * @throws propertytycoongame.LackMoneyException
      */
-    public void nextPlayer() {
+    public static void nextPlayer() throws LackMoneyException {
         if (currentPlayer < players.size() - 1) {
             currentPlayer += 1;
         } else {
             currentPlayer = 0;
         }
         dices.newPlayer();
+        if (Agent.class.isInstance(getCurrentPlayer())) {
+            ((Agent) getCurrentPlayer()).run();
+        }
     }
 
     /**
@@ -189,7 +174,7 @@ public class CentralControl {
      *
      * @return ArrayList List of all players currently in the game
      */
-    public ArrayList<Player> getPlayers() {
+    public static ArrayList<Player> getPlayers() {
         return players;
     }
 
@@ -252,19 +237,29 @@ public class CentralControl {
         return hms;
     }
 
-    
     /**
      * Removes the current player from the game.
      *
      */
     public static void leaveGame() {
         players.remove(getCurrentPlayer());
-        rank.add(getCurrentPlayer());
     }
-    
+
+    /**
+     * Votes to end this game.
+     *
+     * author: Mingfeng
+     *
+     */
+    public void voteEnd() {
+        if (++votes == players.size()) {
+            endGame();
+        }
+    }
+
     /**
      * Ranking players when ends the game.
-     * 
+     *
      * @return ArrayList - the ranking list of the players
      */
     public ArrayList<Player> endGame() {
@@ -280,6 +275,27 @@ public class CentralControl {
         });
         rank.addAll(rankPlayers);
         return rank;
+    }
+
+    public void addAgent(String name, Token token) throws CreatePlayerException {
+        Agent agent = new Agent(name, token);
+        players.add(agent);
+    }
+
+    /**
+     * If it is timer mode. Start the timer
+     *
+     * author: Mingfeng
+     *
+     */
+    public void run() {
+        try {
+            Thread.sleep(duration);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            endGame();
+        }
     }
 
     /**
