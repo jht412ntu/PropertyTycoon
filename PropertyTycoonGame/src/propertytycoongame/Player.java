@@ -5,12 +5,14 @@ import java.util.ArrayList;
 /**
  * Player
  *
- * Enum tokens can only be choosen in a limited range Players` behaviour in game
- * eg: roll dices, buy
- *
+ * Enum tokens can only be choosen from a limited range Players' behaviours in the game
+ * eg: roll dices, buy.
+ * 
+ * Documented by Haotian Jiao
+ * 
  * @author Mingfeng
  */
-public class Player implements Comparable<Player> {
+public class Player {
 
     private int money = 1500;
     private int location = 0;
@@ -19,29 +21,45 @@ public class Player implements Comparable<Player> {
     private String name;
     private int releaseCard;
     protected ArrayList<Property> Properties = new ArrayList<>();
-    private boolean leavedGame;
     protected int totalvalue;
-
-    public enum Token {
-        boot, smartphone, goblet, hatstand, cat, spoon;
-    }
-
-    /** Constructor for class Player.
-     *
-     * @param name Name of the player
-     * @param token Token of the player
+    /**
+     * Limited range of the Tokens.
      */
-    public Player(String name, Token token) {
-        // TODO Auto-generated constructor stub
-        this.name = name;
-        this.token = token;
-        leavedGame = false;
+    public enum Token {
+        boot,
+        smartphone,
+        goblet,
+        hatstand,
+        cat,
+        spoon;
     }
 
     /**
-     * @author: Mingfeng
-     * @methodsName: rollDices
-     * @description: Roll dices and checks whether player needs to go to Jail
+     * Constructor for Player.
+     *
+     * @param name Name of the player
+     * @param token Token of the player
+     * @throws DuplicateException
+     */
+    public Player(String name, Token token) throws DuplicateException {
+        for (Player player : CentralControl.players) {
+            if (name.equals(player.getName())) {
+                throw new DuplicateException(" name: " + name);
+            }
+        }
+        for (Player player : CentralControl.players) {
+            if (token.equals(player.getToken())) {
+                throw new DuplicateException(" token: " + token);
+            }
+        }
+        this.name = name;
+        this.token = token;
+    }
+
+    /**
+     * Player rolls dices and acts as the rules required.
+     * 
+     * author: Mingfeng
      */
     public void rollDices() {
         if (CentralControl.dices.getNumDouble() > 2) {
@@ -50,44 +68,66 @@ public class Player implements Comparable<Player> {
             CentralControl.board.getJail().pass(this);
         } else {
             CentralControl.dices.rollDice();
-            location += CentralControl.dices.getTotalVal();
-            if (location > 40) {
+            int tLocation = location + CentralControl.dices.getTotalVal();
+            if (tLocation > 40) {
                 passGo = true;
                 CentralControl.bank.distributeCash(this, 200);
-                location -= 40;
+                tLocation -= 40;
                 CentralControl.bank.addBalance(-200);
             }
-            switch (location) {
-                //park fine collection
-                case 21:
-                    CentralControl.board.getPark().collectFine(this);
-                    break;
-                //income tax	
-                case 5:
-                    try {
-                        minusMoney(200);
-                    } catch (LackMoneyException e) {
-                        // TODO Auto-generated catch block
-                        raiseMoney();
-                    }
-                    break;
-                case 31:
-                    CentralControl.board.getJail().put(this);
-                    location = 11;
-                    break;
-                default:
-                    Property p = (Property) CentralControl.board.theboard.get(location);
-                    Player owner = p.getOwner();
+            location = tLocation;
+            Cell currentCell = CentralControl.board.getCell(this.getLocation());
+
+            // take action based on cell landed
+            // land on the property
+            if (Property.class.isInstance(currentCell)) {
+                Property p = (Property) currentCell;
+                Player owner = p.getOwner();
+                if (owner != null && !owner.equals(this)) {
                     payRent(p, owner);
+                } else 
+						;//  buy or bid (GUI)
+            } // PotluckCard cell
+            else if (PotluckCard.class.isInstance(currentCell)) {
+                ((PotluckCard) currentCell).action(this);
+            } //OpportunityknockCard cell
+            else if (OpportunityknockCard.class.isInstance(currentCell)) {
+                ((OpportunityknockCard) currentCell).action(this);
+            } else {
+                switch (location) {
+                    //park fine collection cell
+                    case 21:
+                        CentralControl.board.getPark().collectFine(this);
+                        break;
+                    //income tax
+                    case 5:
+                        try {
+                            minusMoney(200);
+                        } catch (LackMoneyException e) {
+                            if (raiseMoney(200 - money)) {
+                                money -= 200;
+                            } else {
+                                CentralControl.leaveGame();
+                            }
+                        }
+                        break;
+                    //go to Jail
+                    case 31:
+                        CentralControl.board.getJail().put(this);
+                        location = 11;
+                        break;
+                }
             }
         }
     }
 
     /**
-     * @return @author: Mingfeng
+     * Pays 50$ for releasing and add money to Park.
+     * 
+     * author: Mingfeng
+     * 
+     * @return boolean - if the action succeed
      * @throws LackMoneyException
-     * @methodsName: payReleased
-     * @description: pay 50$ for releasing and add money to Park
      */
     public boolean payReleased() throws LackMoneyException {
         if (money > 50) {
@@ -101,9 +141,11 @@ public class Player implements Comparable<Player> {
     }
 
     /**
-     * @return @author: Mingfeng
-     * @methodsName: released
-     * @description: release yourself from jail
+     * Releases the player from jail.
+     * 
+     * author: Mingfeng
+     * 
+     * @return boolean - if the action succeed
      */
     public boolean released() {
         if (releaseCard > 0) {
@@ -115,20 +157,21 @@ public class Player implements Comparable<Player> {
     }
 
     /**
-     * @author: Mingfeng
-     * @methodsName: addReleaseCard
-     * @description: add a realeasd card in your hand
+     * Adds a realeasd card in your hand.
+     * 
+     * author: Mingfeng
      */
     public void addReleaseCard() {
         releaseCard += 1;
     }
 
     /**
-     * @param property
-     * @author: Mingfeng
-     * @return	ArrayList, Properties this player owns
-     * @methodsName: buyProperty
-     * @description: add a house in your houses list
+     * Adds a house in your houses list.
+     * 
+     * author: Mingfeng
+     * 
+     * @param property The property that needs to buy
+     * @return	ArrayList - properties this player owns
      */
     public ArrayList<Property> buyProperty(Property property) {
         this.Properties.add(property);
@@ -138,11 +181,12 @@ public class Player implements Comparable<Player> {
     }
 
     /**
-     * @param property
-     * @author: Mingfeng
-     * @return	ArrayList, Properties this player owns
-     * @methodsName: sellProperty
-     * @description: remove a house in your houses list
+     * Removes a house in your houses list.
+     * 
+     * author: Mingfeng
+     * 
+     * @param property The property that need to be sold
+     * @return	ArrayList - properties this player owned
      */
     public ArrayList<Property> sellProperty(Property property) {
         Properties.remove(property);
@@ -150,156 +194,169 @@ public class Player implements Comparable<Player> {
     }
 
     /**
-     * Trading mechanic: selling properties between players used by the GUI when
-     * players defined an agreed price for a property
+     * Trading mechanic: selling properties between players used by the GUI
+     * when players defined an agreed price for a property.
      *
-     * author: Haotian Jiao date: 20/04/2020
+     * author: Haotian Jiao
+     * date: 20/04/2020
      *
      * @param player The instance of Player
      * @param p The instance of Property
      * @param price A defined price(agreed between players)
+     * @throws LackMoneyException
      */
-    public void sellPropertyToPlayer(Player player, Property p, int price) {
+    public void sellPropertyToPlayer(Player player, Property p, int price) throws LackMoneyException {
         sellProperty(p);
         player.buyProperty(p);
-        player.addMoney(-price);
+        player.minusMoney(price);
         addMoney(price);
     }
 
     /**
-     * @author: Mingfeng
-     * @return	boolean wheather player raises money succeed
-     * @methodsName: raiseMoney
-     * @description: sell something for raising money
+     * Sells something for raising money.
+     * 
+     * author: Mingfeng
+     * 
+     * @param difference The least money that need to be raised
+     * @return	boolean - wheather player raises money succeed
      */
-    public boolean raiseMoney() {
+    public boolean raiseMoney(int difference) {
         // should include "sellPropertyToPlayer"
-        // need GUI finished (when player cannot pay rent, the mortage button and sell button will be hignlight
-        // player is not abole to act other behaviours but leave game
+        // need GUI finished (when player cannot pay rent, the mortage button and sell button will be highlighted
+        // player is unable to act other behaviours but leave the game
         boolean enough = false;
+        while (!enough) {
+            int choose = 0;
+            switch (choose) {
+                case 1:
+
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+
+                    break;
+                default:
+                    enough = money >= difference;
+            }
+        }
         return enough;
     }
 
     /**
-     *
-     *
-     * @param p
-     * @param reciever
+     * Pays a property's rent to a player.
+     * 
+     * @param p The Property instance that need to be paid
+     * @param reciever The Player instance that need to be paid
      */
     public void payRent(Property p, Player reciever) {
         if (CentralControl.board.getJail().turnInJail(reciever) == 0 && p.undermortgage != true) {
             try {
                 minusMoney(p.getRent());
             } catch (LackMoneyException e) {
-                if (raiseMoney()) {
-
+                if (raiseMoney(p.getRent() - money)) {
+                    payRent(p, reciever);
                 } else {
-                    return;
+                    CentralControl.leaveGame();
                 }
             }
             reciever.addMoney(p.getRent());
         }
     }
 
-    /*
-     * field getter and setter
-     */
     /**
-     *
-     * @return int
+     * Accesses and returns the balance of the player.
+     * 
+     * @return int - the money the player has
      */
     public int getMoney() {
         return money;
     }
 
     /**
-     * @param money
-     * @description: add money to balance
+     * Adds money to the balance.
+     * 
+     * @param money The value of money
      */
     public void addMoney(int money) {
-        this.money = money + this.money;
+        this.money += money;
     }
 
     /**
-     *
-     * @param money
-     * @description: minus money from balance
+     * Subtracts money from the balance.
+     * 
+     * @param money The money that need to be subtracted
+     * @throws propertytycoongame.LackMoneyException
      */
     public void minusMoney(int money) throws LackMoneyException {
         if (this.money - money < 0) {
             throw new LackMoneyException("lack money");
         }
-        this.money = this.money - money;
+        this.money -= money;
     }
 
     /**
-     *
-     * @return int
+     * Accesses and returns the current location.
+     * 
+     * @return int - the position number
      */
     public int getLocation() {
         return location;
     }
 
     /**
-     *
-     * @param location
+     * Sets location.
+     * 
+     * @param location - the position number that need to be set
      */
     public void setLocation(int location) {
         this.location = location;
     }
 
     /**
-     *
-     * @return boolean
+     * Accesses and returns the field 'passGo'.
+     * 
+     * @return boolean - if the player has passed GO.
      */
     public boolean isPassGo() {
         return passGo;
     }
 
     /**
-     *
-     * @param passGo
+     * Sets the player passed GO or not.
+     * 
+     * @param passGo - true and false
      */
     public void setPassGo(boolean passGo) {
         this.passGo = passGo;
     }
 
     /**
-     *
-     * @return Token
+     * Accesses and returns the token that the player has assigned.
+     * 
+     * @return Token - the token in the Token range list
      */
     public Token getToken() {
         return token;
     }
 
     /**
-     *
-     * @return String
+     * Accesses and returns the name of the player.
+     * 
+     * @return String - the name of the player
      */
     public String getName() {
         return name;
     }
 
-    public ArrayList<Property> propertiesList() {
+    /**
+     * Accesses and returns a list of properties the player has.
+     * 
+     * @return ArrayList - the list of Property
+     */
+    public ArrayList<Property> getPropertiesList() {
         return Properties;
     }
 
-    @Override
-    public int compareTo(Player o) {
-        // TODO Auto-generated method stub
-        if (this.getMoney() > o.getMoney()) {
-            return 1;
-        }
-        return 0;
-    }
-
-    /**
-     * For players to mark themselves as leaved
-     *
-     * author: Haotian Jiao date: 23/04/2020
-     *
-     */
-    public void setLeaveGame() {
-        leavedGame = true;
-    }
 }

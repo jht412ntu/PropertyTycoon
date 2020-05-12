@@ -1,14 +1,17 @@
 package propertytycoongame;
 
 /**
- * Property Tycoon Game Property
+ * Property
  *
  * Class that provides functionality to access and manage a property.
- *
+ * 
+ * Documented by Haotian Jiao
+ * 
  * @author Haotian Jiao
- * @version 1.0.1
+ * @version 1.1.0
  */
 public class Property extends Cell implements Comparable<Property>{
+
     protected final String name;
     private final String group;
     private final int cost;
@@ -16,8 +19,6 @@ public class Property extends Cell implements Comparable<Property>{
     private int improvedRent;
     private final int[] improvedRents;
     protected  boolean available;
-
-    
     private boolean hotelBuilded;
     private int numOfHouse;
     private int status; // 1: one house 2: two houses 3: three houses 4: four houses 5: a hotel
@@ -26,8 +27,22 @@ public class Property extends Cell implements Comparable<Property>{
     protected final int location;
 
 
-    public Property(int location,String propertyname, String group, int cost, int rent, int oneHouseRent, int twoHousesRent, int threeHousesRent, int fourHousesRent, int hotelRent) {
-        super(location);//??
+    /**
+     * Constructor for Property
+     * 
+     * @param location The property's cell location
+     * @param propertyname The property's name
+     * @param group The property's group
+     * @param cost The property's cost
+     * @param rent The property's initial rent
+     * @param oneHouseRent The property's rent when a house has built
+     * @param twoHousesRent The property's rent when two house has built
+     * @param threeHousesRent The property's rent when three house has built
+     * @param fourHousesRent The property's rent when four house has built
+     * @param hotelRent The property's rent when a hotel has built
+     */
+    public Property(int location, String propertyname, String group, int cost, int rent, int oneHouseRent, int twoHousesRent, int threeHousesRent, int fourHousesRent, int hotelRent) {
+        super(location);
         name = propertyname;
         this.group = group;
         this.cost = cost;
@@ -49,15 +64,17 @@ public class Property extends Cell implements Comparable<Property>{
     }
 
     /**
+     * Accesses and returns the name of the property.
+     * 
      * @author Hayden
-     * @return String of property name
+     * @return String - property's name
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Sells the property to a player
+     * Sells the property to a player.
      *
      * @param player The player receiving the property
      * @throws PropertyException The property cannot be sold
@@ -72,18 +89,18 @@ public class Property extends Cell implements Comparable<Property>{
     }
 
     /**
-     * Checks if the property is unsold
+     * Checks if the property is unsold.
      *
-     * @return if the property is unsold (boolean)
+     * @return boolean - if the property is unsold (boolean)
      */
     public boolean isAvailable() {
         return available;
     }
 
     /**
-     * Gets the rent of the property
+     * Accesses and returns the rent of the property.
      *
-     * @return the rent in integer
+     * @return int - the rent in integer
      */
     public int getRent() {
         if (improvedRent == 0) {
@@ -94,53 +111,53 @@ public class Property extends Cell implements Comparable<Property>{
     }
 
     /**
-     * Gets the initial cost of the property
+     * Accesses and returns the initial cost of the property.
      *
-     * @return the cost of the property in integer
+     * @return int - the cost of the property in integer
      */
     public int getCost() {
         return cost;
     }
 
     /**
-     * Gets the owner of the property
+     * Accesses and returns the owner of the property.
      *
-     * @return the instance of the player with type Player
+     * @return int - the instance of the player with type Player
      */
     public Player getOwner() {
         return owner;
     }
 
     /**
-     * Gets the group of the property
+     * Accesses and returns the group of the property.
      *
-     * @return the group of the property in String
+     * @return String - the group of the property in String
      */
     public String getGroup() {
         return group;
     }
 
     /**
-     * Gets the number of house on the property
+     * Accesses and returns the number of houses on the property.
      *
-     * @return the number of house in integer
+     * @return int - the number of houses in integer
      */
     public int getNumOfHouse() {
         return numOfHouse;
     }
 
     /**
-     * Check if a hotel has built on the property
+     * Checks if a hotel has built on the property.
      *
-     * @return if hotel has built (boolean)
+     * @return boolean - if hotel has built (boolean)
      */
     public boolean ifHotelBuilded() {
         return hotelBuilded;
     }
 
     /**
-     * Builds a house on the property and
-     * change the current rent
+     * Builds a house on the property
+     * and changes the current rent.
      *
      */
     public void buildHouse() {
@@ -150,8 +167,8 @@ public class Property extends Cell implements Comparable<Property>{
     }
 
     /**
-     * Sells a house on the property and
-     * change the current rent
+     * Sells a house on the property
+     * and changes the current rent.
      *
      */
     public void sellHouse() {
@@ -167,7 +184,7 @@ public class Property extends Cell implements Comparable<Property>{
     /**
      * Builds a hotel on the property and
      * change the current rent and
-     * number of house
+     * number of house.
      *
      */
     public void buildHotel() {
@@ -179,8 +196,8 @@ public class Property extends Cell implements Comparable<Property>{
 
     /**
      * Sells a hotel on the property and
-     * recover the houses and
-     * change the current rent
+     * recovers the houses and
+     * changes the current rent.
      */
     public void sellHotel() {
         numOfHouse = 4;
@@ -190,7 +207,7 @@ public class Property extends Cell implements Comparable<Property>{
     }
 
     /**
-     * Changes the owner of the property
+     * Changes the owner of the property.
      *
      * @param player A Player instance
      */
@@ -199,7 +216,7 @@ public class Property extends Cell implements Comparable<Property>{
     }
 
     /**
-     * Sets the status of the property
+     * Sets the status of the property.
      *
      * 0: empty
      * 1: one house
@@ -225,7 +242,8 @@ public class Property extends Cell implements Comparable<Property>{
         }
     }
 
-    /** Mortgages the property to the bank.
+    /** 
+     * Mortgages the property to the bank.
      * 
      * Note: The player needs to land on the property to mortgage
      *
@@ -242,19 +260,21 @@ public class Property extends Cell implements Comparable<Property>{
     }
     /**
      * Sets availability of a property.
-     * @param available if the property is available.
+     * 
+     * @param available if the property is available
      */
     public void setAvailable(boolean available) {
         this.available = available;
     }
 
-    /*
-     * player resell the property to bank
-     * property back to available
+    /**
+     * Player resells the property to bank
+     * and property back to available.
      *
-     * */
+     * @param bank The Bank instance
+     * @param player The player sells the property
+     */
     public void liquidate(Bank bank,Player player){
-
         player.Properties.remove(name);
         bank.addBalance(-(cost/2));
         player.addMoney(cost/2);
@@ -263,7 +283,6 @@ public class Property extends Cell implements Comparable<Property>{
         available=true;
         undermortgage=false;
         numOfHouse=0;
-
     }
 
     /**
@@ -276,23 +295,30 @@ public class Property extends Cell implements Comparable<Property>{
      * 4: four houses
      * 5: a hotel
      *
-     * @return the status of the property in integer
+     * @return int - the status of the property in integer
      */
     public int getStatus() {
         return status;
     }
 
-	@Override
-	public int compareTo(Property o) {
-		// TODO Auto-generated method stub
-		int p1 = this.numOfHouse;
-		int p2 = o.getNumOfHouse();
-		if(this.ifHotelBuilded())
-			p1 += 5;
-		if(o.ifHotelBuilded())
-			p2 += 5;
-		if(this.numOfHouse > o.getNumOfHouse())
-			return 1;
-		return 0;
-	}
+    /**
+     * Compares the number of houses with other property.
+     *
+     * @param o The property that need to be compared
+     * @return int - the number of differences
+     */
+    public int compareTo(Property o) {
+        int p1 = this.numOfHouse;
+        int p2 = o.getNumOfHouse();
+        if (this.ifHotelBuilded()) {
+            p1 += 5;
+        }
+        if (o.ifHotelBuilded()) {
+            p2 += 5;
+        }
+        if (this.numOfHouse > o.getNumOfHouse()) {
+            return 1;
+        }
+        return 0;
+    }
 }

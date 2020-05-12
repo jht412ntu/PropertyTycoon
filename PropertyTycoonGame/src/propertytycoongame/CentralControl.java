@@ -12,30 +12,55 @@ import java.util.Map;
 import java.util.TimeZone;
 
 /**
- * Property Tycoon Game Central Control
+ * CentralControl
  *
  * Class that provides functionality for starting and controlling the game.
- *
+ * 
+ * Documented by Haotian Jiao
+ * 
  * @author Haotian Jiao
- * @version 1.0.1
+ * @version 1.1.0
+ *  
  */
 public class CentralControl {
 
-    static Cell opportunityknockCard;
-    static Cell potluckCard;
     private final Date startTime;
     private final Long duration;
     private Date endTime;
     private String mode;
-    protected static ArrayList<Player> players;
-    private int currentPlayer = 0;
-    private ArrayList<Player> passedGoPlayers; // players that completed at least a full circuit
-    public static Board board = new Board();
-    public static Dice dices = new Dice();
-    public static Bank bank = new Bank();
-    public static Jail jail = new Jail(11);
-    public static Park park = new Park(21);
+    private static ArrayList<Player> rank;
+    private static int currentPlayer;
 
+    /**
+     * All players saved in the list.
+     */
+    protected static ArrayList<Player> players;
+    
+    /**
+     * An instance of the Board Class.
+     */
+    public static Board board;
+
+    /**
+     * An instance of the Dice Class.
+     */
+    public static Dice dices;
+
+    /**
+     * An instance of the Bank Class.
+     */
+    public static Bank bank;
+    
+    /**
+     * An instance of the Jail Class.
+     */
+    public static Jail jail;
+
+    /**
+     * Constructor for CentralControl
+     * 
+     * @param duration An input value of the game duration
+     */
     public CentralControl(long duration) { // in minutes
         players = new ArrayList<>();
         startTime = new Date(); // set start time to be current system time
@@ -47,26 +72,55 @@ public class CentralControl {
             mode = "Abridged";
             endTime = new Date(startTime.getTime() + this.duration);
         }
-        csv.readCsvFile("src/propertytycoongame/csv_board.csv");
+        rank = new ArrayList<>();
+        board = new Board();
+        dices = new Dice();
+        bank = new Bank();
+        Csv.readCsvFile("src/propertytycoongame/csv_board.csv");
+        currentPlayer = 0;
     }
 
     /**
      * Add player to the game
      *
      * @param p The player to be added to the game
+     * @throws java.lang.Exception
      */
-    public void addPlayer(Player p) {
-        players.add(p);
+    public void addPlayer(Player p) throws Exception {
+        boolean used = false;
+        if (players.isEmpty()) {
+            players.add(p);
+        } else {
+            for (Player x : players) {
+                if (x.getToken().equals(p.getToken())) {
+                    used = true;
+                    throw new Exception("Token already selected by another player");
+                    
+                }
+            } if(!used){
+                players.add(p);
+            }
+        }
     }
 
     /**
      * Shuffling all the players
      *
+     * @throws java.lang.Exception
      */
-    public void initPlayers() {
-        Collections.shuffle(players);
+    public void initPlayers() throws Exception{
+        if(players.size() < 1){
+            throw new Exception("Minimum of two players required to start game");
+        } else{
+            Collections.shuffle(players);
+        }
     }
 
+    /**
+     * The initial rolling of the game
+     * to decided the order of the players' turn.
+     * 
+     */
     public void firstroll() {
         HashMap<Player, Integer> map = new HashMap<>();
         ArrayList<Player> newplayers = new ArrayList<>();
@@ -100,7 +154,7 @@ public class CentralControl {
     }
 
     /**
-     * Set the current player to the next player in the list of players.
+     * Sets the current player to the next player in the list of players.
      *
      */
     public void nextPlayer() {
@@ -109,10 +163,11 @@ public class CentralControl {
         } else {
             currentPlayer = 0;
         }
+        dices.newPlayer();
     }
 
     /**
-     * Set the final end time.
+     * Sets the final end time.
      *
      * Uses only when the game is playing in normal mode
      */
@@ -121,16 +176,16 @@ public class CentralControl {
     }
 
     /**
-     * Get the current player who should playing the game.
+     * Accesses and returns the current player who should playing the game.
      *
-     * @return Player The current players turn
+     * @return Player - the current player's instance
      */
-    public Player getCurrentPlayer() {
+    public static Player getCurrentPlayer() {
         return players.get(currentPlayer);
     }
 
     /**
-     * Get all the players.
+     * Accesses and returns all the players.
      *
      * @return ArrayList List of all players currently in the game
      */
@@ -139,36 +194,36 @@ public class CentralControl {
     }
 
     /**
-     * Get the current system time.
+     * Accesses and returns the current system time.
      *
-     * @return Date Current system time
+     * @return Date - current system time
      */
     public Date getCurrentTime() {
         return new Date();
     }
 
     /**
-     * Get the start time of the game.
+     * Accesses and returns the start time of the game.
      *
-     * @return Date Start time of the game
+     * @return Date - starting time of the game
      */
     public Date getStartTime() {
         return startTime;
     }
 
     /**
-     * Get the end time of the game
+     * Accesses and returns the end time of the game.
      *
-     * @return Date
+     * @return Date - ending time of the game
      */
     public Date getEndTime() {
         return endTime;
     }
 
     /**
-     * Get the remaining time of the game
+     * Accesses and returns the remaining time of the game.
      *
-     * @return String
+     * @return Time - the remaining time of the game
      */
     public Time getRemainingTime() {
         long interval = endTime.getTime() - getCurrentTime().getTime();
@@ -176,9 +231,9 @@ public class CentralControl {
     }
 
     /**
-     * Get the duration of the game
+     * Accesses and returns the duration of the game.
      *
-     * @return String
+     * @return Time - the duration of the game
      */
     public Time getDuration() {
         long interval = endTime.getTime() - startTime.getTime();
@@ -186,10 +241,10 @@ public class CentralControl {
     }
 
     /**
-     * Format the time in milliseconds to 00:00:00(H:m:s)
+     * Formats the time in milliseconds to 00:00:00(H:m:s).
      *
-     * @param milliseconds 
-     * @return Time
+     * @param milliseconds The milliseconds time
+     * @return Time - the time in format "00:00:00(H:m:s)"
      */
     public Time timeFormat(long milliseconds) {
         TimeZone.setDefault(TimeZone.getTimeZone(ZoneId.of("UTC")));
@@ -197,24 +252,40 @@ public class CentralControl {
         return hms;
     }
 
-    public void setPassedGoPlayer(Player player) {
-        for (Player p : players) {
-            if (p.isPassGo() && !passedGoPlayers.contains(p)) {
-                passedGoPlayers.add(player);
+    
+    /**
+     * Removes the current player from the game.
+     *
+     */
+    public static void leaveGame() {
+        players.remove(getCurrentPlayer());
+        rank.add(getCurrentPlayer());
+    }
+    
+    /**
+     * Ranking players when ends the game.
+     * 
+     * @return ArrayList - the ranking list of the players
+     */
+    public ArrayList<Player> endGame() {
+        ArrayList<Player> rankPlayers = (ArrayList<Player>) players.clone();
+        Collections.sort(rankPlayers, new Comparator<Player>() {
+            @Override
+            public int compare(Player o1, Player o2) {
+                if (o1.getMoney() > o2.getMoney()) {
+                    return 1;
+                }
+                return 0;
             }
-        }
+        });
+        rank.addAll(rankPlayers);
+        return rank;
     }
 
-    public boolean isPlayerPassedGo(Player player) {
-        if (passedGoPlayers.contains(player)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public void leaveGame() {
-        passedGoPlayers.remove(currentPlayer);
-        players.remove(currentPlayer);
+    /**
+     * Starts an auction through the Bank.
+     */
+    public void auction() {
+        bank.startAuction();
     }
 }
