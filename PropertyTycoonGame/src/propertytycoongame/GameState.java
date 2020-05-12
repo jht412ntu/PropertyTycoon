@@ -11,13 +11,13 @@ package propertytycoongame;
  */
 public class GameState {
     public void loadGame(){
-        
+
     }
     public void saveGame(){
-        
+
     }
     public void pauseGame(){
-        
+
     }
-    
+
 }

@@ -3,9 +3,9 @@ package propertytycoongame;
 /**
  * DuplicateException
  * .
- * 
+ *
  * Documented by Haotian Jiao
- * 
+ *
  * @author Haotian Jiao
  */
 public class DuplicateException extends Exception {

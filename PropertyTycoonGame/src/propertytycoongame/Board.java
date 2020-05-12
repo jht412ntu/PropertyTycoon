@@ -4,9 +4,9 @@ import java.util.HashMap;
 
 /**
  * Board
- * 
+ *
  * Class that provides functionality for running the board.
- * 
+ *
  * Documented by Haotian Jiao
  *
  * @author Zhenyu
@@ -18,7 +18,7 @@ public class Board {
     private Jail jail = new Jail(11);
     private PotluckCard potluckCard = new PotluckCard(18);
     private OpportunityknockCard opportunityknockCard = new OpportunityknockCard(8);
-    
+
     /**
      * Accesses and returns the field jail.
      *
@@ -39,7 +39,7 @@ public class Board {
 
     /**
      * Gets a cell with specific location.
-     * 
+     *
      * @param loc The specific location
      * @return Cell - a specific cell
      */
@@ -49,7 +49,7 @@ public class Board {
 
     /**
      * Accesses and returns the field potluckCard.
-     * 
+     *
      * @return PotluckCard - the PotluckCard instance
      */
     public PotluckCard getPotluckCard() {
@@ -58,7 +58,7 @@ public class Board {
 
     /**
      * Accesses and returns the field opportunityknockCard.
-     * 
+     *
      * @return OpportunityknockCard - the OpportunityCard instance
      */
     public OpportunityknockCard getOpportunityknockCard() {

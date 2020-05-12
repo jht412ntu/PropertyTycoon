@@ -4,11 +4,11 @@ import java.util.*;
 
 /**
  * PotluckCard
- * 
+ *
  * Class that provides actions that make the potluck cards work.
- * 
+ *
  * Documented by Haotian Jiao
- * 
+ *
  * @author Zhenyu
  */
 public class PotluckCard extends Cards {
@@ -18,7 +18,7 @@ public class PotluckCard extends Cards {
 
     /**
      * Constructor for PotluckCard
-     * 
+     *
      * @param position The position of the PotluckCard
      */
     public PotluckCard() {
@@ -50,7 +50,7 @@ public class PotluckCard extends Cards {
 
     /**
      * Picks a card from the top of the cards set and takes the action.
-     * 
+     *
      * @param player The player that takes the card
      */
     public void action(Player player) {

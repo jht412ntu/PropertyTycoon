@@ -7,11 +7,11 @@ import java.util.*;
 
 /**
  * OpportunityknockCard
- * 
+ *
  * Class that provides actions that make the opportunity cards work.
  *
  * Documented by Haotian Jiao
- * 
+ *
  * @author Zhenyu
  */
 public class OpportunityknockCard extends Cards {
@@ -21,7 +21,7 @@ public class OpportunityknockCard extends Cards {
 
     /**
      * Constructor for OpportunityknockCard
-     * 
+     *
      * @param position The position of the OpportunityknockCard
      */
     public OpportunityknockCard(int position) {
@@ -54,7 +54,7 @@ public class OpportunityknockCard extends Cards {
 
     /**
      * Picks a card from the top of the cards set and takes the action.
-     * 
+     *
      * @param player The player that takes the card
      */
     public void action(Player player) {
@@ -125,7 +125,7 @@ public class OpportunityknockCard extends Cards {
 
         }
     }
-    
+
     public Queue<String> getShuffledQueue() {
         return shuffledqueue1;
     }

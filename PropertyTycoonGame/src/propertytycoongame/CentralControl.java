@@ -15,12 +15,12 @@ import java.util.TimeZone;
  * CentralControl
  *
  * Class that provides functionality for starting and controlling the game.
- * 
+ *
  * Documented by Haotian Jiao
- * 
+ *
  * @author Haotian Jiao
  * @version 1.1.0
- *  
+ *
  */
 public class CentralControl {
 
@@ -35,7 +35,7 @@ public class CentralControl {
      * All players saved in the list.
      */
     private static  ArrayList<Player> players;
-    
+
     /**
      * An instance of the Board Class.
      */
@@ -50,7 +50,7 @@ public class CentralControl {
      * An instance of the Bank Class.
      */
     public static Bank bank;
-    
+
     /**
      * An instance of the Jail Class.
      */
@@ -58,7 +58,7 @@ public class CentralControl {
 
     /**
      * Constructor for CentralControl
-     * 
+     *
      * @param duration An input value of the game duration
      */
     public CentralControl(long duration) { // in minutes
@@ -106,7 +106,7 @@ public class CentralControl {
     /**
      * The initial rolling of the game
      * to decided the order of the players' turn.
-     * 
+     *
      */
     public void firstroll() {
         HashMap<Player, Integer> map = new HashMap<>();
@@ -242,7 +242,7 @@ public class CentralControl {
         return hms;
     }
 
-    
+
     /**
      * Removes the current player from the game.
      *
@@ -250,22 +250,22 @@ public class CentralControl {
     public static void leaveGame() {
         players.remove(getCurrentPlayer());
     }
-    
+
     /**
      * Votes to end this game.
      *
      * author: Mingfeng
-     *  
+     *
      */
     public void voteEnd() {
 	if (++votes == players.size()) {
 	    endGame();
 	}
     }
-	
+
     /**
      * Ranking players when ends the game.
-     * 
+     *
      * @return ArrayList - the ranking list of the players
      */
     public ArrayList<Player> endGame() {
@@ -290,9 +290,9 @@ public void addAgent(String name,Token token) throws CreatePlayerException {
 
        /**
         * If it is timer mode. Start the timer
-        * 
+        *
         * author: Mingfeng
-        * 
+        *
         */
 	@Override
 	public void run() {
@@ -305,7 +305,7 @@ public void addAgent(String name,Token token) throws CreatePlayerException {
                 endGame();
             }
 	}
-	
+
     /**
      * Starts an auction through the Bank.
      */

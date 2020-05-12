@@ -17,7 +17,7 @@ public class Agent extends Player {
 
     /**
      * Constructor for Agent.
-     * 
+     *
      * @param name The name of the agent
      * @param token A specific token
      * @throws DuplicateException
@@ -28,9 +28,9 @@ public class Agent extends Player {
 
     /**
      * The main function for running the agent.
-     * 
+     *
      * author: Mingfeng
-     * 
+     *
      * @throws propertytycoongame.PropertyException
      * @throws propertytycoongame.LackMoneyException
      */
@@ -45,7 +45,7 @@ public class Agent extends Player {
 
     /**
      * The overrode rollDices method.
-     * 
+     *
      * @methodsName:rollDices
      * @author: Mingfeng
      *
@@ -56,7 +56,7 @@ public class Agent extends Player {
         if (CentralControl.board.getJail().turnInJail(this) == 2) // Use card or money to release itself
         {
             try {
-                if (released() || payReleased()) 
+                if (released() || payReleased())
 					;
             } catch (LackMoneyException | NotInJailException e) {
                 CentralControl.board.getJail().pass(this);
@@ -78,9 +78,9 @@ public class Agent extends Player {
      * Trys automatically to buy property in suitable condition(as much as possible).
      *
      * author: Mingfeng
-     * 
+     *
      * @param currentCell The current landed cell
-     * @throws PropertyException 
+     * @throws PropertyException
      */
     public void autoBuyProperty(Cell currentCell) {
         if (Property.class.isInstance(currentCell)) {
@@ -97,9 +97,9 @@ public class Agent extends Player {
 
     /**
      * Trys automatically to buy house and hotel in suitable condition( money is greater than 400).
-     * 
+     *
      * author: Mingfeng
-     * 
+     *
      */
     public void autoBuild() {
         ArrayList<Property> propertiesBuild = searchPropertyBuild();
@@ -122,7 +122,7 @@ public class Agent extends Player {
 
     /**
      * Searches properties that can be built.
-     * 
+     *
      * author: Mingfeng
      * @return ArrayList - the properties list
      */

@@ -7,9 +7,9 @@ import java.util.ArrayList;
  *
  * Enum tokens can only be choosen from a limited range Players' behaviours in the game
  * eg: roll dices, buy.
- * 
+ *
  * Documented by Haotian Jiao
- * 
+ *
  * @author Mingfeng
  */
 public class Player {
@@ -23,7 +23,7 @@ public class Player {
     private ArrayList<Property> Properties;
     private int totalValue = 0;
     private int totalAssets = 0;
-	
+
     /**
      * Limited range of the Tokens.
      */
@@ -62,7 +62,7 @@ public class Player {
 
     /**
      * Player rolls dices and acts as the rules required.
-     * 
+     *
      * author: Mingfeng
      */
     public void rollDices() {
@@ -85,14 +85,14 @@ public class Player {
                 location = tLocation;
                 Cell currentCell = CentralControl.board.getCell(this.getLocation());
 
-                // take action based on landed cell 
+                // take action based on landed cell
                 // land on the property
                 if (Property.class.isInstance(currentCell)) {
                     Property p = (Property) currentCell;
                     Player owner = p.getOwner();
                     if (owner != null && !owner.equals(this)) {
                         payRent(p);
-                    } else 
+                    } else
     						;//  buy or bid (GUI)
                 } // PotluckCard cell
                 else if (PotluckCard.class.isInstance(currentCell)) {
@@ -131,9 +131,9 @@ public class Player {
 
     /**
      * Pays 50$ for releasing and add money to Park.
-     * 
+     *
      * author: Mingfeng
-     * 
+     *
      * @return boolean - if the action succeed
      * @throws LackMoneyException
      */
@@ -155,9 +155,9 @@ public class Player {
     /**
      * Releases the player from jail by free-prisoner card and
      * placed on the bottom of the corresponding pile.
-     * 
+     *
      * author: Mingfeng
-     * 
+     *
      * @return boolean - if the action succeed
      */
     public boolean released() throws NotInJailException {
@@ -179,7 +179,7 @@ public class Player {
 
     /**
      * Adds a realeasd card in your hand.
-     * 
+     *
      * author: Mingfeng
      */
     public void addReleaseCard(Cards card) {
@@ -188,9 +188,9 @@ public class Player {
 
     /**
      * Adds a house in your houses list.
-     * 
+     *
      * author: Mingfeng
-     * 
+     *
      * @param property The property that needs to buy
      * @return	ArrayList - properties this player owns
      */
@@ -203,9 +203,9 @@ public class Player {
 
     /**
      * Removes a house in your houses list.
-     * 
+     *
      * author: Mingfeng
-     * 
+     *
      * @param property The property that need to be sold
      * @return	ArrayList - properties this player owned
      */
@@ -237,9 +237,9 @@ public class Player {
     /**
      * If player does not have enough money,
      * initialize all his propety and give money to receiver.
-     * 
+     *
      * author: Mingfeng
-     * 
+     *
      * @param difference The least money that need to be raised
      * @return	boolean - wheather player raises money succeed
      */
@@ -284,7 +284,7 @@ public class Player {
 
     /**
      * Pays a property's rent to a player.
-     * 
+     *
      * @param p The Property instance that need to be paid
      * @param reciever The Player instance that need to be paid
      */
@@ -307,7 +307,7 @@ public class Player {
 
     /**
      * Accesses and returns the balance of the player.
-     * 
+     *
      * @return int - the money the player has
      */
     public int getMoney() {
@@ -316,7 +316,7 @@ public class Player {
 
     /**
      * Adds money to the balance.
-     * 
+     *
      * @param money The value of money
      */
     public void addMoney(int money) {
@@ -325,7 +325,7 @@ public class Player {
 
     /**
      * Subtracts money from the balance.
-     * 
+     *
      * @param money The money that need to be subtracted
      * @throws propertytycoongame.LackMoneyException
      */
@@ -335,10 +335,10 @@ public class Player {
         }
         this.money -= money;
     }
-    
+
     /**
      * Adds money to balance.
-     * 
+     *
      * @return totalAssets int - the total assets
      */
     public int calculateAssets() {
@@ -355,7 +355,7 @@ public class Player {
 
     /**
      * Accesses and returns the current location.
-     * 
+     *
      * @return int - the position number
      */
     public int getLocation() {
@@ -364,7 +364,7 @@ public class Player {
 
     /**
      * Sets location.
-     * 
+     *
      * @param location - the position number that need to be set
      */
     public void setLocation(int location) {
@@ -373,7 +373,7 @@ public class Player {
 
     /**
      * Accesses and returns the field 'passGo'.
-     * 
+     *
      * @return boolean - if the player has passed GO.
      */
     public boolean isPassGo() {
@@ -382,7 +382,7 @@ public class Player {
 
     /**
      * Sets the player passed GO or not.
-     * 
+     *
      * @param passGo - true and false
      */
     public void setPassGo(boolean passGo) {
@@ -391,16 +391,16 @@ public class Player {
 
     /**
      * Sets the money.
-     * 
+     *
      * @param money The value of the money
      */
     public void setMoeny(int money) {
         this.money = money;
     }
-    
+
     /**
      * Accesses and returns the token that the player has assigned.
-     * 
+     *
      * @return Token - the token in the Token range list
      */
     public Token getToken() {
@@ -409,7 +409,7 @@ public class Player {
 
     /**
      * Accesses and returns the name of the player.
-     * 
+     *
      * @return String - the name of the player
      */
     public String getName() {
@@ -418,16 +418,16 @@ public class Player {
 
     /**
      * Accesses and returns a list of properties the player has.
-     * 
+     *
      * @return ArrayList - the list of Property
      */
     public ArrayList<Property> getPropertiesList() {
         return Properties;
     }
-    
+
     /**
      * Gets the total value.
-     * 
+     *
      * @return int - the total value
      */
     public int getTotalValue() {
@@ -445,7 +445,7 @@ public class Player {
 
     /**
      * Sets the total value.
-     * 
+     *
      * @param totalValue A value
      */
     public void setotalValue(int totalValue) {

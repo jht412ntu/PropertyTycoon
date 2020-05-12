@@ -4,17 +4,17 @@ package propertytycoongame;
  * Park
  *
  * Where fines are to be paid, the proceeds accumulate on the free parking space in the centre of the board.
- * 
+ *
  * When a player lands on free parking, they collect all of the funds currently on the free parking space.
  *
  * Documented by Haotian Jiao
- * 
+ *
  * @author Mingfeng
  */
 public class Park extends Cell {
 
     private int collectedFine;
-    
+
     /**
      * Constructor for Park.
      *
