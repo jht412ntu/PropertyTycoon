@@ -1,9 +1,21 @@
 package propertytycoongame;
 
-//Throwing when the player does not have enough money
+/**
+ * LackMoneyException
+ * .
+ * 
+ * Documented by Haotian Jiao
+ *
+ * @author Haotian Jiao
+ */
 public class LackMoneyException extends Exception {
-	public LackMoneyException(String message) {
-		// TODO Auto-generated constructor stub
-		super(message);
-	}
+
+    /**
+     * Constructor for DuplicateException.
+     * 
+     * @param message A message that need to be thrown
+     */
+    public LackMoneyException(String message) {
+        super(message);
+    }
 }
