@@ -20,9 +20,9 @@ public class Agent extends Player {
      *
      * @param name The name of the agent
      * @param token A specific token
-     * @throws DuplicateException
+     * @throws propertytycoongame.CreatePlayerException
      */
-    public Agent(String name, Token token) throws DuplicateException {
+    public Agent(String name, Token token) throws CreatePlayerException {
         super(name, token);
     }
 
@@ -31,16 +31,16 @@ public class Agent extends Player {
      *
      * author: Mingfeng
      *
-     * @throws propertytycoongame.PropertyException
      * @throws propertytycoongame.LackMoneyException
      */
-    public void run() throws PropertyException, LackMoneyException {
+    public void run() throws LackMoneyException {
         rollDices();
         Cell currentCell = CentralControl.board.getCell(this.getLocation());
         autoBuyProperty(currentCell);
         autoBuild();
         autoPayRent(currentCell);
-        autoSelectCard(currentCell);
+        autoSelectCard (currentCell);
+        CentralControl.nextPlayer();
     }
 
     /**
@@ -56,7 +56,7 @@ public class Agent extends Player {
         if (CentralControl.board.getJail().turnInJail(this) == 2) // Use card or money to release itself
         {
             try {
-                if (released() || payReleased())
+                if (released() || payReleased()) 
 					;
             } catch (LackMoneyException | NotInJailException e) {
                 CentralControl.board.getJail().pass(this);
@@ -80,7 +80,6 @@ public class Agent extends Player {
      * author: Mingfeng
      *
      * @param currentCell The current landed cell
-     * @throws PropertyException
      */
     public void autoBuyProperty(Cell currentCell) {
         if (Property.class.isInstance(currentCell)) {

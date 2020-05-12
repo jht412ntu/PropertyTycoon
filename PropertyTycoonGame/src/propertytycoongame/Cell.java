@@ -21,6 +21,10 @@ public class Cell {
     public Cell(int position) {
         position = this.position;
     }
+    
+    public Cell() {
+    	
+    }
 
     /**
      * Accesses and returns the position.

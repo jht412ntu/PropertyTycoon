@@ -24,8 +24,7 @@ public class OpportunityknockCard extends Cards {
      *
      * @param position The position of the OpportunityknockCard
      */
-    public OpportunityknockCard(int position) {
-        super(position);
+    public OpportunityknockCard() {
 
         unshuffleList1.add("Bank pays you divided of £50");
         unshuffleList1.add("You have won a lip sync battle. Collect £100");

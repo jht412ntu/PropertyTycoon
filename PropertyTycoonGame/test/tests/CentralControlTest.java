@@ -13,7 +13,9 @@ import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 import propertytycoongame.CentralControl;
 import propertytycoongame.DuplicateException;
+import propertytycoongame.LackMoneyException;
 import propertytycoongame.Player;
+import propertytycoongame.PropertyException;
 
 /**
  * Sprint1 test and some methods test.
@@ -98,7 +100,7 @@ public class CentralControlTest {
      * Test of nextPlayer method, of class CentralControl.
      */
     @Test
-    public void test3NextPlayer() {
+    public void test3NextPlayer() throws PropertyException, LackMoneyException {
         System.out.println("nextPlayer");
 //        normal.addPlayer(p2);
 //        normal.addPlayer(p1);

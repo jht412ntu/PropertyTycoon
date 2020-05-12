@@ -41,7 +41,7 @@ public class Player {
      *
      * @param name Name of the player
      * @param token Token of the player
-     * @throws DuplicateException
+     * @throws propertytycoongame.CreatePlayerException
      */
     public Player(String name, Token token) throws CreatePlayerException {
         for (Player player : CentralControl.getPlayers()) {
@@ -136,6 +136,7 @@ public class Player {
      *
      * @return boolean - if the action succeed
      * @throws LackMoneyException
+     * @throws propertytycoongame.NotInJailException
      */
     public boolean payReleased() throws LackMoneyException, NotInJailException {
         if (CentralControl.board.getJail().turnInJail(this) == 0) {
@@ -159,6 +160,7 @@ public class Player {
      * author: Mingfeng
      *
      * @return boolean - if the action succeed
+     * @throws propertytycoongame.NotInJailException
      */
     public boolean released() throws NotInJailException {
         if (CentralControl.board.getJail().turnInJail(this) == 0) {
@@ -181,6 +183,7 @@ public class Player {
      * Adds a realeasd card in your hand.
      *
      * author: Mingfeng
+     * @param card
      */
     public void addReleaseCard(Cards card) {
         releaseCard.add(card);
@@ -240,7 +243,8 @@ public class Player {
      *
      * author: Mingfeng
      *
-     * @param difference The least money that need to be raised
+     * @param rent
+     * @param reciever
      * @return	boolean - wheather player raises money succeed
      */
     public boolean raiseMoney(int rent, Player reciever) {
@@ -286,7 +290,6 @@ public class Player {
      * Pays a property's rent to a player.
      *
      * @param p The Property instance that need to be paid
-     * @param reciever The Player instance that need to be paid
      */
     public void payRent(Property p) {
         Player reciever = p.getOwner();
@@ -299,7 +302,6 @@ public class Player {
                     payRent(p);
                 } else {
                     CentralControl.leaveGame();
-                    return;
                 }
             }
         }
