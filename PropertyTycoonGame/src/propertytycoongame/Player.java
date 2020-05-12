@@ -208,6 +208,7 @@ public class Player {
     public void sellPropertyToPlayer(Player player, Property p, int price) throws LackMoneyException {
         sellProperty(p);
         player.buyProperty(p);
+        p.changeOwner(player);
         player.minusMoney(price);
         addMoney(price);
     }
