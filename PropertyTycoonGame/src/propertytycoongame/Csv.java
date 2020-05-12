@@ -33,8 +33,7 @@ public class Csv {
                 csvList.add(current);
 
             }
-            //delete head of csv
-            csvList.remove(0);
+
 
             for (int row = 1; row < csvList.size(); row++) {
                 p1 = new Property(Integer.valueOf((csvList.get(row)[0])), csvList.get(row)[1], csvList.get(row)[2], Integer.valueOf(csvList.get(row)[3]),
