@@ -30,6 +30,7 @@ public class Jail extends Cell{
 	*/
 	public void put(Player player) {
 		prisoners.put(player, 2);
+		player.setLocation(11);
 	}
 	
 	/**

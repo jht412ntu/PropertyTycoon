@@ -116,7 +116,6 @@ public class Player {
                    //go to Jail
                     case 31:
                         CentralControl.board.getJail().put(this);
-                        location = 11;
                         break;
                 }
             }
