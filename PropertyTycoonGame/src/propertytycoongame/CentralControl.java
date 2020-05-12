@@ -76,7 +76,7 @@ public class CentralControl {
         board = new Board();
         dices = new Dice();
         bank = new Bank();
-        Csv.readCsvFile("src/propertytycoongame/csv_board.csv");
+        csv.readCsvFile("src/propertytycoongame/csv_board.csv");
         currentPlayer = 0;
     }
 

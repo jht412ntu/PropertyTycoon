@@ -73,5 +73,21 @@ public class Jail extends Cell {
     public void release(Player player) {
         prisoners.remove(player);
     }
+    
+    
+   /**
+    * Checks if given player is in jail.
+    * author: Hayden.
+    * 
+    * @param p The player to check
+    * @return true, if the player is in jail.
+    */
+    public boolean contains(Player p){
+        if(prisoners.containsKey(p)){
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

@@ -649,7 +649,7 @@ public class GameGUI extends javax.swing.JFrame {
             txtPlrBalance.setText("Balance: " + p.getMoney());
             txtRollValue.setText("Roll Value: " + CentralControl.dices.getTotalVal());
             txtCurrPlayer.setText("Player: " + p.getName());
-            txtCurrPos.setText("Current Position: " + ((Property) CentralControl.board.getCell(p.getLocation())).getName());
+            txtCurrPos.setText("Current Position: " + (CentralControl.board.getCell(p.getLocation())));
             setTitle("Property Tycoon Game - " + game.getRemainingTime().toString());
             txtAvaliable.setText("Avaliable: " + Boolean.toString(((Property) CentralControl.board.getCell(p.getLocation())).isAvailable()));
             txtBankBalance.setText("Bank Balance: " + Integer.toString(CentralControl.bank.getBalance()));
@@ -657,6 +657,8 @@ public class GameGUI extends javax.swing.JFrame {
             txtGroup.setText("Group: " + ((Property) CentralControl.board.getCell(p.getLocation())).getGroup());
         } catch (NullPointerException ex) {
             System.out.println("GUI not updated");
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         } catch (ClassCastException ex) {
 
         }

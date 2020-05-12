@@ -64,7 +64,7 @@ public class Player {
     public void rollDices() {
         if (CentralControl.dices.getNumDouble() > 2) {
             CentralControl.board.getJail().put(this);
-        } else if (CentralControl.board.getJail().turnInJail(this) > 0) {
+        } else if (CentralControl.board.getJail().contains(this) && CentralControl.board.getJail().turnInJail(this) > 0) {
             CentralControl.board.getJail().pass(this);
         } else {
             CentralControl.dices.rollDice();
