@@ -39,7 +39,7 @@ public class CentralControl {
     /**
      * An instance of the Board Class.
      */
-    public static Board board;
+    public static Board board=new Board();
 
     /**
      * An instance of the Dice Class.
@@ -73,10 +73,10 @@ public class CentralControl {
             endTime = new Date(startTime.getTime() + this.duration);
         }
         rank = new ArrayList<>();
-        board = new Board();
+       // board = new Board();
         dices = new Dice();
         bank = new Bank();
-        Csv.readCsvFile("src/propertytycoongame/csv_board.csv");
+        Csv.readCsvFile("csv_board.csv");
         currentPlayer = 0;
     }
 
