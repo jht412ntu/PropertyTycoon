@@ -16,8 +16,10 @@ import propertytycoongame.Cell;
 import propertytycoongame.CentralControl;
 import propertytycoongame.CreatePlayerException;
 import propertytycoongame.Jail;
+import propertytycoongame.LackMoneyException;
 import propertytycoongame.Player;
 import propertytycoongame.Property;
+import propertytycoongame.PropertyException;
 
 public class AgentTest {
 	
@@ -99,7 +101,7 @@ public class AgentTest {
 	}
 	
 	@Test
-	public void runTest() {
+	public void runTest() throws PropertyException, LackMoneyException {
 		agent.run();
 	}
 }

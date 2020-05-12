@@ -1,6 +1,8 @@
 package propertytycoongame;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javax.swing.JOptionPane;
@@ -583,7 +585,11 @@ public class GameGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddPlayerActionPerformed
 
     private void btnNextPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextPlayerActionPerformed
-        game.nextPlayer();
+        try {
+            game.nextPlayer();
+        } catch (LackMoneyException ex) {
+            Logger.getLogger(GameGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         CentralControl.dices.newPlayer();
     }//GEN-LAST:event_btnNextPlayerActionPerformed
 

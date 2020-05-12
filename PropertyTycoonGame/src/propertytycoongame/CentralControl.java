@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+import propertytycoongame.Player.Token;
 
 /**
  * CentralControl
@@ -26,30 +27,31 @@ public class CentralControl {
 
     private final Date startTime;
     private final Long duration;
+    private int votes = 0;
     private Date endTime;
     private String mode;
-    private static ArrayList<Player> rank;
-    private static int currentPlayer;
+    private static ArrayList<Player> rank = new ArrayList<>();
+    private static int currentPlayer = 0;
 
     /**
      * All players saved in the list.
      */
-    private static  ArrayList<Player> players;
+    private static ArrayList<Player> players = new ArrayList<>();
 
     /**
      * An instance of the Board Class.
      */
-    public static Board board;
+    public static Board board = new Board();
 
     /**
      * An instance of the Dice Class.
      */
-    public static Dice dices;
+    public static Dice dices = new Dice();
 
     /**
      * An instance of the Bank Class.
      */
-    public static Bank bank;
+    public static Bank bank = new Bank();
 
     /**
      * An instance of the Jail Class.
@@ -62,7 +64,7 @@ public class CentralControl {
      * @param duration An input value of the game duration
      */
     public CentralControl(long duration) { // in minutes
-        players = new ArrayList<>();
+        //players 
         startTime = new Date(); // set start time to be current system time
         this.duration = duration * 60000; // time in milliseconds
         if (duration == 0) { // Normal(survival) mode
@@ -72,11 +74,6 @@ public class CentralControl {
             mode = "Abridged";
             endTime = new Date(startTime.getTime() + this.duration);
         }
-        rank = new ArrayList<>();
-        board = new Board();
-        dices = new Dice();
-        bank = new Bank();
-        currentPlayer = 0;
         Csv.readCsvFile("csv_board.csv");
     }
 
@@ -84,7 +81,6 @@ public class CentralControl {
      * Add player to the game
      *
      * @param p The player to be added to the game
-     * @throws java.lang.Exception
      */
     public void addPlayer(Player p) {
         players.add(p);
@@ -95,17 +91,16 @@ public class CentralControl {
      *
      * @throws java.lang.Exception
      */
-    public void initPlayers() throws Exception{
-        if(players.size() < 1){
+    public void initPlayers() throws Exception {
+        if (players.size() < 1) {
             throw new Exception("Minimum of two players required to start game");
-        } else{
+        } else {
             Collections.shuffle(players);
         }
     }
 
     /**
-     * The initial rolling of the game
-     * to decided the order of the players' turn.
+     * The initial rolling of the game to decided the order of the players' turn.
      *
      */
     public void firstroll() {
@@ -141,19 +136,19 @@ public class CentralControl {
     }
 
     /**
-     * Sets the current player to the next player in the list of players.
-     * If player is an agent, start to run automatically
+     * Sets the current player to the next player in the list of players. If player is an agent, start to run automatically
+     * @throws propertytycoongame.LackMoneyException
      */
-    public static void nextPlayer() {
+    public static void nextPlayer() throws LackMoneyException {
         if (currentPlayer < players.size() - 1) {
             currentPlayer += 1;
         } else {
             currentPlayer = 0;
         }
         dices.newPlayer();
-	if (Agent.class.isInstance(getCurrentPlayer())) {
-		((Agent)getCurrentPlayer()).run();
-	}
+        if (Agent.class.isInstance(getCurrentPlayer())) {
+            ((Agent) getCurrentPlayer()).run();
+        }
     }
 
     /**
@@ -242,7 +237,6 @@ public class CentralControl {
         return hms;
     }
 
-
     /**
      * Removes the current player from the game.
      *
@@ -258,9 +252,9 @@ public class CentralControl {
      *
      */
     public void voteEnd() {
-	if (++votes == players.size()) {
-	    endGame();
-	}
+        if (++votes == players.size()) {
+            endGame();
+        }
     }
 
     /**
@@ -283,28 +277,26 @@ public class CentralControl {
         return rank;
     }
 
-public void addAgent(String name,Token token) throws CreatePlayerException {
-		Agent agent = new Agent(name, token);
-		players.add(agent);
-	}
+    public void addAgent(String name, Token token) throws CreatePlayerException {
+        Agent agent = new Agent(name, token);
+        players.add(agent);
+    }
 
-       /**
-        * If it is timer mode. Start the timer
-        *
-        * author: Mingfeng
-        *
-        */
-	@Override
-	public void run() {
-	    try {
-	        Thread.sleep(duration);
-	    } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            finally {
-                endGame();
-            }
-	}
+    /**
+     * If it is timer mode. Start the timer
+     *
+     * author: Mingfeng
+     *
+     */
+    public void run() {
+        try {
+            Thread.sleep(duration);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            endGame();
+        }
+    }
 
     /**
      * Starts an auction through the Bank.
