@@ -1,44 +1,52 @@
 package propertytycoongame;
 
-
 /**
- * Park class
+ * Park
  *
- * Where fines are to be paid, the proceeds accumulate on the free parking space in the centre of the board. 
+ * Where fines are to be paid, the proceeds accumulate on the free parking space in the centre of the board.
+ * 
  * When a player lands on free parking, they collect all of the funds currently on the free parking space.
  *
+ * Documented by Haotian Jiao
+ * 
  * @author Mingfeng
  */
-public class Park extends Cell{
-	public Park(int position) {
-		super(position);
-		collectedFine = 0;
-		// TODO Auto-generated constructor stub
-	}
+public class Park extends Cell {
 
-	private int collectedFine ;
-	
-	/**
-     * Add money to the parking area
-     * 
-     * @param fine // player paid
+    private int collectedFine;
+    
+    /**
+     * Constructor for Park.
+     *
+     * @param position The position of the park
      */
-	public int addFine(int fine) {
-		collectedFine += fine;
-		return collectedFine;
-	}
-	
-	/**
-     * Player who lands on free parking area collect money
-     * 
+    public Park(int position) {
+        super(position);
+	collectedFine = 0;
+    }
+
+    /**
+     * Adds money to the parking area.
+     *
+     * @param fine Player paid
+     * @return int - the total collected fines
+     */
+    public int addFine(int fine) {
+        collectedFine += fine;
+        return collectedFine;
+    }
+
+    /**
+     * Player who lands on free parking area collect money.
+     *
      * @param player Player that has landed on free parking
      */
-	public void collectFine(Player player) {
-		player.addMoney(collectedFine) ;
-		collectedFine = 0;
-	}
-	
-	public int getMoney() {
-		return collectedFine;
-	}
+    public void collectFine(Player player) {
+        player.addMoney(collectedFine);
+        collectedFine = 0;
+    }
+
+    public int getMoney() {
+	return collectedFine;
+    }
 }
