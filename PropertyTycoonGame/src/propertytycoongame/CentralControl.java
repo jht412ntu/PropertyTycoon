@@ -11,31 +11,58 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
-import propertytycoongame.Player.Token;
-
 /**
- * Property Tycoon Game Central Control
+ * CentralControl
  *
  * Class that provides functionality for starting and controlling the game.
- *
+ * 
+ * Documented by Haotian Jiao
+ * 
  * @author Haotian Jiao
- * @version 1.0.1
+ * @version 1.1.0
+ *  
  */
-public class CentralControl implements Runnable{
-	
+public class CentralControl {
+
     private final Date startTime;
     private final Long duration;
-    private int votes = 0;
     private Date endTime;
     private String mode;
-    private static ArrayList<Player> rank = new ArrayList<Player>();
-    private static  ArrayList<Player> players = new ArrayList<>();
-    private static int currentPlayer = 0;
-    public static Board board = new Board();
-    public static Dice dices = new Dice();
-    public static Bank bank = new Bank();
+    private static ArrayList<Player> rank;
+    private static int currentPlayer;
 
+    /**
+     * All players saved in the list.
+     */
+    private static  ArrayList<Player> players;
+    
+    /**
+     * An instance of the Board Class.
+     */
+    public static Board board;
+
+    /**
+     * An instance of the Dice Class.
+     */
+    public static Dice dices;
+
+    /**
+     * An instance of the Bank Class.
+     */
+    public static Bank bank;
+    
+    /**
+     * An instance of the Jail Class.
+     */
+    public static Jail jail;
+
+    /**
+     * Constructor for CentralControl
+     * 
+     * @param duration An input value of the game duration
+     */
     public CentralControl(long duration) { // in minutes
+        players = new ArrayList<>();
         startTime = new Date(); // set start time to be current system time
         this.duration = duration * 60000; // time in milliseconds
         if (duration == 0) { // Normal(survival) mode
@@ -45,20 +72,28 @@ public class CentralControl implements Runnable{
             mode = "Abridged";
             endTime = new Date(startTime.getTime() + this.duration);
         }
+        rank = new ArrayList<>();
+        board = new Board();
+        dices = new Dice();
+        bank = new Bank();
+        currentPlayer = 0;
+        Csv.readCsvFile("csv_board.csv");
     }
 
     /**
      * Add player to the game
      *
      * @param p The player to be added to the game
+     * @throws java.lang.Exception
      */
-    public void addPlayer(Player p){
+    public void addPlayer(Player p) {
         players.add(p);
     }
 
     /**
      * Shuffling all the players
      *
+     * @throws java.lang.Exception
      */
     public void initPlayers() throws Exception{
         if(players.size() < 1){
@@ -68,6 +103,11 @@ public class CentralControl implements Runnable{
         }
     }
 
+    /**
+     * The initial rolling of the game
+     * to decided the order of the players' turn.
+     * 
+     */
     public void firstroll() {
         HashMap<Player, Integer> map = new HashMap<>();
         ArrayList<Player> newplayers = new ArrayList<>();
@@ -101,7 +141,7 @@ public class CentralControl implements Runnable{
     }
 
     /**
-     * Set the current player to the next player in the list of players.
+     * Sets the current player to the next player in the list of players.
      * If player is an agent, start to run automatically
      */
     public static void nextPlayer() {
@@ -111,13 +151,13 @@ public class CentralControl implements Runnable{
             currentPlayer = 0;
         }
         dices.newPlayer();
-        if (Agent.class.isInstance(getCurrentPlayer())) {
-			((Agent)getCurrentPlayer()).run();
-		}
+	if (Agent.class.isInstance(getCurrentPlayer())) {
+		((Agent)getCurrentPlayer()).run();
+	}
     }
 
     /**
-     * Set the final end time.
+     * Sets the final end time.
      *
      * Uses only when the game is playing in normal mode
      */
@@ -126,16 +166,16 @@ public class CentralControl implements Runnable{
     }
 
     /**
-     * Get the current player who should playing the game.
+     * Accesses and returns the current player who should playing the game.
      *
-     * @return Player The current players turn
+     * @return Player - the current player's instance
      */
     public static Player getCurrentPlayer() {
         return players.get(currentPlayer);
     }
 
     /**
-     * Get all the players.
+     * Accesses and returns all the players.
      *
      * @return ArrayList List of all players currently in the game
      */
@@ -144,36 +184,36 @@ public class CentralControl implements Runnable{
     }
 
     /**
-     * Get the current system time.
+     * Accesses and returns the current system time.
      *
-     * @return Date Current system time
+     * @return Date - current system time
      */
     public Date getCurrentTime() {
         return new Date();
     }
 
     /**
-     * Get the start time of the game.
+     * Accesses and returns the start time of the game.
      *
-     * @return Date Start time of the game
+     * @return Date - starting time of the game
      */
     public Date getStartTime() {
         return startTime;
     }
 
     /**
-     * Get the end time of the game
+     * Accesses and returns the end time of the game.
      *
-     * @return Date
+     * @return Date - ending time of the game
      */
     public Date getEndTime() {
         return endTime;
     }
 
     /**
-     * Get the remaining time of the game
+     * Accesses and returns the remaining time of the game.
      *
-     * @return String
+     * @return Time - the remaining time of the game
      */
     public Time getRemainingTime() {
         long interval = endTime.getTime() - getCurrentTime().getTime();
@@ -181,20 +221,20 @@ public class CentralControl implements Runnable{
     }
 
     /**
-     * Get the duration of the game
+     * Accesses and returns the duration of the game.
      *
-     * @return String
+     * @return Time - the duration of the game
      */
     public Time getDuration() {
         long interval = endTime.getTime() - startTime.getTime();
         return timeFormat(interval);
     }
-    
+
     /**
-     * Format the time in milliseconds to 00:00:00(H:m:s)
+     * Formats the time in milliseconds to 00:00:00(H:m:s).
      *
-     * @param milliseconds
-     * @return Time
+     * @param milliseconds The milliseconds time
+     * @return Time - the time in format "00:00:00(H:m:s)"
      */
     public Time timeFormat(long milliseconds) {
         TimeZone.setDefault(TimeZone.getTimeZone(ZoneId.of("UTC")));
@@ -204,68 +244,72 @@ public class CentralControl implements Runnable{
 
     
     /**
-     * @description Remove a player from the game
+     * Removes the current player from the game.
      *
      */
     public static void leaveGame() {
-    	rank.add(getCurrentPlayer());
         players.remove(getCurrentPlayer());
     }
     
     /**
-     * @author: Mingfeng
-     * @methodsName: voteEnd
-     * @description: Vote to end this game
+     * Votes to end this game.
+     *
+     * author: Mingfeng
+     *  
      */
     public void voteEnd() {
-		if (++votes == players.size()) {
-			endGame();
-		}
+	if (++votes == players.size()) {
+	    endGame();
 	}
+    }
+	
     /**
-     * @author: Mingfeng
-     * @methodsName: endGame
-     * @description Rank players when ends the game
-     * @return ArrayList<Player>
+     * Ranking players when ends the game.
+     * 
+     * @return ArrayList - the ranking list of the players
      */
     public ArrayList<Player> endGame() {
-    	ArrayList<Player> rankPlayers = (ArrayList<Player>) players.clone();
-    	Collections.sort(rankPlayers, new Comparator<Player>() {
-			@Override
-			public int compare(Player o1, Player o2) {
-				// TODO Auto-generated method stub
-				if (o1.getMoney() > o2.getMoney()) {
-		            return 1;
-		        }
-		        return 0;
-			}
+        ArrayList<Player> rankPlayers = (ArrayList<Player>) players.clone();
+        Collections.sort(rankPlayers, new Comparator<Player>() {
+            @Override
+            public int compare(Player o1, Player o2) {
+                if (o1.getMoney() > o2.getMoney()) {
+                    return 1;
+                }
+                return 0;
+            }
         });
-		rank.addAll(rankPlayers);
-		return rank;
-	}
-    
-    public void addAgent(String name,Token token) throws CreatePlayerException {
+        rank.addAll(rankPlayers);
+        return rank;
+    }
+
+public void addAgent(String name,Token token) throws CreatePlayerException {
 		Agent agent = new Agent(name, token);
 		players.add(agent);
 	}
-    
-    /**
-     * @author: Mingfeng
-     * @methodsName: run
-     * @description: If it is timer mode. Start the timer
-     */
+
+       /**
+        * If it is timer mode. Start the timer
+        * 
+        * author: Mingfeng
+        * 
+        */
 	@Override
 	public void run() {
-		try {
-			Thread.sleep(duration);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		finally {
-			endGame();
-		}
+	    try {
+	        Thread.sleep(duration);
+	    } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            finally {
+                endGame();
+            }
 	}
 	
-	
+    /**
+     * Starts an auction through the Bank.
+     */
+    public void auction() {
+        bank.startAuction();
+    }
 }
