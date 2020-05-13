@@ -166,15 +166,15 @@ Reverts [#24](https://github.com/jht412ntu/PropertyTycoon/pull/24)
 Accidently merged branch into master
 
 [#27](https://github.com/jht412ntu/PropertyTycoon/pull/27)   `23/04/2020`  Agent created with fuction "rollDice, autoBuyProperty, autoBuildHouse  
-Creater: Haotian behalf of Mingfeng  
+Creater: Haotian on behalf of Mingfeng  
 Comment: None
 
 [#28](https://github.com/jht412ntu/PropertyTycoon/pull/28)   `23/04/2020`  Revert "Agent created with fuction "rollDice, autoBuyProperty, autoBuildHouse"  
-Creater: Haotian behalf of Mingfeng  
+Creater: Haotian on behalf of Mingfeng  
 Comment: Reverts [#27](https://github.com/jht412ntu/PropertyTycoon/pull/27)
 
 [#29](https://github.com/jht412ntu/PropertyTycoon/pull/29)   `23/04/2020`  Agent features: Mingfeng wang 215920  
-Creater: Haotian behalf of Mingfeng  
+Creater: Haotian on behalf of Mingfeng  
 Comment: None
 
 [#30](https://github.com/jht412ntu/PropertyTycoon/pull/30)   `23/04/2020`  Hayden banes 198757  
@@ -213,7 +213,7 @@ Cards set now has flexible position.
 [9305814](https://github.com/jht412ntu/PropertyTycoon/commit/93058141a86f9e7df819a363aa0891b9d6ff7d40)
 
 [#33](https://github.com/jht412ntu/PropertyTycoon/pull/33)   `24/04/2020`  Merge master to Zhenyu-Tang-215907 after pull request #32  
-Creater: Haotian behalf of Zhenyu  
+Creater: Haotian on behalf of Zhenyu  
 Comment: None
 
 [#34](https://github.com/jht412ntu/PropertyTycoon/pull/34)   `24/04/2020`  Hayden Banes 198757  
@@ -227,7 +227,115 @@ Creater: Zhenyu
 Comment: most of board class can delete,because we can fetch data and auto import.
 
 [#36](https://github.com/jht412ntu/PropertyTycoon/pull/36)   `25/04/2020`  Fixed some errors  
-Creater:   
+Creater: Hayden  
 Comment:   
 - Made javacsv.jar path relative  
 - Added local static variables in CentralControl
+
+[#37](https://github.com/jht412ntu/PropertyTycoon/pull/37)   `25/04/2020`  GitHub Page updated after 24/04/2020 online Seminar Support Session  
+Creater: Haotian  
+Comment:  
+Meetings:  
+Added more meeting records  
+Audio and Video recordings are now available  
+
+Sprints:  
+Added more sprint records  
+
+Pull Requests:  
+Created a new page contained all of the detailed pull requests  
+
+Summary:  
+Changed the index and deleted the Timeline page  
+
+[#38](https://github.com/jht412ntu/PropertyTycoon/pull/38)   `27/04/2020`  Updated GUI  
+Creater: Hayden  
+Comment:  
+- Added game statistics monitoring (accessed from 'Stats' menu).
+- Added 'View Properties' button on the game screen, allowing players to view info about and manage (upgrade and mortgage) thier currently owned properties.
+- Added a method in Property class for setting the availability of the current property
+- Documentation
+- Fixed some errors
+
+[#39](https://github.com/jht412ntu/PropertyTycoon/pull/39)   `29/04/2020`  auto find file with filename now  
+Creater: Zhenyu  
+Comment: class now take file name as input
+
+[#40](https://github.com/jht412ntu/PropertyTycoon/pull/40)   `30/04/2020`  Mingfeng wang 215920  
+Creater: Mingfeng  
+Comment:  
+Bugs about Player rollDices fixed.  
+Some code logic optimisations.  
+
+
+[#41](https://github.com/jht412ntu/PropertyTycoon/pull/41)   `30/04/2020`  Added getHousePrice  
+Creater:  Haotian  
+Comment:  Gets the corresponding house price of a property.
+
+[#42](https://github.com/jht412ntu/PropertyTycoon/pull/42)   `30/04/2020`  Hayden banes 198757  
+Creater: Hayden  
+Comment:  
+- Added check if new player is trying to use a token that has already been selected by another player
+- Game now requires minimum of two players before starting
+- Player must now have a name and a token before being added to the game
+- Added exception handeling in the form of popup error/wraning dialogs in the GUI  
+
+[#43](https://github.com/jht412ntu/PropertyTycoon/pull/43)   `04/05/2020`  Mingfeng wang 215920  
+Creater: Mingfeng  
+Comment: Closed  
+
+[#44](https://github.com/jht412ntu/PropertyTycoon/pull/44)   `08/05/2020`  Mingfeng wang 215920  
+Creater: Mingfeng  
+Comment: Closed
+
+[#45](https://github.com/jht412ntu/PropertyTycoon/pull/45)   `11/05/2020`  Code documentation for all the classes  
+Creater: Haotian  
+Comment: Documented all the classes and fixed some small bugs.
+
+[#46](https://github.com/jht412ntu/PropertyTycoon/pull/46)   `12/05/2020`  Requirements testing  
+Creater: Haotian  
+Comment:  
+Sprint 1 tests:  
+TC4: Central Control  
+TC4-F1: Determine who’s turn it is  
+
+Sprint 2 tests:  
+TC2: Buy Properties  
+TC2-F1: Player shall be able to buy a property  
+TC2-F3: Before a player buys a property, the amount of money the player shall be compared with property price in order to check whether the player has enough money  
+TC2-F4: When a player has enough money to buy property, the system shall change the owner of the property.  
+TC2-F5: The amount of money for the property shall be transferred from the player’s bank account to the bank.  
+
+Sprint 3 tests:  
+TC1: Auctioning  
+TC1-F1: Before a player is allowed to make a bid, it shall be checked whether a player has completed one full circuit  
+TC1-F2: It should be checked that the player’s bid is a valid number  
+
+Sprint 5 tests:  
+TC2: Re-sell properties  
+TC2-F2: Bank shall transfer the original value of the property back to the player’s bank account  
+TC2-F3: The attribute owner of the property shall be changed and the stored data shall be updated  
+TC2-F5: A player shall only be able to re-sell its own properties.  
+
+Sprint 6 tests:  
+TC3: Trading mechanics  
+TC3-F4: A player should be able to sell the property for more than the original value  
+TC3-F5: When buying the property, the buyer shall transfer the money to the seller’s bank account  
+TC3-F6: The owner of the property shall be changed  
+
+[#47](https://github.com/jht412ntu/PropertyTycoon/pull/47)   `12/05/2020` Merge master to Mingfeng-Wang-215920 - trying to fix conflicts. 
+Creater: Haotian  
+Comment: Closed
+
+[#48](https://github.com/jht412ntu/PropertyTycoon/pull/48)   `12/05/2020`   Test3  
+Creater: Hayden  
+Comment: Closed
+
+[#49](https://github.com/jht412ntu/PropertyTycoon/pull/49)   `12/05/2020` Merge master to Mingfeng-Wang-215920 - Trying to fix conflicts.
+Creater: Haotian  
+Comment: Closed
+
+
+[#50](https://github.com/jht412ntu/PropertyTycoon/pull/50)   `12/05/2020` Merging after conflicts fixed  
+Creater: Haotian  
+Comment: Conflicts fixed.

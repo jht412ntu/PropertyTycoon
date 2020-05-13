@@ -17,3 +17,11 @@
   [Google Doc](https://docs.google.com/document/d/1kx6EYfpFbEhpc8_ip4MO7v3RRPooDLHdQpSdTDgJ4mI) `20/04/2020 - 21/04/2020`
 * Sprint 7:  
   [Google Doc](https://docs.google.com/document/d/1uzCdg5jcEoPr0u6gBaTk9wTyiGHhgIKEYZuVXpnx_Og) `22/04/2020 - 29/04/2020`
+* Sprint 8:  
+  [Google Doc](https://docs.google.com/document/d/1ubUoUNcbK7Hzd3ouWggzueQv-5GUUM7HhyxIB-xdgsg) `23/04/2020 - 28/04/2020`
+* Sprint 9:  
+  [Google Doc](https://docs.google.com/document/d/1-pelvl0Ge6ivzWkx4yiuhQXVtC7k8kHqf7_E-drFsZQ) `29/04/2020 - 01/05/2020`
+* Sprint 10:  
+  [Google Doc](https://docs.google.com/document/d/1U_Z8egsjrUjSMrRq8FZ-NmJZvtDDxsAVuJTK0z0BtO4) `02/05/2020 - 05/05/2020`
+* Sprint 11:  
+  [Google Doc](https://docs.google.com/document/d/1b9KwkWtNz2SAmZkmRHwbew5mdhRPychMlpFe24XtgxA) `06/05/2020 - 12/05/2020`

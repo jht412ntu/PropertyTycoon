@@ -8,6 +8,7 @@ import propertytycoongame.Player;
 import propertytycoongame.Property;
 import propertytycoongame.PropertyException;
 import propertytycoongame.CentralControl;
+import propertytycoongame.CreatePlayerException;
 
 /**
  * Testing for sprint 2, 3 and 5.
@@ -22,15 +23,11 @@ public class BankTest {
     private Property pp2;
     private CentralControl normal;
     
-    public BankTest() {
+    public BankTest() throws CreatePlayerException {
         bank = new Bank();
         normal = new CentralControl(0);
-        try {
-            p = new Player("Player 1", Player.Token.boot);
-            p2 = new Player("Player 2", Player.Token.cat);
-        } catch (DuplicateException e) {
-            System.err.println(e);
-        }
+        p = new Player("Player 1", Player.Token.boot);
+        p2 = new Player("Player 2", Player.Token.cat);
         pp = new Property(2, "Crapper Street", "Brown", 60, 2, 10, 30, 90, 160, 250);
         pp2 = new Property(4, "Gangsters Paradise", "Brown", 60, 4, 20, 60, 180, 320, 450);
     }

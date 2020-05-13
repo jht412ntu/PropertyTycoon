@@ -42,13 +42,36 @@
 &emsp;&emsp;Decided to attend the Friday seminar support session  
 &emsp;&emsp;Basic Board GUI still missing - Hayden's part
 
-14.   `23/04/2020` Continue Sprint 7 - Online  
+14.   `23/04/2020` Continue Sprint 7 and start 8 - Online  
 &emsp;&emsp;[Audio Recording](https://drive.google.com/open?id=1egUVvr4VptAATCgJoT8FBmdk1uwlYjuX)  
 &emsp;&emsp;Tang didn't talk - computer was dead  
 &emsp;&emsp;Some conflicts that hard to fix appeared in Mingfeng's branch  
-&emsp;&emsp;Basic Board GUI still missing - Hayden's part
+&emsp;&emsp;Gave up building the board GUI
 
 15.   `24/04/2020` Seminar Support Session - Online Zoom  
 &emsp;&emsp;[Video Recording](https://drive.google.com/open?id=146g7lOGn_sZhmLFJ5nJ5KhqAthwaChHn)
 
-16.   `28/04/2020` Scheduled meeting - Online
+16.   `28/04/2020` Initialise Sprint 9 - Online  
+&emsp;&emsp;[Audio Recording](https://drive.google.com/open?id=1fEaiN58J5KGl6z0NjEGDDWPo2URWS_Se)  
+&emsp;&emsp;Fixed FileNotFoundException caused by csvreader
+
+17.   `30/04/2020` Initialise Sprint 10 - Online  
+&emsp;&emsp;[Audio Recording](https://drive.google.com/open?id=1M8HlDOaSVSKeoJVLLx31DCAbD5jvfvAJ)  
+&emsp;&emsp;Mainly about testing
+
+18.   `05/05/2020` Initialise Sprint 11 - Online  
+&emsp;&emsp;[Audio Recording](https://drive.google.com/open?id=13tGqX_nM0r0CIwL02CFtj7qA21PUWXTh)  
+&emsp;&emsp;Hayden didn't show up - no reason  
+&emsp;&emsp;Started requirements testing
+
+18.   `07/05/2020` Discussed report and short video - Online  
+&emsp;&emsp;[Audio Recording](https://drive.google.com/open?id=1bGF8bZildO_DzftUxbPm7aR4GHj8EU4U)  
+
+19.   `11/05/2020` Reviewed testing - Online  
+&emsp;&emsp;[Audio Recording](https://drive.google.com/open?id=193PPWfVi3FrX9T9v5_vkSYnBb2LR4Drw)
+
+20.   `12/05/2020` Reviewed testing - Online  
+&emsp;&emsp;[Audio Recording](https://drive.google.com/open?id=1nNLIXXrz6dLGrdrNVWMDz87CwdpJzg9v)  
+&emsp;&emsp;Hayden late for the meeting  
+&emsp;&emsp;Start writing the report  
+&emsp;&emsp;Trying to fix the conflicts in Mingfeng-Wang-215920
