@@ -18,7 +18,7 @@ import static java.util.stream.IntStream.range;
  */
 public class Dice {
 
-    private final int[] sides = range(1, 6).toArray();
+    private final int[] sides = range(1, 7).toArray();
     private int diceVal0, diceVal1;
     private int numDouble;
     private int totalVal;

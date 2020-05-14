@@ -104,7 +104,8 @@ public class PropertyTycoonGame {
                         break;
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                //System.out.println(e.getMessage());
+//                e.printStackTrace();
             }
         }
 
@@ -112,7 +113,7 @@ public class PropertyTycoonGame {
 
     public void playerSetup() throws IOException, DuplicateException, Exception {
         boolean setup = true;
-        System.out.println("Enter player name and token\ntype start when done\n? for help\n");
+        System.out.println("Enter player name and token\ntype 'start' when done\n? for help\n");
 
         while (setup) {
             try {
@@ -143,9 +144,9 @@ public class PropertyTycoonGame {
                                 break;
                             case "?":
                                 System.out.println("Enter playername and token\n"
-                                        + "use agent playername token to add a agent\n"
+                                        + "'agent' playername token to add a agent\n\n"
                                         + "q        quit to the main menu\n"
-                                        + "start    start the game\n"
+                                        + "start    start the game\n\n"
                                         + "List of tokens:");
 
                                 for (final Token t : Token.values()) {
@@ -161,7 +162,7 @@ public class PropertyTycoonGame {
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
-                e.printStackTrace();
+//                e.printStackTrace();
             }
         }
     }
@@ -178,7 +179,20 @@ public class PropertyTycoonGame {
                     Agent.class.cast(p).run();
                 } else {
                     ArrayList<Player> players = CentralControl.getPlayers();
-                    Object[] args = {p.getName(), ((Property) CentralControl.board.getCell(p.getLocation())).getName(), p.getMoney()};
+                    Cell c = CentralControl.board.getCell(p.getLocation());
+                    String s = null;
+                    if(c instanceof Jail){
+                        s = "Jail";
+                    } else if(c instanceof Park){
+                       s = "Park";
+                    } else if(c instanceof PotluckCard){
+                       s = "Pot Luck";
+                    } else if(c instanceof OpportunityknockCard){
+                        s = "Opportunity Knock";
+                    } else{
+                        s = ((Property) c).getName();
+                    }
+                    Object[] args = {p.getName(), s, p.getMoney()};
                     System.out.printf("%1s [%2s] [%3s]> ", args);
                     while (!reader.ready()) {
                         //wait for input
@@ -282,7 +296,7 @@ public class PropertyTycoonGame {
                         case "?":
                             System.out.println("type action and then property number\n"
                                     + "upgrade      builds a house on the chosen property\n"
-                                    + "mortgage     mortgages the chosen property"
+                                    + "mortgage     mortgages the chosen property\n"
                                     + "done         returns to the game");
                             break;
 
