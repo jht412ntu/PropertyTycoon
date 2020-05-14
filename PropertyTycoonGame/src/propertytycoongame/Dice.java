@@ -20,11 +20,18 @@ public class Dice {
 
     private final int[] sides = range(1, 6).toArray();
     private int diceVal0, diceVal1;
-    private int numDouble = 0;
+    private int numDouble;
     private int totalVal;
-    public boolean goJail = false;
-    public boolean rollAgain = true;
-    public boolean doub = false;
+    public boolean goJail;
+    public boolean rollAgain;
+    public boolean doub;
+
+    public Dice() {
+        goJail = false;
+        rollAgain = true;
+        doub = false;
+        numDouble = 0;
+    }
 
     /**
      * Rolls the dice and returns the total combined value of both dice.
@@ -99,6 +106,10 @@ public class Dice {
      */
     public int getNumDouble() {
         return numDouble;
+    }
+    
+    public boolean getRollAgain(){
+        return rollAgain;
     }
 
     /**

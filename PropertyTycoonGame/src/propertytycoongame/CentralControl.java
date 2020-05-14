@@ -107,9 +107,11 @@ public class CentralControl {
         HashMap<Player, Integer> map = new HashMap<>();
         ArrayList<Player> newplayers = new ArrayList<>();
         for (Player player : players) {
+            
             dices.rollDice();
             player.setotalValue(dices.getTotalVal());  //each player's points
             map.put(player, player.getTotalValue());//put it in map
+            dices.newPlayer();
         }
         List<Map.Entry<Player, Integer>> orderedlist = new ArrayList<>(map.entrySet()); //trans to a list
         Collections.sort(orderedlist, new Comparator<Map.Entry<Player, Integer>>() {
@@ -123,6 +125,7 @@ public class CentralControl {
         players = newplayers;
         for (int j = 0; j > players.size(); j++) {
             if (players.get(j).getTotalValue() == players.get(j + 1).getTotalValue()) {
+                
                 dices.rollDice();
                 players.get(j).setotalValue(dices.getTotalVal());
                 dices.rollDice();
@@ -130,6 +133,7 @@ public class CentralControl {
                 if (players.get(j).getTotalValue() < players.get(j + 1).getTotalValue()) {
                     Collections.swap(players, j, j + 1);
                 }
+                dices.newPlayer();
             }
         }
 

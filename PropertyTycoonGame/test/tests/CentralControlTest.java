@@ -83,8 +83,6 @@ public class CentralControlTest {
         try{
         p1 = new Player("Player1", Player.Token.boot);
         normal.addPlayer(p1);
-        } catch (DuplicateException de){
-            
         } catch (Exception e){
             
         }

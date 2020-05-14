@@ -7,21 +7,20 @@ package tests;
 
 import java.sql.Time;
 import java.util.Date;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 import propertytycoongame.CentralControl;
 import propertytycoongame.DuplicateException;
+import propertytycoongame.LackMoneyException;
 import propertytycoongame.Player;
+import propertytycoongame.PropertyException;
 
 /**
- *
- * @author Hallton-PC
+ * Sprint1 test and some methods test.
+ * 
+ * @author Haotian Jiao
  */
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 public class CentralControlTest {
@@ -31,36 +30,44 @@ public class CentralControlTest {
     private CentralControl normal;
     private CentralControl timed;
     
-    public CentralControlTest() throws DuplicateException {
-        p1 = new Player("Player1", Player.Token.boot);
-        p2 = new Player("Player2", Player.Token.cat);
-        p3 = new Player("Player3", Player.Token.spoon);
+    public CentralControlTest() {
+        try {
+            p1 = new Player("Player 1", Player.Token.boot);
+            p2 = new Player("Player 2", Player.Token.cat);
+            p3 = new Player("Player 3", Player.Token.spoon);
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        
         normal = new CentralControl(0);
         timed = new CentralControl(90);
     }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
 
+    /**
+     * Sprint1: TC4: Central Control
+     * 
+     * TC4-F1: Determine who’s turn it is.
+     * 
+     * @throws Exception 
+     */
+    @Test
+    public void testWhosTurnItIs() throws Exception {
+        System.out.println("Who's turn it is:");
+        normal.addPlayer(p1);
+        normal.addPlayer(p2);
+        normal.addPlayer(p3);
+        normal.nextPlayer();
+        Player expResult = p2;
+        Player result = normal.getCurrentPlayer();
+        System.out.println("Expected result: " + expResult + "\nResult: " + result);
+    }
+    
     /**
      * Test of getCurrentTime method, of class CentralControl.
      */
     @Test
     public void test0GetCurrentTime() {
-        //System.out.println("getCurrentTime");
+        System.out.println("getCurrentTime");
         CentralControl instance = new CentralControl(0);
         Date expResult = new Date();
         Date result = instance.getCurrentTime();
@@ -71,13 +78,11 @@ public class CentralControlTest {
      * Test of addPlayer method, of class CentralControl.
      */
     @Test
-    public void test1AddPlayer() {
-        //System.out.println("addPlayer");
+    public void test1AddPlayer() throws Exception {
+        System.out.println("addPlayer");
         try{
         p1 = new Player("Player1", Player.Token.boot);
         normal.addPlayer(p1);
-        } catch (DuplicateException de){
-            
         } catch (Exception e){
             
         }
@@ -89,7 +94,7 @@ public class CentralControlTest {
      */
     @Test
     public void test2GetCurrentPlayer() {
-        //System.out.println("getCurrentPlayer");
+        System.out.println("getCurrentPlayer");
 //        normal.addPlayer(p2);
 //        normal.addPlayer(p1);
         //Player result = normal.getCurrentPlayer();
@@ -100,8 +105,8 @@ public class CentralControlTest {
      * Test of nextPlayer method, of class CentralControl.
      */
     @Test
-    public void test3NextPlayer() {
-        //System.out.println("nextPlayer");
+    public void test3NextPlayer() throws PropertyException, LackMoneyException {
+        System.out.println("nextPlayer");
 //        normal.addPlayer(p2);
 //        normal.addPlayer(p1);
         normal.nextPlayer();
@@ -112,7 +117,7 @@ public class CentralControlTest {
      */
     @Test
     public void test4InitPlayers() {
-        //System.out.println("initPlayers");
+        System.out.println("initPlayers");
 //        normal.addPlayer(p3);
 //        normal.addPlayer(p2);
 //        normal.addPlayer(p1);
@@ -124,7 +129,7 @@ public class CentralControlTest {
      */
     @Test
     public void test5GetPlayers() {
-        //System.out.println("getPlayers");
+        System.out.println("getPlayers");
 //        normal.addPlayer(p3);
 //        normal.addPlayer(p2);
 //        normal.addPlayer(p1);
@@ -136,7 +141,7 @@ public class CentralControlTest {
      */
     @Test
     public void test6GetStartTime() {
-        //System.out.println("getStartTime");
+        System.out.println("getStartTime");
         Date result = normal.getStartTime();      
         assertEquals(new Date(), result);
         System.out.println(result);
@@ -147,7 +152,7 @@ public class CentralControlTest {
      */
     @Test
     public void test7SetEndTime() {
-        //System.out.println("setEndTime");
+        System.out.println("setEndTime");
         normal.setEndTime();
     }
 
@@ -156,7 +161,7 @@ public class CentralControlTest {
      */
     @Test
     public void test8GetRemainingTime() {
-        //System.out.println("getRemainingTime");
+        System.out.println("getRemainingTime");
         Time result = timed.getRemainingTime();
         Time expResult = timed.timeFormat(90*60000);
         System.out.println(result);
@@ -168,7 +173,7 @@ public class CentralControlTest {
      */
     @Test
     public void test9GetDuration() throws InterruptedException {
-        //System.out.println("getDuration");
+        System.out.println("getDuration");
         //Thread.currentThread().sleep(1000);
         Time result = timed.getDuration();
         Time expResult = timed.timeFormat(90*60000);
