@@ -285,6 +285,7 @@ public class PropertyTycoonGame {
                             CentralControl.bank.buildHouse(p, props.get(Integer.parseInt(input[1]) - 1));
                             break;
                         case "mortgage":
+                            props.get(Integer.parseInt(input[1])-1).mortgage(CentralControl.bank, p);
                             break;
                         case "trade":
                             
