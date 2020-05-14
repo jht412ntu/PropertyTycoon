@@ -1,6 +1,7 @@
 package propertytycoongame;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,9 +44,17 @@ public class Board {
         String splitBy = ",";
         try {
             //InputStream in = ClassLoader.getSystemResourceAsStream(filePath);
+            System.out.println("Checking file");
+            //FileReader f = new FileReader("src/propertytycoongame/csv_board.csv");
+            //System.out.println();
+            File g = new File("src/csv_board.csv");
+            System.out.println(g.exists());
+            System.out.println(g.getAbsolutePath());
+//            File c = new File("csv_board.csv");
+//            System.out.println(c.exists());
             Property p1;
             ArrayList<String[]> csvList = new ArrayList<String[]>();
-            BufferedReader br = new BufferedReader(new FileReader(fileName));
+            BufferedReader br = new BufferedReader(new FileReader(g));
             while ((line = br.readLine()) != null) //returns a Boolean value
             {
                 String[] current = line.split(splitBy);
