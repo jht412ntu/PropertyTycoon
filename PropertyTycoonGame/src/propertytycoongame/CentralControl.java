@@ -74,7 +74,6 @@ public class CentralControl {
             mode = "Abridged";
             endTime = new Date(startTime.getTime() + this.duration);
         }
-        //Csv.readCsvFile("/src/propertytycoongame/csv_board.csv");
     }
 
     /**
