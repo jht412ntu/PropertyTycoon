@@ -1,7 +1,10 @@
 package propertytycoongame;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -30,7 +33,7 @@ public class Board {
         park = new Park(21);
         potluckCard = new PotluckCard();
         opportunityknockCard = new OpportunityknockCard();
-        readCsvFile("csv_board.csv");
+        readCsvFile("/csv_board.csv");
     }
 
     /**
@@ -42,10 +45,10 @@ public class Board {
         String line = "";
         String splitBy = ",";
         try {
-            //InputStream in = ClassLoader.getSystemResourceAsStream(filePath);
+            InputStream in = this.getClass().getResourceAsStream(fileName);
             Property p1;
             ArrayList<String[]> csvList = new ArrayList<String[]>();
-            BufferedReader br = new BufferedReader(new FileReader(fileName));
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
             while ((line = br.readLine()) != null) //returns a Boolean value
             {
                 String[] current = line.split(splitBy);
