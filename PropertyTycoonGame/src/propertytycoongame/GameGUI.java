@@ -298,6 +298,12 @@ public class GameGUI extends javax.swing.JFrame {
             }
         });
 
+        txtGameLength.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtGameLengthActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout startScreenLayout = new javax.swing.GroupLayout(startScreen);
         startScreen.setLayout(startScreenLayout);
         startScreenLayout.setHorizontalGroup(
@@ -559,7 +565,7 @@ public class GameGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_tokenListValueChanged
 
     private void startAbridgedGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startAbridgedGameActionPerformed
-        game = new CentralControl(90);
+        game = new CentralControl(Long.getLong(gui.txtGameLength.getText()));
         gui.startScreen.setVisible(false);
         gui.playerSetup.setVisible(true);
 
@@ -575,7 +581,7 @@ public class GameGUI extends javax.swing.JFrame {
             gui.tokenList.clearSelection();
 
             createPlayerList();
-        } catch (CreatePlayerException ex) {
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(playerSetup, ex.getMessage());
         }
     }//GEN-LAST:event_btnAddPlayerActionPerformed
@@ -649,6 +655,10 @@ public class GameGUI extends javax.swing.JFrame {
 //        }
     }//GEN-LAST:event_btnMortgageActionPerformed
 
+    private void txtGameLengthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGameLengthActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtGameLengthActionPerformed
+
     private void updateGUI() {
         try {
             Player p = game.getCurrentPlayer();
@@ -657,7 +667,7 @@ public class GameGUI extends javax.swing.JFrame {
             txtCurrPlayer.setText("Player: " + p.getName());
             txtCurrPos.setText("Current Position: " + ((Property) CentralControl.board.getCell(p.getLocation())).getName());
             setTitle("Property Tycoon Game - " + game.getRemainingTime().toString());
-            txtAvaliable.setText("Avaliable: " + Boolean.toString(((Property) CentralControl.board.getCell(p.getLocation())).isAvailable()));
+            txtAvaliable.setText("Available: " + Boolean.toString(((Property) CentralControl.board.getCell(p.getLocation())).isAvailable()));
             txtBankBalance.setText("Bank Balance: " + Integer.toString(CentralControl.bank.getBalance()));
             txtPrpCost.setText("Cost: " + Integer.toString(((Property) CentralControl.board.getCell(p.getLocation())).getCost()));
             txtGroup.setText("Group: " + ((Property) CentralControl.board.getCell(p.getLocation())).getGroup());
