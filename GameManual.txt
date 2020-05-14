@@ -1,0 +1,124 @@
+============================================================
+ Property Tycoon Game - Team 22 - Software Engineering 2020
+============================================================
+
+Contents:
+* How to start
+* Using the GUI
+* Using the command line
+* Playing the game
+* Know issues
+
+------------
+How to start
+------------
+
+Run the game from the command line using:
+
+java -jar /Path/To/Game/PropertyTycoonGame.jar
+
+Once started you will see "mainmenu >" on the command line
+
+To play the game using the GUI, type "gui" and press enter
+
+To play the game using the command line, type "full" for a full game
+or "abridged" followed by the time and press enter
+
+To quit, type "q".
+
+-------------------------
+Playing the game with GUI
+-------------------------
+
+Upon starting the GUI, you will greeted by the game start screen. From 
+here you can choose Full Game or Abridged, to choose abridged you must specify a time limit for the game.
+
+After choosing one of the options, the player setup screen will appear.
+Players must enter their desired player name and select a token from the list. Note: A player cannot have the same name or token as an existing player
+
+Once all the players are in the game (minimum of two required), the game can be started.
+
+On the game screen players have several options:
+* Next player - Passes the turn to the next player
+* Roll Dice - Roll the dice for the current player
+* Buy Property - Buys the property the player is currently on (if available
+* View properties - Displays a list of properties the current player owns
+
+The player can also see information about the game:
+* Player - The current player
+* Balance - The current player's balance
+* Bank Balance - The balance of the game bank
+* Roll Value - The value of the last roll for this player (will be 0
+if the player has not rolled yet
+* Current Position - The name of the board location of the current player
+* Group - The colour group of the current property
+* Available - States if the current location is available for the player to purchase
+* Cost - Cost of the current location
+
+In the stats menu item, the player can view statistics about the game
+including:
+* Player Name
+* Cash
+* Number of properties owned
+* Their current location on the board
+
+
+------------------------------------
+Playing the game on the command line
+------------------------------------
+
+At any point, type "?" to view a list of commands to play to game.
+
+Upon starting either a full or abridged game, you will be greeted by a setup prompt.
+Type the playername followed by a token to add a player to the game.
+To add a new agent to the game, type "agent" before the playername and token.
+Type "?" to view a list of tokens in the game.
+
+When all the players/agents are in the game, type start to begin the game.
+
+Game command list:
+* roll - rolls the dice for the current player
+* pass - passes the turn to the next player
+* buy - buys the property the player is currently on
+* list - lists the players in the current game, along with their associated token
+* prop - starts property management for the current player
+* leave - leave the game
+* voteend - cast a vote to end the current game
+
+
+To manage your properties, type prop on your turn to enter the management prompt. You will be presented with a list of currently owned properties, denoted by a number. To action a property, type the command followed by the number of the property.
+
+Property management "prop" command list:
+* upgrade - builds a house on the chosen property
+* mortgage - mortgages the chosen property
+* done - returns to game
+
+
+----------------
+Playing the game
+----------------
+
+To start playing the game, roll the dice.
+If you get a double you can roll again, three double and you will go to jail!
+If you land on a property, you can choose to buy it.
+Collect all properties of a group to build houses on them and increase the rent.
+To upgrade or mortgage a property, click View Properties, choose the property you wish to action and select one of the two options. When done close the dialog to return to the game.
+When you have finished you turn, pass control to the next player by clicking the Next Player button.
+Then wait for your turn to go again.
+
+Landing on a property owned by another player rent will be automatically sent to them, when a player lands on your property you will automatically receive rent from them.
+
+Build your property list, bankrupt other player and be the last player
+standing or have the highest worth to win!
+
+
+------------
+Known issues
+------------
+
+
+
+
+
+
+
