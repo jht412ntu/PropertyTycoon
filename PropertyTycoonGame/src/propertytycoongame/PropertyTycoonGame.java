@@ -76,7 +76,7 @@ public class PropertyTycoonGame {
                         try {
 
                             Result result = junit.run(
-                                    AgentTest.class,
+                                    //AgentTest.class,
                                     BankTest.class,
                                     Boardtest.class,
                                     CentralControlTest.class,
