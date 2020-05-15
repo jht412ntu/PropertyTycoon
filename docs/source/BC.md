@@ -9,7 +9,7 @@
 		<nav class="nav">
 			<ul>
 				<li>
-					<a href="https://app.creately.com/diagram/ydWvxHWtHK0">
+					<a href="https://drive.google.com/open?id=1WA6M5ZK7NdMiv5f9fCPk-at-q-goR1Xv">
 						<span>
 							UML
 						</span>
