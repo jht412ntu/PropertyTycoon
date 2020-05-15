@@ -63,6 +63,7 @@ public class Board {
                 theboard.put(row, p1);
                 if (csvList.get(row)[10].equals("Yes")) {
                     p1.setAvailable(true);
+                    CentralControl.bank.addProperty(p1);
                 }
                 if (csvList.get(row)[1].equals("Opportunity Knocks")) {
                     theboard.put(row + 1, opportunityknockCard);

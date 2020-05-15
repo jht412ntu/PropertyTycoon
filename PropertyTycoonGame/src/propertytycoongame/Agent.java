@@ -102,6 +102,8 @@ public class Agent extends Player {
      */
     public void autoBuild() {
         ArrayList<Property> propertiesBuild = searchPropertyBuild();
+        if (propertiesBuild.size() == 0)
+        	return;
         while (getMoney() >= 400) {
             for (Property property : propertiesBuild) {
                 try {

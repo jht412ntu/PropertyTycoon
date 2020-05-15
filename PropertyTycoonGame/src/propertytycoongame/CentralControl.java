@@ -39,6 +39,11 @@ public class CentralControl {
     private static ArrayList<Player> players = new ArrayList<>();
 
     /**
+     * An instance of the Bank Class.
+     */
+    public static Bank bank = new Bank();
+    
+    /**
      * An instance of the Board Class.
      */
     public static Board board = new Board();
@@ -47,11 +52,6 @@ public class CentralControl {
      * An instance of the Dice Class.
      */
     public static Dice dices = new Dice();
-
-    /**
-     * An instance of the Bank Class.
-     */
-    public static Bank bank = new Bank();
 
     /**
      * An instance of the Jail Class.

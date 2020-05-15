@@ -69,36 +69,30 @@ public class AgentTest {
 	@Test
 	public void autoBuildHouseTest() {
 		Property property  = (Property)CentralControl.board.getCell(2);
+		Property property1  = (Property)CentralControl.board.getCell(4);
 		property.changeOwner(agent);
+		property1.changeOwner(agent);
+		agent.getPropertiesList().add(property);
+		agent.getPropertiesList().add(property1);
 		assertEquals(0,property.getNumOfHouse());
 		agent.autoBuild();
-		assertEquals(1,property.getNumOfHouse());
+		assertEquals(0,property.getNumOfHouse());
+		assertTrue(property.ifHotelBuilded());
 	}
 	
 	@Test
 	public void autoBuildHotelTest() {
 		Property property  = (Property)CentralControl.board.getCell(2);
+		Property property1  = (Property)CentralControl.board.getCell(4);
 		property.changeOwner(agent);
+		property1.changeOwner(agent);
+		agent.getPropertiesList().add(property);
+		agent.getPropertiesList().add(property1);
 		assertFalse(property.ifHotelBuilded());
-		agent.autoBuild();
-		agent.autoBuild();
-		agent.autoBuild();
-		agent.autoBuild();
 		agent.autoBuild();
 		assertTrue(property.ifHotelBuilded());
 	}
 	
-	@Test
-	public void autoPayRentTest() throws CreatePlayerException {
-		Property property  = (Property)CentralControl.board.getCell(2);
-		Agent agent2 = new Agent("agent2", Player.Token.goblet);
-		property.changeOwner(agent2);
-		agent.setLocation(2);
-		Cell currentCell = CentralControl.board.getCell(agent.getLocation());
-		agent.autoPayRent(currentCell);
-		assertEquals(1501, agent2.getMoney());
-		assertEquals(1499, agent2.getMoney());
-	}
 	
 	@Test
 	public void runTest() throws PropertyException, LackMoneyException {
