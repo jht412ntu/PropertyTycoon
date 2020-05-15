@@ -18,7 +18,7 @@
 *   [x]  Sprint 9 29/04/2020 - 01/05/2020
 *   [x]  Sprint 10 02/05/2020 - 05/05/2020
 *   [x]  Sprint 11 06/05/2020 - 12/05/2020
-*   [ ]  Read-me file
-*   [ ]  Video
-*   [ ]  Report
-*   [ ]  Peer Assessment
+*   [x]  Read-me file
+*   [x]  Video
+*   [x]  Report
+*   [x]  Peer Assessment
