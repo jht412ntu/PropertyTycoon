@@ -91,7 +91,7 @@ public class PropertyTycoonGame {
                             } else {
                                 System.out.println(result.getFailureCount() + "/"
                                         + result.getRunCount()
-                                        + "failed in " + (result.getRunTime() / 1000) + " seconds");
+                                        + " failed in " + (result.getRunTime() / 1000) + " seconds");
                             }
                         } catch (final Exception e) {
                             System.out.println(e.getMessage());
